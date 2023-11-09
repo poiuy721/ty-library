@@ -17,7 +17,7 @@
     WHERE B_ID = #{id}
 </update>
 
-<select id="selectBooksByBId" parameterType="string" resultType="com.library.DTO.BooksDTO">
+<select id="selectBooksByBId" parameterType="string" resultType="com.library.dto.BooksDTO">
 	SELECT *
     FROM books
     WHERE B_ID = #{id}
@@ -26,18 +26,18 @@
 
 
 <!-- 대여중 조회 -->
-<select id="selectBooksByYState" resultType="com.library.DTO.BooksDTO">
+<select id="selectBooksByYState" resultType="com.library.dto.BooksDTO">
     SELECT *
     FROM books
     WHERE B_STATE = 'Y'
 </select>
 <!-- 대여 아닌거 재고 상태 조회 -->
-<select id="selectBooksByNStateAndNStock" resultType="com.library.DTO.BooksDTO">
+<select id="selectBooksByNStateAndNStock" resultType="com.library.dto.BooksDTO">
     SELECT *
     FROM books
     WHERE B_STATE = 'N' AND B_STOCK = 'N'
 </select>
-<select id="selectBooksByNStateAndYStock" resultType="com.library.DTO.BooksDTO">
+<select id="selectBooksByNStateAndYStock" resultType="com.library.dto.BooksDTO">
     SELECT *
     FROM books
     WHERE B_STATE = 'N' AND B_STOCK = 'Y'
