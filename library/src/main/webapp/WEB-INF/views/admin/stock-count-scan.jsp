@@ -288,7 +288,7 @@
 			                 		canvas.getContext('2d').drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight, 0, 0, video.offsetWidth,video.offsetHeight);
 			                 		canvas.style.display = "block";
 			                    	setTimeout(() => canvas.style.display="none",1000)
-			                    	$("#book_info1").text(data.b_ID);
+			                    	$("#book_info1").text(data.b_id);
 			                    	$("#book_info2").text(data.isbn);
 			                     },
 			                     error: function () {

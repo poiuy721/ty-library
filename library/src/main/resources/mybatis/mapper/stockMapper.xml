@@ -7,13 +7,13 @@
 <!-- 초기화 -->
 <update id="updateInitialNStock" >
     UPDATE books
-    SET B_STOCK = 'N'
-    WHERE B_STATE != 'Y'
+    SET STOCK_COUNT_STATUS = 'N'
+    WHERE B_STATUS != 'Y'
 </update>
 
 <update id="updateyStockByBId" parameterType="String">
 	UPDATE BOOKS
-    SET B_STOCK = 'Y'
+    SET STOCK_COUNT_STATUS = 'Y'
     WHERE B_ID = #{id}
 </update>
 
@@ -29,18 +29,18 @@
 <select id="selectBooksByYState" resultType="com.library.dto.BooksDTO">
     SELECT *
     FROM books
-    WHERE B_STATE = 'Y'
+    WHERE B_STATUS = 'Y'
 </select>
 <!-- 대여 아닌거 재고 상태 조회 -->
 <select id="selectBooksByNStateAndNStock" resultType="com.library.dto.BooksDTO">
     SELECT *
     FROM books
-    WHERE B_STATE = 'N' AND B_STOCK = 'N'
+    WHERE B_STATUS = 'N' AND STOCK_COUNT_STATUS = 'N'
 </select>
 <select id="selectBooksByNStateAndYStock" resultType="com.library.dto.BooksDTO">
     SELECT *
     FROM books
-    WHERE B_STATE = 'N' AND B_STOCK = 'Y'
+    WHERE B_STATUS = 'N' AND STOCK_COUNT_STATUS = 'Y'
 </select>
 
 

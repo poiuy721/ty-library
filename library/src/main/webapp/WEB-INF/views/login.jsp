@@ -6,13 +6,13 @@
 
 <head>
 <meta charset="utf-8">
-<title>확인</title>
+<title>로그인</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
 
 <!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
+<link href="/img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,32 +26,20 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet">
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+	href="https://cdn.jsdelivr.net/npmstrap-icons@1.4.1/fontstrap-icons.css"
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="/boot/lib/owlcarousel/assets/owl.carousel.min.css"
+<link href="/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="/boot/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="/boot/css/bootstrap.min.css" rel="stylesheet">
+<link href="/cssstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="/boot/css/style.css" rel="stylesheet">
-
-<script type="text/javascript">
-
-	function goBack(){
-		window.history.go(-1);
-	}
-	
-</script>
-
-
-
-
+<link href="/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -139,18 +127,7 @@
 					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
-								<c:if test="${sort eq 'rent'}">
-			                       <h2 class="mb-0 text-center">대여</h2>
-			                    </c:if>
-			                    <c:if test="${sort eq 'renew'}">
-			                       <h2 class="mb-0 text-center">연장</h2>
-			                    </c:if>
-			                    <c:if test="${sort eq 'assign'}">
-			                       <h2 class="mb-0 text-center">양도</h2>
-			                    </c:if>
-			                    <c:if test="${sort eq 'return'}">
-			                       <h2 class="mb-0 text-center">반납</h2>
-			                    </c:if>
+								<h2 class="mb-0 text-center">로그인 (사번)</h2>
 							</div>
 						</div>
 					</div>
@@ -163,70 +140,27 @@
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
 					<div class="col-sm-12 col-xl-6">
-					<form action="">
 						<div class="bg-light text-center rounded p-4">
 							<div
 								class="d-flex align-items-center justify-content-between mb-4">
-								<c:if test="${sort eq 'rent'}">
-			                       <h6 class="mb-0">| 대여 정보 확인</h6>
-			                    </c:if>
-			                    <c:if test="${sort eq 'renew'}">
-			                       <h6 class="mb-0">| 연장 정보 확인</h6>
-			                    </c:if>
-			                    <c:if test="${sort eq 'assign'}">
-			                       <h6 class="mb-0">| 양도 정보 확인</h6>
-			                    </c:if>
-			                    <c:if test="${sort eq 'return'}">
-			                       <h6 class="mb-0">| 반납 정보 확인</h6>
-			                    </c:if>
+								<h6 class="mb-0">| 사번 입력</h6>
 							</div>
-							<table class="table table-borderless">
-								<thead>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">도서명</th>
-										<td>${bookTitle}</td>
-									</tr>
-									<tr>
-										<c:if test="${sort eq 'rent'}">
-					                    	<th scope="row">대여기간</th>
-					                    	<td>${rent_date} ~ ${due_date}</td>
-					                    </c:if>
-					                    <c:if test="${sort eq 'renew'}">
-					                    	<th scope="row">연장기간</th>
-					                    	<td>${rent_date} ~ ${due_date}</td>
-					                    </c:if>
-					                    <c:if test="${sort eq 'assign'}">
-					                    	<th scope="row">(양도)<br>대여기간</th>
-					                    	<td>${rent_date} ~ ${due_date}</td>
-					                    </c:if>
-					                    <c:if test="${sort eq 'return'}">
-					                    	<th scope="row">반납일자</th>
-					                    	<td>${rent_date}</td>
-					                    </c:if>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="text-center">
-						<br>
-						
+							
 							<c:if test="${sort eq 'rent'}">
-					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/rent/${b_id}'">대여</button>
-					        </c:if>
-					        <c:if test="${sort eq 'renew'}">
-					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/renew/${b_id}'">연장</button>
-					        </c:if>
-					        <c:if test="${sort eq 'assign'}">
-					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/assign/{b_id}'">양도 받기</button>
-					        </c:if>
-					        <c:if test="${sort eq 'return'}">
-					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/return/${b_id}'">반납</button>
-					        </c:if>
-							<button type="button" class="btn btn-outline-danger m-2" onclick="javascript:form.action='/tylibrary/books/${b_id}">취소</button>
+			                    <form action="/tylibrary/rent/loginProcess/${b_id}" method="post">
+			                </c:if>
+			                <c:if test="${sort eq 'renew'}">
+			                    <form action="/tylibrary/renew/loginProcess/${b_id}" method="post">
+			                </c:if>
+			                <c:if test="${sort eq 'assign'}">
+			                    <form action="/tylibrary/assign/loginProcess/${b_id}" method="post">
+			                </c:if>
+								<div class="form-floating mb-3">
+									<input type="text" class="form-control" id="e_id" name="e_id" placeholder="사번" required>
+								</div>
+								<button type="submit" class="btn btn-outline-primary m-2">로그인</button>
+							</form>
 						</div>
-					</form>	
 					</div>
 					<!-- Sales Chart End -->
 				</div>
@@ -242,7 +176,8 @@
 						<div class="col-12 col-sm-6 text-center text-sm-end">
 							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 							Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
-							Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+							Distributed By <a class="border-bottom"
+								href="https://themewagon.com" target="_blank">ThemeWagon</a>
 						</div>
 					</div>
 				</div>
@@ -257,17 +192,18 @@
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="/boot/lib/chart/chart.min.js"></script>
-	<script src="/boot/lib/easing/easing.min.js"></script>
-	<script src="/boot/lib/waypoints/waypoints.min.js"></script>
-	<script src="/boot/lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="/boot/lib/tempusdominus/js/moment.min.js"></script>
-	<script src="/boot/lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="/boot/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npmstrap@5.0.0/dist/jsstrap.bundle.min.js"></script>
+	<script src="/lib/chart/chart.min.js"></script>
+	<script src="/lib/easing/easing.min.js"></script>
+	<script src="/lib/waypoints/waypoints.min.js"></script>
+	<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="/boot/js/main.js"></script>
+	<script src="/js/main.js"></script>
 </body>
 
 </html>

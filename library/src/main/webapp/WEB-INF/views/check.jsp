@@ -6,9 +6,7 @@
 
 <head>
 <meta charset="utf-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<title>대여 기간 선택</title>
+<title>확인</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -28,20 +26,29 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet">
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+	href="https://cdn.jsdelivr.net/npmstrap-icons@1.4.1/fontstrap-icons.css"
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="/boot/lib/owlcarousel/assets/owl.carousel.min.css"
+<link href="/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="/boot/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="/boot/css/bootstrap.min.css" rel="stylesheet">
+<link href="/cssstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="/boot/css/style.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+
+<script type="text/javascript">
+
+	function goBack(){
+		window.history.go(-1);
+	}
+	
+</script>
+
 
 
 
@@ -49,7 +56,15 @@
 
 <body>
 	<div class="container-xxl position-relative bg-white d-flex p-0">
-
+		<!-- Spinner Start -->
+		<div id="spinner"
+			class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+			<div class="spinner-border text-primary"
+				style="width: 3rem; height: 3rem;" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
+		</div>
+		<!-- Spinner End -->
 
 
 		<!-- Sidebar Start -->
@@ -124,7 +139,18 @@
 					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
-								<h2 class="mb-0 text-center">대여</h2>
+								<c:if test="${sort eq 'rent'}">
+			                       <h2 class="mb-0 text-center">대여</h2>
+			                    </c:if>
+			                    <c:if test="${sort eq 'renew'}">
+			                       <h2 class="mb-0 text-center">연장</h2>
+			                    </c:if>
+			                    <c:if test="${sort eq 'assign'}">
+			                       <h2 class="mb-0 text-center">양도</h2>
+			                    </c:if>
+			                    <c:if test="${sort eq 'return'}">
+			                       <h2 class="mb-0 text-center">반납</h2>
+			                    </c:if>
 							</div>
 						</div>
 					</div>
@@ -134,27 +160,73 @@
 
 
 			<!-- Sales Chart Start -->
-			
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
 					<div class="col-sm-12 col-xl-6">
-						<div class="bg-light rounded p-4">
+					<form action="">
+						<div class="bg-light text-center rounded p-4">
 							<div
 								class="d-flex align-items-center justify-content-between mb-4">
-								<h6 class="mb-0">| 대여 기간 선택</h6>
+								<c:if test="${sort eq 'rent'}">
+			                       <h6 class="mb-0">| 대여 정보 확인</h6>
+			                    </c:if>
+			                    <c:if test="${sort eq 'renew'}">
+			                       <h6 class="mb-0">| 연장 정보 확인</h6>
+			                    </c:if>
+			                    <c:if test="${sort eq 'assign'}">
+			                       <h6 class="mb-0">| 양도 정보 확인</h6>
+			                    </c:if>
+			                    <c:if test="${sort eq 'return'}">
+			                       <h6 class="mb-0">| 반납 정보 확인</h6>
+			                    </c:if>
 							</div>
-							<ul class="mb-0 text-left">
-								<li>기본 대여 기간은 2주입니다.</li>
-								<li>기본 대여 기간을 초과하여 대여하기를 원하신다면, 하단 달력에서 반납 일자를 선택하여 주시길
-									바랍니다.</li>
-								<li>최대 대여 기간은 다음달 까지입니다.</li>
-							</ul>
-							<br>
-							<div id="calender"></div>
+							<table class="table table-borderless">
+								<thead>
+								</thead>
+								<tbody>
+									<tr>
+										<th scope="row">도서명</th>
+										<td>${bookTitle}</td>
+									</tr>
+									<tr>
+										<c:if test="${sort eq 'rent'}">
+					                    	<th scope="row">대여기간</th>
+					                    	<td>${rent_date} ~ ${due_date}</td>
+					                    </c:if>
+					                    <c:if test="${sort eq 'renew'}">
+					                    	<th scope="row">연장기간</th>
+					                    	<td>${rent_date} ~ ${due_date}</td>
+					                    </c:if>
+					                    <c:if test="${sort eq 'assign'}">
+					                    	<th scope="row">(양도)<br>대여기간</th>
+					                    	<td>${rent_date} ~ ${due_date}</td>
+					                    </c:if>
+					                    <c:if test="${sort eq 'return'}">
+					                    	<th scope="row">반납일자</th>
+					                    	<td>${rent_date}</td>
+					                    </c:if>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 						<div class="text-center">
-							<button type="button" class="btn btn-outline-primary m-2">다음</button>
+						<br>
+						
+							<c:if test="${sort eq 'rent'}">
+					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/rent/${b_id}'">대여</button>
+					        </c:if>
+					        <c:if test="${sort eq 'renew'}">
+					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/renew/${b_id}'">연장</button>
+					        </c:if>
+					        <c:if test="${sort eq 'assign'}">
+					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/assign/{b_id}'">양도 받기</button>
+					        </c:if>
+					        <c:if test="${sort eq 'return'}">
+					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/return/${b_id}'">반납</button>
+					        </c:if>
+							<button type="button" class="btn btn-outline-danger m-2" onclick="javascript:form.action='/tylibrary/books/${b_id}">취소</button>
 						</div>
+					</form>	
 					</div>
 					<!-- Sales Chart End -->
 				</div>
@@ -165,13 +237,12 @@
 				<div class="bg-light rounded-top p-4">
 					<div class="row">
 						<div class="col-12 col-sm-6 text-center text-sm-start">
-							&copy; <a href="#">Your Site Name</a>, All Right Reserved.
+							&copy; <a href="#">TY Library</a>, All Right Reserved.
 						</div>
 						<div class="col-12 col-sm-6 text-center text-sm-end">
 							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 							Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
-							Distributed By <a class="border-bottom"
-								href="https://themewagon.com" target="_blank">ThemeWagon</a>
+							Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
 						</div>
 					</div>
 				</div>
@@ -186,18 +257,17 @@
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="/boot/lib/chart/chart.min.js"></script>
-	<script src="/boot/lib/easing/easing.min.js"></script>
-	<script src="/boot/lib/waypoints/waypoints.min.js"></script>
-	<script src="/boot/lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="/boot/lib/tempusdominus/js/moment.min.js"></script>
-	<script src="/boot/lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="/boot/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npmstrap@5.0.0/dist/jsstrap.bundle.min.js"></script>
+	<script src="/lib/chart/chart.min.js"></script>
+	<script src="/lib/easing/easing.min.js"></script>
+	<script src="/lib/waypoints/waypoints.min.js"></script>
+	<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="/boot/js/main.js"></script>
+	<script src="/js/main.js"></script>
 </body>
 
 </html>

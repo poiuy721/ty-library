@@ -14,7 +14,7 @@
 <meta content="" name="description">
 
 <!-- Favicon -->
-<link href="/boot/img/favicon.ico" rel="icon">
+<link href="/img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,17 +23,17 @@
 
 <!-- Icon Font Stylesheet -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npmstrap-icons@1.4.1/fontstrap-icons.css" rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="/boot/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-<link href="/boot/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="/boot/css/bootstrap.min.css" rel="stylesheet">
+<link href="/cssstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="/boot/css/style.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
 
 	<script type="text/javascript">	
 
@@ -83,7 +83,7 @@
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="/boot/img/user.jpg" alt=""
+						<img class="rounded-circle" src="/img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -272,17 +272,17 @@
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="/boot/lib/chart/chart.min.js"></script>
-	<script src="/boot/lib/easing/easing.min.js"></script>
-	<script src="/boot/lib/waypoints/waypoints.min.js"></script>
-	<script src="/boot/lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="/boot/lib/tempusdominus/js/moment.min.js"></script>
-	<script src="/boot/lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="/boot/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npmstrap@5.0.0/dist/jsstrap.bundle.min.js"></script>
+	<script src="/lib/chart/chart.min.js"></script>
+	<script src="/lib/easing/easing.min.js"></script>
+	<script src="/lib/waypoints/waypoints.min.js"></script>
+	<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="/boot/js/main.js"></script>
+	<script src="/js/main.js"></script>
 
 <!--  //한 화면에 버튼 다 표시하는 경우
 	<button type="button" class="btn btn-outline-primary m-2" id="rent" onclick="Login(this.id)">대여</button>

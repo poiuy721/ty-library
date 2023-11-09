@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>camera test</title>
-<script src="/boot/js/jsQR.js"></script>
+<script src="/js/jsQR.js"></script>
 
 <style type="text/css">
 	canvas {

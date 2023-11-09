@@ -1,128 +1,119 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 <meta charset="utf-8">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-<title>대여 기간 선택</title>
+<title>연장 기간 선택</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
 
 <!-- Favicon -->
-<link href="/boot/img/favicon.ico" rel="icon">
+<link href="img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Icon Font Stylesheet -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
-	rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npmstrap-icons@1.4.1/fontstrap-icons.css" rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="/boot/lib/owlcarousel/assets/owl.carousel.min.css"
-	rel="stylesheet">
-<link
-	href="/boot/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
-	rel="stylesheet" />
+<link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="/boot/css/bootstrap.min.css" rel="stylesheet">
+<link href="/cssstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="/boot/css/style.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
 
 
 <style>
-@import
-	url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+	@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+	
+		td {
+            width: 30px;
+            height: 30px;
+        }
 
-td {
-	width: 30px;
-	height: 30px;
-}
+        .Calendar {
+            text-align: center;
+        }
 
-.Calendar {
-	text-align: center;
-}
+        .Calendar>thead>tr:first-child>td {
+            font-family: 'Questrial', sans-serif;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
 
-.Calendar>thead>tr:first-child>td {
-	font-family: 'Questrial', sans-serif;
-	font-size: 1.1em;
-	font-weight: bold;
-}
+        .Calendar>thead>tr:last-child>td {
+            font-family: 'Questrial', sans-serif;
+            font-weight: 600;     
+        }
 
-.Calendar>thead>tr:last-child>td {
-	font-family: 'Questrial', sans-serif;
-	font-weight: 600;
-}
+        .Calendar>tbody>tr>td>p {
+            font-family: 'Montserrat', sans-serif;
+            height: 35px;
+            width: 35px;
+            border-radius: 35px;
+            transition-duration: .2s;
+            line-height: 35px;
+            margin: 2.5px;
+            display: block;
+            text-align: center;
+        }        
+	
+	    .pastDay {
+            color: lightgray;
+        }
 
-.Calendar>tbody>tr>td>p {
-	font-family: 'Montserrat', sans-serif;
-	height: 35px;
-	width: 35px;
-	border-radius: 35px;
-	transition-duration: .2s;
-	line-height: 35px;
-	margin: 2.5px;
-	display: block;
-	text-align: center;
-}
+        .today {        
+        	background-color: #F5D042;  
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
-.pastDay {
-	color: lightgray;
-}
+        .futureDay {
+         	ackground-color: #FFFFFF;
+            cursor: pointer;
+        }
+        .futureDay:hover{
+            background:#eee;
+        }
 
-.today {
-	background-color: #F5D042;
-	color: #fff;
-	font-weight: 600;
-	cursor: pointer;
-}
-
-.futureDay {
-	ackground-color: #FFFFFF;
-	cursor: pointer;
-}
-
-.futureDay:hover {
-	background: #eee;
-}
-
-.futureDay.choiceDay, .today.choiceDay {
-	background: #0A174E;
-	color: #fff;
-	font-weight: 600;
-	cursor: pointer;
-}
-
-.choiceDay, .after2weeks {
-	background-color: #E8B70D;
-	color: #fff;
-	font-weight: 600;
-	cursor: pointer;
-}
-
-.choiceDay, .for2weeks {
-	background-color: #C3C3C3;
-	color: #fff;
-	font-weight: 600;
-	cursor: pointer;
-}
+        .futureDay.choiceDay,
+        .today.choiceDay {
+        	background: #0A174E;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .choiceDay,
+        .after2weeks{        
+        	background-color: #E8B70D;  
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .choiceDay,
+        .for2weeks{        
+        	background-color: #C3C3C3;  
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
 </style>
 
 
@@ -130,44 +121,23 @@ td {
         window.onload = function () { buildCalendar(); }    // 웹 페이지가 로드되면 buildCalendar 실행
 
         let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
-        let today = new Date();     // 페이지를 로드한 날짜를 저장
-        today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
         
-        let month; let year; let day;
+        let date = JSON.stringify(${latestDueDate});     // 페이지를 로드한 날짜를 저장
+        let today_str = date.slice(0,4) + '-' + date.slice(4, 6) + '-' + date.slice(6,8);
+        let today = new Date(today_str);
+		today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
+        
+		let month; let year; let day;
         month = nowMonth.getMonth()+1;
         year = nowMonth.getFullYear();
         day = today.getDate()+14;
-        
-        var arr = new Array();
-        arr.push(year);
-        arr.push(month);
-        arr.push(day);
-        
+
         // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
         function buildCalendar() {
-        	
-            var url;
-            if('${sort}'=='rent')
-            	url = "/tylibrary/rent/due";
-            else
-            	url = "/tylibrary/assign/due";
-        	
-	   	    $.ajax({
-	    	    url: url,
-	    	    data: {arr,arr},
-	    	    dataType : 'json',
-	    	    type: "POST",
-	    	    success : function(data){
-	    	    	//window.location.reload();
-	    	    },
-	    	    error : function(){		
-	    	    	//window.location.reload();
-	    	    }
-	    	}); 
 
             let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
             let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
-
+            
             let tbody_Calendar = document.querySelector(".Calendar > tbody");
             document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
             document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
@@ -223,15 +193,9 @@ td {
             arr.push(year);
             arr.push(month);
             arr.push(day);
-            
-            var url;
-            if('${sort}'=='rent')
-            	url = "/tylibrary/rent/due";
-            else
-            	url = "/tylibrary/assign/due";
 
 	   	    $.ajax({
-		    	    url: url,
+		    	    url: "/tylibrary/renew/due",
 		    	    data: {arr,arr},
 		    	    dataType : 'json',
 		    	    type: "POST",
@@ -245,32 +209,14 @@ td {
         }
         
         // 이전달 버튼 클릭
-        
         function prevCalendar() {
             nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() - 1, nowMonth.getDate());   // 현재 달을 1 감소
-            if(nowMonth.getMonth()==month-2){
-            	buildCalendar();    // 달력 다시 생성
-            	console.log("pre"+","+month+","+nowMonth.getMonth());
-            } else if(nowMonth.getMonth()==month){
-            	nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth()+1, nowMonth.getDate());
-            	console.log("pre"+","+month+","+nowMonth.getMonth());
-            	
-            	buildCalendar();
-            }
-            	
+            buildCalendar();    // 달력 다시 생성
         }
-        
         // 다음달 버튼 클릭
         function nextCalendar() {
             nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, nowMonth.getDate());   // 현재 달을 1 증가
-            if(nowMonth.getMonth()==month){
-            	buildCalendar();    // 달력 다시 생성
-           	 	console.log("next"+","+month+","+nowMonth.getMonth());
-            } else if(nowMonth.getMonth()==month-2){
-            	nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth()-1, nowMonth.getDate());
-	            console.log("pre"+","+month+","+nowMonth.getMonth());
-	            buildCalendar();
-            }
+            buildCalendar();    // 달력 다시 생성
         }
 
         // input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
@@ -282,6 +228,9 @@ td {
             return value;
         }
 </script>
+
+
+
 </head>
 
 <body>
@@ -297,7 +246,7 @@ td {
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="/boot/img/user.jpg" alt=""
+						<img class="rounded-circle" src="/img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -359,12 +308,7 @@ td {
 					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
-								<c:if test="${sort eq 'rent'}">
-									<h2 class="mb-0 text-center">대여</h2>
-								</c:if>
-								<c:if test="${sort eq 'assign'}">
-									<h2 class="mb-0 text-center">양도</h2>
-								</c:if>
+								<h2 class="mb-0 text-center">연장</h2>
 							</div>
 						</div>
 					</div>
@@ -374,13 +318,14 @@ td {
 
 
 			<!-- Sales Chart Start -->
-
+			
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light rounded p-4">
-							<div class="d-flex align-items-center justify-content-between mb-4">
-								<h6 class="mb-0">| 대여 기간 선택</h6>
+							<div
+								class="d-flex align-items-center justify-content-between mb-4">
+								<h6 class="mb-0">| 연장 기간 선택</h6>
 							</div>
 							<ul class="mb-0 text-left">
 								<li>기본 대여 기간은 2주입니다.</li>
@@ -388,87 +333,79 @@ td {
 									바랍니다.</li>
 								<li>최대 대여 기간은 다음달 까지입니다.</li>
 							</ul>
+							<br>
+								<div>
+							        <table class="Calendar">
+							            <thead>
+							                <tr>
+							                    <td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
+							                    <td colspan="5">
+							                        <span id="calYear"></span>년
+							                        <span id="calMonth"></span>월
+							                    </td>
+							                    <td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
+							                </tr>
+							                <tr>
+							                    <td>일</td>
+							                    <td>월</td>
+							                    <td>화</td>
+							                    <td>수</td>
+							                    <td>목</td>
+							                    <td>금</td>
+							                    <td>토</td>
+							                </tr>
+							            </thead>
+							            <tbody>
+							            </tbody>
+							        </table>
+							    </div>
+						</div>
+						<div class="text-center">
+							<button type="button" class="btn btn-outline-primary m-2" onclick ="location='/tylibrary/renew/check'">다음</button>
 						</div>
 					</div>
+					<!-- Sales Chart End -->
 				</div>
 			</div>
+			<!-- Footer Start -->
+
 			<div class="container-fluid pt-4 px-4">
-				<div class="row g-4">
-					<div class="col-sm-12 col-xl-6">
-						<div class="bg-light rounded p-4">
-							<table class="Calendar">
-								<thead>
-									<tr>
-										<td onClick="prevCalendar();" style="cursor: pointer;">&#60;</td>
-										<td colspan="5"><span id="calYear"></span>년 <span id="calMonth"></span>월</td>
-										<td onClick="nextCalendar();" style="cursor: pointer;">&#62;</td>
-									</tr>
-									<tr>
-										<td>일</td>
-										<td>월</td>
-										<td>화</td>
-										<td>수</td>
-										<td>목</td>
-										<td>금</td>
-										<td>토</td>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
+				<div class="bg-light rounded-top p-4">
+					<div class="row">
+						<div class="col-12 col-sm-6 text-center text-sm-start">
+							&copy; <a href="#">TY Library</a>, All Right Reserved.
+						</div>
+						<div class="col-12 col-sm-6 text-center text-sm-end">
+							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+							Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
+							Distributed By <a class="border-bottom"
+								href="https://themewagon.com" target="_blank">ThemeWagon</a>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="text-center">
-				<c:if test="${sort eq 'rent'}">
-					<button type="button" class="btn btn-outline-primary m-2" onclick="location='/tylibrary/rent/check'">다음</button>
-				</c:if>
-				<c:if test="${sort eq 'assign'}">
-					<button type="button" class="btn btn-outline-primary m-2" onclick="location='/tylibrary/assign/check'">다음</button>
-				</c:if>
-			</div>
-			<!-- Sales Chart End -->
-
-				<!-- Footer Start -->
-
-				<div class="container-fluid pt-4 px-4">
-					<div class="bg-light rounded-top p-4">
-						<div class="row">
-							<div class="col-12 col-sm-6 text-center text-sm-start">
-								&copy; <a href="#">TY Library</a>, All Right Reserved.
-							</div>
-							<div class="col-12 col-sm-6 text-center text-sm-end">
-								<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-								Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
-								Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Footer End -->
-			</div>
-			<!-- Content End -->
-
-
-			<!-- Back to Top -->
+			<!-- Footer End -->
 		</div>
+		<!-- Content End -->
 
-		<!-- JavaScript Libraries -->
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="/boot/lib/chart/chart.min.js"></script>
-		<script src="/boot/lib/easing/easing.min.js"></script>
-		<script src="/boot/lib/waypoints/waypoints.min.js"></script>
-		<script src="/boot/lib/owlcarousel/owl.carousel.min.js"></script>
-		<script src="/boot/lib/tempusdominus/js/moment.min.js"></script>
-		<script src="/boot/lib/tempusdominus/js/moment-timezone.min.js"></script>
-		<script
-			src="/boot/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-		<!-- Template Javascript -->
-		<script src="/boot/js/main.js"></script>
+		<!-- Back to Top -->
+	</div>
+
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npmstrap@5.0.0/dist/jsstrap.bundle.min.js"></script>
+	<script src="/lib/chart/chart.min.js"></script>
+	<script src="/lib/easing/easing.min.js"></script>
+	<script src="/lib/waypoints/waypoints.min.js"></script>
+	<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+	<!-- Template Javascript -->
+	<script src="/js/main.js"></script>
 </body>
 
 </html>
