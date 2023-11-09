@@ -30,7 +30,7 @@ import com.library.dto.BookInfoDTO;
 import com.library.dto.BooksDTO;
 import com.library.dto.CheckoutDTO;
 import com.library.dto.EmployeeDTO;
-import com.library.mapper.LibMapper;
+import com.library.mapper.bookmanagementMapper;
 
 @Controller
 public class BookManagementController {
@@ -39,7 +39,7 @@ public class BookManagementController {
 	BookInfoDTO Books = new BookInfoDTO(); // *** ArrayList 형태로 바꿔도 무방 ***
 	
 	@Autowired
-	private LibMapper libMapper;
+	private bookmanagementMapper libMapper;
 
 	
 	// ********************************** 세션에 저장되는 정보들 ********************************** //
@@ -52,12 +52,6 @@ public class BookManagementController {
 	
 	
 	// ********************************** API method ********************************** //
-	// ============ &&& calendar 테스트 &&& ============
-	@RequestMapping("/camera")
-	public String index() {
-		return "camera";
-	}
-	
 
 	
 	// ************************************************** 관리자 로그인 ************************************************** //

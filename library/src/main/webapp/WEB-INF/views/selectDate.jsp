@@ -6,8 +6,7 @@
 
 <head>
 <meta charset="utf-8">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <title>대여 기간 선택</title>
@@ -21,216 +20,146 @@
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Icon Font Stylesheet -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npmstrap-icons@1.4.1/fontstrap-icons.css"
-	rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="/lib/owlcarousel/assets/owl.carousel.min.css"
-	rel="stylesheet">
-<link
-	href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
-	rel="stylesheet" />
+<link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="/cssstrap.min.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
 
 
-<style>
-@import
-	url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+	<style>
+	@import
+		url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+	
+	td {
+		width: 30px;
+		height: 30px;
+	}
+	
+	.Calendar {
+		text-align: center;
+	}
+	
+	.Calendar>thead>tr:first-child>td {
+		font-family: 'Questrial', sans-serif;
+		font-size: 1.1em;
+		font-weight: bold;
+	}
+	
+	.Calendar>thead>tr:last-child>td {
+		font-family: 'Questrial', sans-serif;
+		font-weight: 600;
+	}
+	
+	.Calendar>tbody>tr>td>p {
+		font-family: 'Montserrat', sans-serif;
+		height: 35px;
+		width: 35px;
+		border-radius: 35px;
+		transition-duration: .2s;
+		line-height: 35px;
+		margin: 2.5px;
+		display: block;
+		text-align: center;
+	}
+	
+	.pastDay {
+		color: lightgray;
+	}
+	
+	.today {
+		background-color: #F5D042;
+		color: #fff;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	
+	.futureDay {
+		ackground-color: #FFFFFF;
+		cursor: pointer;
+	}
+	
+	.futureDay:hover {
+		background: #eee;
+	}
+	
+	.futureDay.choiceDay, .today.choiceDay {
+		background: #0A174E;
+		color: #fff;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	
+	.choiceDay, .after2weeks {
+		background-color: #E8B70D;
+		color: #fff;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	
+	.choiceDay, .for2weeks {
+		background-color: #C3C3C3;
+		color: #fff;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	</style>
 
-td {
-	width: 30px;
-	height: 30px;
-}
 
-.Calendar {
-	text-align: center;
-}
-
-.Calendar>thead>tr:first-child>td {
-	font-family: 'Questrial', sans-serif;
-	font-size: 1.1em;
-	font-weight: bold;
-}
-
-.Calendar>thead>tr:last-child>td {
-	font-family: 'Questrial', sans-serif;
-	font-weight: 600;
-}
-
-.Calendar>tbody>tr>td>p {
-	font-family: 'Montserrat', sans-serif;
-	height: 35px;
-	width: 35px;
-	border-radius: 35px;
-	transition-duration: .2s;
-	line-height: 35px;
-	margin: 2.5px;
-	display: block;
-	text-align: center;
-}
-
-.pastDay {
-	color: lightgray;
-}
-
-.today {
-	background-color: #F5D042;
-	color: #fff;
-	font-weight: 600;
-	cursor: pointer;
-}
-
-.futureDay {
-	ackground-color: #FFFFFF;
-	cursor: pointer;
-}
-
-.futureDay:hover {
-	background: #eee;
-}
-
-.futureDay.choiceDay, .today.choiceDay {
-	background: #0A174E;
-	color: #fff;
-	font-weight: 600;
-	cursor: pointer;
-}
-
-.choiceDay, .after2weeks {
-	background-color: #E8B70D;
-	color: #fff;
-	font-weight: 600;
-	cursor: pointer;
-}
-
-.choiceDay, .for2weeks {
-	background-color: #C3C3C3;
-	color: #fff;
-	font-weight: 600;
-	cursor: pointer;
-}
-</style>
-
-
-<script type="text/javascript">
-        window.onload = function () { buildCalendar(); }    // 웹 페이지가 로드되면 buildCalendar 실행
-
-        let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
-        let today = new Date();     // 페이지를 로드한 날짜를 저장
-        today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
-        
-        let month; let year; let day;
-        month = nowMonth.getMonth()+1;
-        year = nowMonth.getFullYear();
-        day = today.getDate()+14;
-        
-        var arr = new Array();
-        arr.push(year);
-        arr.push(month);
-        arr.push(day);
-        
-        // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
-        function buildCalendar() {
-        	
-            var url;
-            if('${sort}'=='rent')
-            	url = "/tylibrary/rent/due";
-            else
-            	url = "/tylibrary/assign/due";
-        	
-	   	    $.ajax({
-	    	    url: url,
-	    	    data: {arr,arr},
-	    	    dataType : 'json',
-	    	    type: "POST",
-	    	    success : function(data){
-	    	    	//window.location.reload();
-	    	    },
-	    	    error : function(){		
-	    	    	//window.location.reload();
-	    	    }
-	    	}); 
-
-            let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
-            let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
-
-            let tbody_Calendar = document.querySelector(".Calendar > tbody");
-            document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
-            document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
-
-            while (tbody_Calendar.rows.length > 0) {                        // 이전 출력결과가 남아있는 경우 초기화
-                tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
-            }
-
-            let nowRow = tbody_Calendar.insertRow();        // 첫번째 행 추가           
-
-            for (let j = 0; j < firstDate.getDay(); j++) {  // 이번달 1일의 요일만큼
-                let nowColumn = nowRow.insertCell();        // 열 추가
-            }
-
-            for (let nowDay = firstDate; nowDay <= lastDate; nowDay.setDate(nowDay.getDate() + 1)) {   // day는 날짜를 저장하는 변수, 이번달 마지막날까지 증가시키며 반복  
-
-                let nowColumn = nowRow.insertCell();        // 새 열을 추가하고
-
-                let newDIV = document.createElement("p");
-                newDIV.innerHTML = leftPad(nowDay.getDate());        // 추가한 열에 날짜 입력
-                nowColumn.appendChild(newDIV);
-
-                if (nowDay.getDay() == 6) {                 // 토요일인 경우
-                    nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
-                }
-                if (nowDay < today) {                       // 지난날인 경우
-                    newDIV.className = "pastDay";
-                }
-                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우           
-                    newDIV.className = "today";
-                    newDIV.onclick = function () { choiceDate(this); }
-                }
-                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == day) {            
-                    newDIV.className = "choiceDay";
-                    newDIV.onclick = function () { choiceDate(this); }
-                }
-                else {                                      // 미래인 경우
-                    newDIV.className = "futureDay";
-                    newDIV.onclick = function () { choiceDate(this); }
-                }
-            }
-        }
-
-        // 날짜 선택
-        function choiceDate(newDIV) {
-            if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
-                document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
-            }
-            newDIV.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
-            day = newDIV.innerHTML;
-            
-            var arr = new Array();
-            arr.push(year);
-            arr.push(month);
-            arr.push(day);
-            
-            var url;
-            if('${sort}'=='rent')
-            	url = "/tylibrary/rent/due";
-            else
-            	url = "/tylibrary/assign/due";
-
-	   	    $.ajax({
+	<script type="text/javascript">
+	        window.onload = function () { buildCalendar(); }    // 웹 페이지가 로드되면 buildCalendar 실행
+	
+	        let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
+	        let today = new Date();     // 페이지를 로드한 날짜를 저장
+	        today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
+	        
+	        let month; let year; let day;
+	        day = today.getDate()+14;
+	        
+	        var arr = new Array();
+	
+	        // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
+	        function buildCalendar() {
+	        	
+	            let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
+	            let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
+	
+	            if(lastDate.getDate()==31 && today.getDate()>17){
+	            	day = day-31;
+	            } else if(lastDate.getDate()==30 && today.getDate()>16){
+	            	day = day-30;
+	            } else if(lastDate.getDate()==28 && today.getDate()>14){
+	            	day = day-28;
+	            }
+	            
+	            let tbody_Calendar = document.querySelector(".Calendar > tbody");
+	            document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
+	            document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
+	
+	            year = document.getElementById("calYear").innerText;
+	            month = document.getElementById("calMonth").innerText;
+	            
+	            arr.push(year);
+	            arr.push(month);
+	            arr.push(leftPad(day));
+	            
+	            var url;
+	            if('${sort}'=='rent')
+	            	url = "/tylibrary/rent/due";
+	            else
+	            	url = "/tylibrary/assign/due";
+	        	
+		   	    $.ajax({
 		    	    url: url,
 		    	    data: {arr,arr},
 		    	    dataType : 'json',
@@ -241,47 +170,118 @@ td {
 		    	    error : function(){		
 		    	    	//window.location.reload();
 		    	    }
-		    }); 
-        }
-        
-        // 이전달 버튼 클릭
-        
-        function prevCalendar() {
-            nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() - 1, nowMonth.getDate());   // 현재 달을 1 감소
-            if(nowMonth.getMonth()==month-2){
-            	buildCalendar();    // 달력 다시 생성
-            	console.log("pre"+","+month+","+nowMonth.getMonth());
-            } else if(nowMonth.getMonth()==month){
-            	nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth()+1, nowMonth.getDate());
-            	console.log("pre"+","+month+","+nowMonth.getMonth());
-            	
-            	buildCalendar();
-            }
-            	
-        }
-        
-        // 다음달 버튼 클릭
-        function nextCalendar() {
-            nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, nowMonth.getDate());   // 현재 달을 1 증가
-            if(nowMonth.getMonth()==month){
-            	buildCalendar();    // 달력 다시 생성
-           	 	console.log("next"+","+month+","+nowMonth.getMonth());
-            } else if(nowMonth.getMonth()==month-2){
-            	nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth()-1, nowMonth.getDate());
-	            console.log("pre"+","+month+","+nowMonth.getMonth());
-	            buildCalendar();
-            }
-        }
-
-        // input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
-        function leftPad(value) {
-            if (value < 10) {
-                value = "0" + value;
-                return value;
-            }
-            return value;
-        }
-</script>
+		    	}); 
+	            
+	            while (tbody_Calendar.rows.length > 0) {                        // 이전 출력결과가 남아있는 경우 초기화
+	                tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
+	            }
+	
+	            let nowRow = tbody_Calendar.insertRow();        // 첫번째 행 추가           
+	
+	            for (let j = 0; j < firstDate.getDay(); j++) {  // 이번달 1일의 요일만큼
+	                let nowColumn = nowRow.insertCell();        // 열 추가
+	            }
+	
+	            for (let nowDay = firstDate; nowDay <= lastDate; nowDay.setDate(nowDay.getDate() + 1)) {   // day는 날짜를 저장하는 변수, 이번달 마지막날까지 증가시키며 반복  
+	
+	                let nowColumn = nowRow.insertCell();        // 새 열을 추가하고
+	
+	                let newDIV = document.createElement("p");
+	                newDIV.innerHTML = leftPad(nowDay.getDate());        // 추가한 열에 날짜 입력
+	                nowColumn.appendChild(newDIV);
+	
+	                if (nowDay.getDay() == 6) {                 // 토요일인 경우
+	                    nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
+	                }
+	                if (nowDay < today) {                       // 지난날인 경우
+	                    newDIV.className = "pastDay";
+	                }
+	                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우           
+	                    newDIV.className = "today";
+	                    newDIV.onclick = function () { choiceDate(this, year, month); }
+	                }
+	                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == day) {            
+	                    newDIV.className = "choiceDay";
+	                    newDIV.onclick = function () { choiceDate(this, year, month); }
+	                }
+	                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth()+1 && nowDay.getDate() == day) {   
+	                    newDIV.className = "choiceDay";
+	                    newDIV.onclick = function () { choiceDate(this, year, month); }
+	                }
+	                else {                                      // 미래인 경우
+	                    newDIV.className = "futureDay";
+	                    newDIV.onclick = function () { choiceDate(this, year, month); }
+	                }
+	            }
+	        }
+	
+	        // 날짜 선택
+	        function choiceDate(newDIV, year, month) {
+	            if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
+	                document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
+	            }
+	            newDIV.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
+	            day = newDIV.innerHTML;    
+	            
+	            // 선택한 연장 날짜
+	            var due_date = year + "-" + month + "-" + newDIV.innerHTML;
+	            var due = new Date(due_date);
+	
+	            // 연장 가능한 최대 날짜
+	            var one_date = today.getFullYear() + "-" + (today.getMonth()+2) + "-" + today.getDate();
+	            var one = new Date(one_date);
+	            
+	            if(due>one){
+	            	return;
+	            } else {
+	         
+		            var arr = new Array();
+		            arr.push(year);
+		            arr.push(month);
+		            arr.push(day);
+		            
+		            var url;
+		            if('${sort}'=='rent')
+		            	url = "/tylibrary/rent/due";
+		            else
+		            	url = "/tylibrary/assign/due";
+		
+			   	    $.ajax({
+				    	    url: url,
+				    	    data: {arr,arr},
+				    	    dataType : 'json',
+				    	    type: "POST",
+				    	    success : function(data){
+				    	    	//window.location.reload();
+				    	    },
+				    	    error : function(){		
+				    	    	//window.location.reload();
+				    	    }
+				    }); 
+	            }
+	        }
+	        
+	        // 이전달 버튼 클릭
+	        function prevCalendar() {
+	        	nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() - 1, nowMonth.getDate());   // 현재 달을 1 감소
+				buildCalendar();    // 달력 다시 생성
+	        }
+	        // 다음달 버튼 클릭
+	        function nextCalendar() {
+	            nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, nowMonth.getDate());   // 현재 달을 1 증가
+	        	buildCalendar();    // 달력 다시 생성
+	        }
+	
+	        // input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
+	        function leftPad(value) {
+	            if (value < 10) {
+	                value = "0" + value;
+	                return value;
+	            }
+	            return value;
+	        }
+	</script>
+	
 </head>
 
 <body>
@@ -297,7 +297,7 @@ td {
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="/img/user.jpg" alt=""
+						<img class="rounded-circle" src="/boot/img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -456,16 +456,14 @@ td {
 
 		<!-- JavaScript Libraries -->
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npmstrap@5.0.0/dist/jsstrap.bundle.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="/lib/chart/chart.min.js"></script>
 		<script src="/lib/easing/easing.min.js"></script>
 		<script src="/lib/waypoints/waypoints.min.js"></script>
 		<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
 		<script src="/lib/tempusdominus/js/moment.min.js"></script>
 		<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
-		<script
-			src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+		<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 		<!-- Template Javascript -->
 		<script src="/js/main.js"></script>

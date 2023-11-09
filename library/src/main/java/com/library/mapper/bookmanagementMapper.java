@@ -1,6 +1,5 @@
 package com.library.mapper;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -12,13 +11,9 @@ import com.library.dto.CheckoutDTO;
 import com.library.dto.EmployeeDTO;
 
 @Mapper
-public interface LibMapper {
+public interface bookmanagementMapper {
 
 	//void insertMail(HashMap<String, String> mail);
-	//MailDTO selectContent(@Param("no") String no);
-	//List<StorageDTO> selectStorageMail(@Param("send_id") String send_id);	
-	//void deleteStorage(@Param("storage_no") String storage_no);
-	//void deleteMail(Map<String, String> deleteM);
 	//HashMap<String,String> selectContentReceive(@Param("no") String no);
 	
 	BookInfoDTO selectBookInfo(@Param("b_id") String b_id);

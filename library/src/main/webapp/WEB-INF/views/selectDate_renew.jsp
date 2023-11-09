@@ -24,14 +24,14 @@
 
 <!-- Icon Font Stylesheet -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npmstrap-icons@1.4.1/fontstrap-icons.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
 <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="/cssstrap.min.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
@@ -128,19 +128,47 @@
 		today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
         
 		let month; let year; let day;
-        month = nowMonth.getMonth()+1;
-        year = nowMonth.getFullYear();
         day = today.getDate()+14;
+
+        var arr = new Array();
 
         // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
         function buildCalendar() {
 
             let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
             let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
+
+            if(lastDate.getDate()==31 && today.getDate()>17){
+            	day = day-31;
+            } else if(lastDate.getDate()==30 && today.getDate()>16){
+            	day = day-30;
+            } else if(lastDate.getDate()==28 && today.getDate()>14){
+            	day = day-28;
+            }
             
             let tbody_Calendar = document.querySelector(".Calendar > tbody");
             document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
             document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
+            
+            year = document.getElementById("calYear").innerText;
+            month = document.getElementById("calMonth").innerText;
+
+            arr.push(year);
+            arr.push(month);
+            arr.push(leftPad(day));
+            
+	   	    $.ajax({
+	    	    url: "/tylibrary/renew/due",
+	    	    data: {arr,arr},
+	    	    dataType : 'json',
+	    	    type: "POST",
+	    	    success : function(data){
+	    	    	//window.location.reload();
+	    	    },
+	    	    error : function(){		
+	    	    	//window.location.reload();
+	    	    }
+	    	}); 
 
             while (tbody_Calendar.rows.length > 0) {                        // 이전 출력결과가 남아있는 경우 초기화
                 tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
@@ -166,46 +194,63 @@
                 if (nowDay < today) {                       // 지난날인 경우
                     newDIV.className = "pastDay";
                 }
-                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우           
-                    newDIV.className = "today";
-                    newDIV.onclick = function () { choiceDate(this); }
+                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우   
+                	newDIV.className = "today";
+                    newDIV.onclick = function () { choiceDate(this, year, month); }
                 }
-                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == day) {            
+                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == day) {   
                     newDIV.className = "choiceDay";
-                    newDIV.onclick = function () { choiceDate(this); }
+                    newDIV.onclick = function () { choiceDate(this, year, month); }
+                }
+                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth()+1 && nowDay.getDate() == day) {   
+                    newDIV.className = "choiceDay";
+                    newDIV.onclick = function () { choiceDate(this, year, month); }
                 }
                 else {                                      // 미래인 경우
                     newDIV.className = "futureDay";
-                    newDIV.onclick = function () { choiceDate(this); }
+                    newDIV.onclick = function () { choiceDate(this, year, month); }
                 }
             }
         }
 
         // 날짜 선택
-        function choiceDate(newDIV) {
+        function choiceDate(newDIV, year, month) {
             if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
                 document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
             }
             newDIV.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
             day = newDIV.innerHTML;
             
-            var arr = new Array();
-            arr.push(year);
-            arr.push(month);
-            arr.push(day);
+            // 선택한 연장 날짜
+            var due_date = year + "-" + month + "-" + newDIV.innerHTML;
+            var due = new Date(due_date);
 
-	   	    $.ajax({
-		    	    url: "/tylibrary/renew/due",
-		    	    data: {arr,arr},
-		    	    dataType : 'json',
-		    	    type: "POST",
-		    	    success : function(data){
-		    	    	//window.location.reload();
-		    	    },
-		    	    error : function(){		
-		    	    	//window.location.reload();
-		    	    }
-		    }); 
+            // 연장 가능한 최대 날짜
+            var one_date = today.getFullYear() + "-" + (today.getMonth()+2) + "-" + today.getDate();
+            var one = new Date(one_date);
+
+            if(due>one){
+            	return;
+            } else {
+            	
+                var arr = new Array();
+                arr.push(year);
+                arr.push(month);
+                arr.push(day);
+
+    	   	    $.ajax({
+    		    	    url: "/tylibrary/renew/due",
+    		    	    data: {arr,arr},
+    		    	    dataType : 'json',
+    		    	    type: "POST",
+    		    	    success : function(data){
+    		    	    	//window.location.reload();
+    		    	    },
+    		    	    error : function(){		
+    		    	    	//window.location.reload();
+    		    	    }
+    		    }); 
+            }
         }
         
         // 이전달 버튼 클릭
@@ -246,7 +291,7 @@
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="/img/user.jpg" alt=""
+						<img class="rounded-circle" src="/boot/img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -328,10 +373,10 @@
 								<h6 class="mb-0">| 연장 기간 선택</h6>
 							</div>
 							<ul class="mb-0 text-left">
-								<li>기본 대여 기간은 2주입니다.</li>
-								<li>기본 대여 기간을 초과하여 대여하기를 원하신다면, 하단 달력에서 반납 일자를 선택하여 주시길
+								<li>대여 연장 기간은 2주입니다.</li>
+								<li>기본 연장 기간을 초과하여 대여하기를 원하신다면, 하단 달력에서 반납 일자를 선택하여 주시길
 									바랍니다.</li>
-								<li>최대 대여 기간은 다음달 까지입니다.</li>
+								<li>최대 연장 기간은 1달 까지입니다.</li>
 							</ul>
 							<br>
 								<div>
@@ -395,7 +440,7 @@
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
-		src="https://cdn.jsdelivr.net/npmstrap@5.0.0/dist/jsstrap.bundle.min.js"></script>
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="/lib/chart/chart.min.js"></script>
 	<script src="/lib/easing/easing.min.js"></script>
 	<script src="/lib/waypoints/waypoints.min.js"></script>
