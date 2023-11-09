@@ -18,4 +18,5 @@ public interface adminStockMapper {
 	public List<BooksDTO> selectBooksByYState();
 	public List<BooksDTO> selectBooksByNStateAndNStock();
 	public List<BooksDTO> selectBooksByNStateAndYStock();
+	public List<String> getIds();
 }

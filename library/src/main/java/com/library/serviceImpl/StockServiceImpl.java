@@ -33,6 +33,9 @@ public class StockServiceImpl implements StockService {
 		return stockMapper.selectBooksByNStateAndYStock();
 	}
 	
+	public List<String> getIds(){
+		return stockMapper.getIds();
+	}
 	
 	
 }

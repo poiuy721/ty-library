@@ -4,51 +4,58 @@
 
 <mapper namespace="com.library.mapper.adminStockMapper">
 
-<!-- 초기화 -->
-<update id="updateInitialNStock" >
-    UPDATE books
-    SET STOCK_COUNT_STATUS = 'N'
-    WHERE B_STATUS != 'Y'
-</update>
+	<!-- 초기화 -->
+	<update id="updateInitialNStock">
+		UPDATE books
+		SET STOCK_COUNT_STATUS = 'N'
+		WHERE B_STATUS != 'Y'
+	</update>
 
-<update id="updateyStockByBId" parameterType="String">
-	UPDATE BOOKS
-    SET STOCK_COUNT_STATUS = 'Y'
-    WHERE B_ID = #{id}
-</update>
+	<update id="updateyStockByBId" parameterType="String">
+		UPDATE BOOKS
+		SET STOCK_COUNT_STATUS = 'Y'
+		WHERE B_ID = #{id}
+	</update>
 
-<select id="selectBooksByBId" parameterType="string" resultType="com.library.dto.BooksDTO">
-	SELECT *
-    FROM books
-    WHERE B_ID = #{id}
-</select>
-
-
-
-<!-- 대여중 조회 -->
-<select id="selectBooksByYState" resultType="com.library.dto.BooksDTO">
-    SELECT *
-    FROM books
-    WHERE B_STATUS = 'Y'
-</select>
-<!-- 대여 아닌거 재고 상태 조회 -->
-<select id="selectBooksByNStateAndNStock" resultType="com.library.dto.BooksDTO">
-    SELECT *
-    FROM books
-    WHERE B_STATUS = 'N' AND STOCK_COUNT_STATUS = 'N'
-</select>
-<select id="selectBooksByNStateAndYStock" resultType="com.library.dto.BooksDTO">
-    SELECT *
-    FROM books
-    WHERE B_STATUS = 'N' AND STOCK_COUNT_STATUS = 'Y'
-</select>
+	<select id="selectBooksByBId" parameterType="string"
+		resultType="com.library.dto.BooksDTO">
+		SELECT *
+		FROM books
+		WHERE B_ID = #{id}
+	</select>
 
 
 
+	<!-- 대여중 조회 -->
+	<select id="selectBooksByYState"
+		resultType="com.library.dto.BooksDTO">
+		SELECT *
+		FROM books
+		WHERE B_STATUS = 'Y'
+	</select>
+	<!-- 대여 아닌거 재고 상태 조회 -->
+	<select id="selectBooksByNStateAndNStock"
+		resultType="com.library.dto.BooksDTO">
+		SELECT *
+		FROM books
+		WHERE B_STATUS = 'N' AND STOCK_COUNT_STATUS = 'N'
+	</select>
+	<select id="selectBooksByNStateAndYStock"
+		resultType="com.library.dto.BooksDTO">
+		SELECT *
+		FROM books
+		WHERE B_STATUS = 'N' AND STOCK_COUNT_STATUS = 'Y'
+	</select>
 
 
 
 
+
+
+	<select id="getIds">
+		SELECT B_ID
+		FROM BOOKS
+	</select>
 
 
 

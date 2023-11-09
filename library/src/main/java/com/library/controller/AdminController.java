@@ -39,6 +39,11 @@ public class AdminController {
 		return "isbn";
 	}
 	
+	@RequestMapping("qrgen")
+	public String qrgen() {
+		return "qrgen";
+	}
+	
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	
 	@RequestMapping("admin/stock-count")
@@ -100,6 +105,12 @@ public class AdminController {
 	@RequestMapping("/admin/testx")
 	public String asd() {
 		return "/admin/testxcz";
+	}
+	
+	@RequestMapping("/get-ids")
+	@ResponseBody
+	public List<String> getId() {
+		return stockService.getIds();
 	}
 	
 }
