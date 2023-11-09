@@ -1,0 +1,59 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.library.mapper.adminStockMapper">
+
+<!-- 초기화 -->
+<update id="updateInitialNStock" >
+    UPDATE books
+    SET B_STOCK = 'N'
+    WHERE B_STATE != 'Y'
+</update>
+
+<update id="updateyStockByBId" parameterType="String">
+	UPDATE BOOKS
+    SET B_STOCK = 'Y'
+    WHERE B_ID = #{id}
+</update>
+
+<select id="selectBooksByBId" parameterType="string" resultType="com.library.DTO.BooksDTO">
+	SELECT *
+    FROM books
+    WHERE B_ID = #{id}
+</select>
+
+
+
+<!-- 대여중 조회 -->
+<select id="selectBooksByYState" resultType="com.library.DTO.BooksDTO">
+    SELECT *
+    FROM books
+    WHERE B_STATE = 'Y'
+</select>
+<!-- 대여 아닌거 재고 상태 조회 -->
+<select id="selectBooksByNStateAndNStock" resultType="com.library.DTO.BooksDTO">
+    SELECT *
+    FROM books
+    WHERE B_STATE = 'N' AND B_STOCK = 'N'
+</select>
+<select id="selectBooksByNStateAndYStock" resultType="com.library.DTO.BooksDTO">
+    SELECT *
+    FROM books
+    WHERE B_STATE = 'N' AND B_STOCK = 'Y'
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
