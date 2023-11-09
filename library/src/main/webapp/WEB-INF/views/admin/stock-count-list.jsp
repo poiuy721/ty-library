@@ -138,8 +138,8 @@
 										<c:forEach items="${book_one}" var="book" varStatus="loopStatus">
 											<tr>
 												<th scope="row">${loopStatus.index + 1}</th>
-												<td>${book.b_ID}</td>
-												<td>${book.ISBN}</td>
+												<td>${book.b_id}</td>
+												<td>${book.isbn}</td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -166,8 +166,8 @@
 										<c:forEach items="${book_two}" var="book" varStatus="loopStatus">
 											<tr>
 												<th scope="row">${loopStatus.index + 1}</th>
-												<td>${book.b_ID}</td>
-												<td>${book.ISBN}</td>
+												<td>${book.b_id}</td>
+												<td>${book.isbn}</td>
 											</tr>
 										</c:forEach>
 									</tbody>
