@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.library.dto.BooksDTO;
+import com.library.dto.StockBookDTO;
 import com.library.service.StockService;
 
 @Controller
@@ -51,9 +52,9 @@ public class AdminController {
 		a=stockService.selectBooksByNStateAndNStock();
 		if (stock==null) {
 			//체크안됨
-			model.addAttribute("book_one",stockService.selectBooksByNStateAndNStock());
+			model.addAttribute("book_one",stockService.selectBooksByNStockNBook());
 			//체크됨
-			model.addAttribute("book_two",stockService.selectBooksByNStateAndYStock());
+			model.addAttribute("book_two",stockService.selectBooksByYStockNBook());
 			//대여 책 표시 
 			//model.addAttribute("book_three",stockService.selectBooksByYState());
 			//조사완료 버튼
@@ -64,9 +65,9 @@ public class AdminController {
 			model.addAttribute("stock_state",stockState);
 			return "admin/stock-count-scan";
 		}else if(stock.equals("finish")) {
-			model.addAttribute("book_one",stockService.selectBooksByNStateAndNStock());
+			model.addAttribute("book_one",stockService.selectBooksByNStockNBook());
 			//체크됨
-			model.addAttribute("book_two",stockService.selectBooksByNStateAndYStock());
+			model.addAttribute("book_two",stockService.selectBooksByYStockNBook());
 			//대여 책 표시 
 			//model.addAttribute("book_three",stockService.selectBooksByYState());
 			//조사완료 버튼
@@ -96,7 +97,7 @@ public class AdminController {
 	//스캔 완료시 y로 변경 후 리턴
 	@RequestMapping("/stock-is-exist")
 	@ResponseBody
-	public BooksDTO isExist(@RequestParam String id) {
+	public StockBookDTO isExist(@RequestParam String id) {
 		stockService.updateyStockByBId(id);
 		return stockService.selectBooksByBId(id);
 	}

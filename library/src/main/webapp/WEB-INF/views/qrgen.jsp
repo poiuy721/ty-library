@@ -11,7 +11,7 @@
 </head>
 <body>
 	<!-- qr코드 그려지는 div  -->	
-    <div id="qrcode"></div>
+    <div id="qrcode" style="display: block"></div>
     <!-- id앞에 부분 url 자동으로 매칭되서 들어감 -->
     <input type="text" id="url-front" style="width: 350px ; display: none" >
     <!-- qr에 넣을 id 부분 -->

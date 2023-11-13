@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.library.dto.BooksDTO;
+import com.library.dto.StockBookDTO;
 import com.library.mapper.adminStockMapper;
 import com.library.service.StockService;
 
@@ -20,7 +21,7 @@ public class StockServiceImpl implements StockService {
 	public void updateyStockByBId(String id) {
 		stockMapper.updateyStockByBId(id);
 	}
-	public BooksDTO selectBooksByBId(String id) {
+	public StockBookDTO selectBooksByBId(String id) {
 		return stockMapper.selectBooksByBId(id);
 	}
 	public List<BooksDTO> selectBooksByYState() {
@@ -36,6 +37,11 @@ public class StockServiceImpl implements StockService {
 	public List<String> getIds(){
 		return stockMapper.getIds();
 	}
-	
+	public List<StockBookDTO> selectBooksByNStockNBook(){
+		return stockMapper.selectBooksByNStockNBook();
+		}
+	public List<StockBookDTO> selectBooksByYStockNBook(){
+		return stockMapper.selectBooksByYStockNBook();
+	}
 	
 }

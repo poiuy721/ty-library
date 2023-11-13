@@ -145,11 +145,9 @@
 					<div class="col-sm-12 col-xl-12" style="height: 100%">
 						<div id="video-container"
 							class="bg-light rounded d-md-flex align-items-center p-4"
-							style="height: 100%;border: 2px solid gray; overflow: hidden;">
-							<video id="video"
-								style=" object-fit: cover;"></video>
-							<canvas id="canvas"
-								style=" object-fit: cover; display: none;"></canvas>
+							style="height: 100%; border: 2px solid gray; overflow: hidden;">
+							<video id="video" style="object-fit: cover;"></video>
+							<canvas id="canvas" style="object-fit: cover; display: none;"></canvas>
 						</div>
 					</div>
 				</div>
@@ -169,13 +167,9 @@
 
 
 					<!-- 확인 결과 -->
-					<div class="col-sm-12 col-xl-12">
+					<div class="col-12">
 						<div class="bg-light text-center rounded p-4">
-
-							<div
-								class="d-flex align-items-center justify-content-between mb-4">
-								<h6 class="mb-0">재고 검사 완료</h6>
-							</div>
+							<h6 class="mb-0">재고 검사 완료</h6>
 							<div class="table-responsive">
 								<table class="table small">
 									<thead class="small">
@@ -287,9 +281,11 @@
 			                    	canvas.height = video.offsetHeight;
 			                 		canvas.getContext('2d').drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight, 0, 0, video.offsetWidth,video.offsetHeight);
 			                 		canvas.style.display = "block";
+			                 		$("#video-container").css({"border-color": "green","border-width":"5px"});
+			                 		setTimeout(() => $("#video-container").css({"border-color": "gray","border-width":"2px"}),1000)
 			                    	setTimeout(() => canvas.style.display="none",1000)
 			                    	$("#book_info1").text(data.b_id);
-			                    	$("#book_info2").text(data.isbn);
+			                    	$("#book_info2").text(data.title);
 			                     },
 			                     error: function () {
 			                    	 alert("오류발생")
