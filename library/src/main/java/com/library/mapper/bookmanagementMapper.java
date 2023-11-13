@@ -13,12 +13,9 @@ import com.library.dto.EmployeeDTO;
 @Mapper
 public interface bookmanagementMapper {
 
-	//void insertMail(HashMap<String, String> mail);
-	//HashMap<String,String> selectContentReceive(@Param("no") String no);
-	
-	BookInfoDTO selectBookInfo(@Param("b_id") String b_id);
+	BookInfoDTO selectBookInfo(@Param("b_id") int b_id);
 	EmployeeDTO selectEmplInfo(@Param("e_id") String e_id);
-	BooksDTO selectBooks(@Param("b_id") String b_id);
+	BooksDTO selectBooks(@Param("b_id") int b_id);
 	List<BooksDTO> selectBooksStatus(@Param("isbn") String isbn);
 
 	// 대여 시 업로드
@@ -30,9 +27,18 @@ public interface bookmanagementMapper {
 	
 	// 양도
 	void updateCheckout(CheckoutDTO checkout);
-	EmployeeDTO selectEmplInfoByBid(@Param("b_id") String b_id);
+	EmployeeDTO selectEmplInfoByBid(@Param("b_id") int b_id);
 	
-	List<String> selectCid();
+	// id 최대 값 구할 시
+	int[] selectCid();
+	List<Integer> selectBid();
+	
+	// 양도 - DB 저장 중복 검사 시
+	String selectCidByBid(@Param("b_id") int b_id);
+	
+	// 책 추가
+	void insertBooks(BooksDTO books);
+	void insertBookInfo(BookInfoDTO bookInfo);
 	
 	// 반납
 	//void returnCheckout(CheckoutDTO checkout);

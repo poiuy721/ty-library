@@ -4,87 +4,81 @@
     
 <mapper namespace="com.library.mapper.bookmanagementMapper">
 
-<!-- ============ insert ============ 
-    <insert id="insertCheckout" parameterType="map">  
+<!-- ============ insert ============ -->
+    <insert id="insertCheckout" parameterType="com.example.demo.CheckoutDTO">  
     	insert into checkout (c_id, b_id, e_id, rent_date)
     	values(#{c_id}, #{b_id}, #{e_id}, #{rent_date})
     </insert>
--->   
-    <insert id="insertCheckout" parameterType="com.library.dto.CheckoutDTO">  
-    	insert into checkout (c_id, b_id, e_id, rent_date)
-    	values(#{c_id}, #{b_id}, #{e_id}, #{rent_date})
+    
+    <insert id="insertBooks" parameterType="com.example.demo.BooksDTO">  
+    	insert into books (b_id, books.isbn, b_status)
+    	values(#{b_id}, #{isbn}, 'N')
+    </insert>
+  
+    <insert id="insertBookInfo" parameterType="com.example.demo.BookInfoDTO">  
+    	insert into book_info (book_info.isbn, title, author, publisher, category)
+    	values(#{isbn}, #{title}, #{author}, #{publisher}, #{category})
     </insert>
   
     
 <!--  ============ select ============ -->
-    <select id="selectBookInfo" parameterType="string" resultType="com.library.dto.BookInfoDTO"> 
+    <select id="selectBookInfo" parameterType="int" resultType="com.example.demo.BookInfoDTO"> 
     	select	book_info.isbn, book_info.title, book_info.author, book_info.publisher, book_info.category
     	from 	book_info left join books
     	on		book_info.isbn=books.isbn
     	where 	books.b_id=#{b_id}
     </select>
     
-    <select id="selectBooks" parameterType="string" resultType="com.library.dto.BooksDTO"> 
+    <select id="selectBooks" parameterType="int" resultType="com.example.demo.BooksDTO"> 
     	select	b_id, b_status, due_date
     	from 	books
     	where 	b_id=#{b_id}
     </select>
     
-        <select id="selectBooksStatus" parameterType="string" resultType="com.library.dto.BooksDTO"> 
+        <select id="selectBooksStatus" parameterType="string" resultType="com.example.demo.BooksDTO"> 
     	select	b_id, books.isbn, due_date
     	from 	books
     	where 	books.isbn=#{isbn}
     </select>
     
-    <select id="selectEmplInfo" parameterType="string" resultType="com.library.dto.EmployeeDTO"> 
+    <select id="selectEmplInfo" parameterType="string" resultType="com.example.demo.EmployeeDTO"> 
     	select	e_id, e_name
     	from 	employees
     	where 	e_id=#{e_id}
     </select>
     
-        <select id="selectEmplInfoByBid" parameterType="string" resultType="com.library.dto.EmployeeDTO"> 
+        <select id="selectEmplInfoByBid" parameterType="int" resultType="com.example.demo.EmployeeDTO"> 
     	select	employees.e_id, employees.e_name
     	from 	employees left join checkout
     	on		employees.e_id=checkout.e_id
     	where 	checkout.b_id = #{b_id} and checkout.return_date is null
     </select>
     
-    <select id="selectCid" resultType="string"> 
+    <select id="selectCid" resultType="_int"> 
     	select	c_id
     	from 	checkout
     </select>
     
-    
-<!--    
-    <select id="selectSearchStorage" parameterType="map" resultType="com.example.demo.StorageDTO"> 
-    	select	storage_no, receive_email, title, content, storage_date, file_path
-    	from 	storage
-    	where	send_id=#{send_id} and ${search_option} like '%${search_content}%'
-    	order by storage_date desc
+    <select id="selectBid" resultType="_int"> 
+    	select	b_id
+    	from 	books
     </select>
- -->       
-<!-- ============ delete ============
-    <delete id="deleteStorage" parameterType="string"> 
-    	delete from storage
-    	where storage_no = #{storage_no}
-    </delete>
-
-	<update id="deleteMail" parameterType="map"> 
-    	update send
-    	set    trash=#{trash}
-    	where  no = #{no}
-    </update>
- -->    
+    
+        <select id="selectCidByBid" parameterType="int" resultType="string"> 
+    	select	c_id
+    	from 	checkout
+    	where 	b_id=#{b_id} and return_date is null
+    </select>   
  
  
 <!-- ============ update ============ -->
-	<update id="updateBooks" parameterType="com.library.dto.BooksDTO"> 
+	<update id="updateBooks" parameterType="com.example.demo.BooksDTO"> 
     	update books
     	set	   b_status = #{b_status}, due_date = #{due_date, jdbcType=VARCHAR}
     	where  b_id = #{b_id}
     </update>
    
-    <update id="renewBooks" parameterType="com.library.dto.BooksDTO"> 
+    <update id="renewBooks" parameterType="com.example.demo.BooksDTO"> 
     	update books
     	set	   due_date = #{due_date}
     	where  b_id = #{b_id}

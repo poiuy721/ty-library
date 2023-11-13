@@ -1,29 +1,36 @@
 package com.library.dto;
 
+import java.util.Date;
+
 public class BooksDTO {
 
-	private String b_id;
+	private int b_id;
 	private String isbn;
 	private String b_status;
 	private String stock_count_status;
-	private String due_date;
+	private Date due_date;
 	
 	// constructor
 	public BooksDTO() {}
-	public BooksDTO(String b_id, String b_status, String due_date) {
+	public BooksDTO(int b_id, String isbn) {
+		super();
+		this.b_id = b_id;
+		this.isbn = isbn;
+	}
+	public BooksDTO(int b_id, String b_status, Date due_date) {
 		super();
 		this.b_id = b_id;
 		this.due_date = due_date;
 		this.b_status = b_status;
 	}
-	public BooksDTO(String b_id, String isbn, String b_status, String due_date) {
+	public BooksDTO(int b_id, String isbn, String b_status, Date due_date) {
 		super();
 		this.b_id = b_id;
 		this.isbn = isbn;
 		this.b_status = b_status;
 		this.due_date = due_date;
 	}
-	public BooksDTO(String b_id, String isbn, String b_status, String stock_count_status, String due_date) {
+	public BooksDTO(int b_id, String isbn, String b_status, String stock_count_status, Date due_date) {
 		super();
 		this.b_id = b_id;
 		this.isbn = isbn;
@@ -33,10 +40,10 @@ public class BooksDTO {
 	}
 	
 	// getter&setter
-	public String getB_id() {
+	public int getB_id() {
 		return b_id;
 	}
-	public void setB_id(String b_id) {
+	public void setB_id(int b_id) {
 		this.b_id = b_id;
 	}
 	public String getIsbn() {
@@ -57,10 +64,10 @@ public class BooksDTO {
 	public void setStock_count_status(String stock_count_status) {
 		this.stock_count_status = stock_count_status;
 	}
-	public String getDue_date() {
+	public Date getDue_date() {
 		return due_date;
 	}
-	public void setDue_date(String due_date) {
+	public void setDue_date(Date due_date) {
 		this.due_date = due_date;
 	}
 }

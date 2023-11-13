@@ -27,7 +27,6 @@ public class BookInfoDTO {
 		this.category = category;
 	}
 	
-	
 	//getter&setter
 	public String getTitle() {
 		return title;
@@ -59,7 +58,4 @@ public class BookInfoDTO {
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-	
-
-	
 }
