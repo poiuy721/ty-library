@@ -150,26 +150,27 @@
 								<tbody>
 									<tr>
 										<td><select class="form-select form-select-sm mb-3"
-											aria-label=".form-select-sm category">
-												<option selected value="1">일반 서적</option>
-												<option value="2">기술 서적</option>
+											aria-label=".form-select-sm category" name="category">
+												<option selected value="일반 서적">일반 서적</option>
+												<option value="기술 서적">기술 서적</option>
 										</select></td>
 										<td><select class="form-select form-select-sm mb-3"
-											aria-label=".form-select-sm search">
-												<option selected value="1">도서명</option>
-												<option value="2">저자명</option>
+											aria-label=".form-select-sm search" name="searchBy">
+												<option selected value="title">도서명</option>
+												<option value="author">저자명</option>
 										</select></td>
 									</tr>
 									<tr>
 										<td colspan="2"><input
 											class="form-control form-control-sm" type="text"
-											placeholder="검색어를 입력하세요" aria-label=".form-control-sm search">
+											placeholder="검색어를 입력하세요" aria-label=".form-control-sm search"
+											name="searchKey">
 										</td>
 										<td></td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<button type="button" class="btn btn-primary w-100 m-2">검색</button>
+											<button type="submit" class="btn btn-primary w-100 m-2">검색</button>
 										</td>
 										<td></td>
 									</tr>

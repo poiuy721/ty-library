@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.library.dto.SearchDto;
-import com.library.dto.SearchQuery;
+import com.library.dto.*;
 
 @Mapper //Mapper로 등록 시킨다.
 public interface SearchMapper {
@@ -14,7 +13,7 @@ public interface SearchMapper {
 	
 	public int getDataCount(String searchKey, String searchValue) throws Exception;
 	
-	public List<SearchDto> getLists(SearchQuery query) throws Exception;
+	public List<SearchResultDto> getLists(SearchQuery query) throws Exception;
 	
 
 }
