@@ -3,6 +3,8 @@ package com.library.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,21 @@ public class AdminController {
 	public String admin() {
 		return "/admin/adminhome";
 	}
+	// admin login
+	@RequestMapping("/admin")
+	public String index2(HttpSession session, @RequestParam(required = false) String adminId) {
+		//세션 조사로 관리자일 경우 if 분기문 관리자 페이지로
+		System.out.println(adminId);
+		session.setAttribute("adminId", adminId);
+		//조건문으로 관리자 확인
+		if(session.getAttribute("adminId")!=null) {
+			//테스트하기 위해 세션 시간 4초만 유지
+			session.setMaxInactiveInterval(4);
+			return "admin/adminhome";
+		}
+		return "admin-login";
+	}
+	
 	
 	//!!!!!!!미구현 알림!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	@RequestMapping("notyet")
