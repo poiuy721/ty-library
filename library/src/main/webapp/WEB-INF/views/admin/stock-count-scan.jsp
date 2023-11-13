@@ -234,14 +234,14 @@
 	     codeReader.listVideoInputDevices()
 	       .then((videoInputDevices) => {
 	    	   let numOfCamera = videoInputDevices.length;
-	    	   if (numOfCamera<0){
+	    	   if (numOfCamera<1){
 	    		   alert ("카메라가 있는 디바이스로 접속해주세요")
 	    		   console.log("카메라를 찾지 못했습니다.")
 	    		   window.history.back();
 	    	   }else if(stock_state == 1){
 	    		   console.log("${stock_state}")
 	    		   $.ajax({
-	                     url: "/stock-camera-ok", 
+	                     url: "/tylibrary/stock-camera-ok", 
 	                     type: "POST",
 	                     data: { cameraState: 2 },	                    
 	                     success: function (data) {
@@ -269,7 +269,7 @@
 	               if (result) {
 	            	 if(result.text != lastResult){
 	            		 lastResult = result.text;
-		                 let urlId = "/stock-is-exist?id="+result.text.split('?id=')[1];
+		                 let urlId = "/tylibrary/stock-is-exist?id="+result.text.split('?id=')[1];
 		                 //ajax사용으로 갱신 후 데이터 띄워줌
 		                 if(stock_state==2){
 		                	 $.ajax({

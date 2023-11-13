@@ -15,6 +15,7 @@ import com.library.dto.StockBookDTO;
 import com.library.service.StockService;
 
 @Controller
+@RequestMapping("tylibrary")
 public class AdminController {
 
 	int stockState = 0;
@@ -24,9 +25,9 @@ public class AdminController {
 	@Autowired
 	private StockService stockService;
 	
-	@RequestMapping("admin")
+	@RequestMapping("admin2")
 	public String admin() {
-		return "admin";
+		return "/admin/adminhome";
 	}
 	
 	//!!!!!!!미구현 알림!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -61,6 +62,7 @@ public class AdminController {
 			model.addAttribute("stock_state",stockState);
 			return "admin/stock-count-list";
 		}else if (stock.equals("start")) {
+			System.out.println("@@@@@@@@@@@@@@@@@@@@");
 			if (stockState ==0) stockState = 1;
 			model.addAttribute("stock_state",stockState);
 			return "admin/stock-count-scan";
