@@ -39,8 +39,4 @@ public interface bookmanagementMapper {
 	// 책 추가
 	void insertBooks(BooksDTO books);
 	void insertBookInfo(BookInfoDTO bookInfo);
-	
-	// 반납
-	//void returnCheckout(CheckoutDTO checkout);
-	
 }

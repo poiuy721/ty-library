@@ -8,6 +8,7 @@ public class BookInfoDTO {
 	private String publisher;
 	private String isbn;
 	
+	
 	//constructors
 	public BookInfoDTO() {}
 	public BookInfoDTO(String isbn, String title, String author, String publisher, String category) {
@@ -18,7 +19,6 @@ public class BookInfoDTO {
 		this.publisher = publisher;
 		this.isbn = isbn;
 	}
-
 	public BookInfoDTO(String title, String author, String publisher, String category) {
 		super();
 		this.title = title;
@@ -26,6 +26,7 @@ public class BookInfoDTO {
 		this.publisher = publisher;
 		this.category = category;
 	}
+	
 	
 	//getter&setter
 	public String getTitle() {

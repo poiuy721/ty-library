@@ -117,12 +117,12 @@
 	function buildCalendar() {
 		
 	    let date = JSON.stringify(${latestDueDate});     // 페이지를 로드한 날짜를 저장
-	    let today_str = date.slice(0,4) + '-' + date.slice(4, 6) + '-' + date.slice(6,8);
-	    let today = new Date(today_str);
+	    let today_str = date.slice(0,4) + '-' + date.slice(4, 6) + '-' + date.slice(6,8);   // 날짜 형식 맞추기
+	    let today = new Date(today_str);    // Date 형으로 변환
 		today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
 	    
 		let month; let year; let day;
-	    day = today.getDate()+14;
+	    day = today.getDate()+14;    // 기본 대여 기간(2주) 설정
 	
 	    var arr = new Array();
 	
@@ -137,8 +137,6 @@
 	    	day = day-28;
 	    }
 	    
-	    console.log(day);
-	    
 	    let tbody_Calendar = document.querySelector(".Calendar > tbody");
 	    document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
 	    document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
@@ -150,7 +148,7 @@
 	    arr.push(month);
 	    arr.push(leftPad(day));
 	    
-		    $.ajax({
+		$.ajax({
 		    url: "/tylibrary/renew/due",
 		    data: {arr,arr},
 		    dataType : 'json',
@@ -265,10 +263,8 @@
 	    }
 	    return value;
 	}
+	
 </script>
-
-
-
 </head>
 
 <body>

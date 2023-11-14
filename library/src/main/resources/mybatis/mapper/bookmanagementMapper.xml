@@ -20,7 +20,6 @@
     	values(#{isbn}, #{title}, #{author}, #{publisher}, #{category})
     </insert>
   
-    
 <!--  ============ select ============ -->
     <select id="selectBookInfo" parameterType="int" resultType="com.library.dto.BookInfoDTO"> 
     	select	book_info.isbn, book_info.title, book_info.author, book_info.publisher, book_info.category
@@ -35,7 +34,7 @@
     	where 	b_id=#{b_id}
     </select>
     
-        <select id="selectBooksStatus" parameterType="string" resultType="com.library.dto.BooksDTO"> 
+    <select id="selectBooksStatus" parameterType="string" resultType="com.library.dto.BooksDTO"> 
     	select	b_id, books.isbn, due_date
     	from 	books
     	where 	books.isbn=#{isbn}
@@ -47,7 +46,7 @@
     	where 	e_id=#{e_id}
     </select>
     
-        <select id="selectEmplInfoByBid" parameterType="int" resultType="com.library.dto.EmployeeDTO"> 
+    <select id="selectEmplInfoByBid" parameterType="int" resultType="com.library.dto.EmployeeDTO"> 
     	select	employees.e_id, employees.e_name
     	from 	employees left join checkout
     	on		employees.e_id=checkout.e_id
@@ -64,7 +63,7 @@
     	from 	books
     </select>
     
-        <select id="selectCidByBid" parameterType="int" resultType="string"> 
+    <select id="selectCidByBid" parameterType="int" resultType="string"> 
     	select	c_id
     	from 	checkout
     	where 	b_id=#{b_id} and return_date is null

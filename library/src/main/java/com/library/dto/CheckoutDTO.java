@@ -10,6 +10,7 @@ public class CheckoutDTO {
 	private Date rent_date;
 	private Date return_date;
 	
+	
 	// constructor
 	public CheckoutDTO() {}
 	public CheckoutDTO(int b_id, Date rent_date) {
@@ -32,6 +33,7 @@ public class CheckoutDTO {
 		this.rent_date = rent_date;
 		this.return_date = return_date;
 	}
+	
 	
 	// getter&setter
 	public int getC_id() {

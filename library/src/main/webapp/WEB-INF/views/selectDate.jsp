@@ -91,24 +91,24 @@
             background:#eee;
         }
 
-	.futureDay.choiceDay, .today.choiceDay {
-		background: #0A174E;
-		color: #fff;
-		font-weight: 600;
-		cursor: pointer;
-	}
-	
-	.choiceDay, .after2weeks {
-		background-color: #99D9EA;
-		color: #fff;
-		font-weight: 600;
-		cursor: pointer;
-	}
+		.futureDay.choiceDay, .today.choiceDay {
+			background: #0A174E;
+			color: #fff;
+			font-weight: 600;
+			cursor: pointer;
+		}
+		
+		.choiceDay, .after2weeks {
+			background-color: #99D9EA;
+			color: #fff;
+			font-weight: 600;
+			cursor: pointer;
+		}
        
 </style>
 
 
-	<script type="text/javascript">
+<script type="text/javascript">
 	window.onload = function () { buildCalendar(); }    // 웹 페이지가 로드되면 buildCalendar 실행
 
     let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
@@ -133,7 +133,7 @@
         } else if(lastDate.getDate()==28 && today.getDate()>14){
         	day = day-28;
         }
-        console.log(day);
+
         let tbody_Calendar = document.querySelector(".Calendar > tbody");
         document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
         document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
@@ -272,8 +272,7 @@
         }
         return value;
     }
-	</script>
-	
+</script>
 </head>
 
 <body>
