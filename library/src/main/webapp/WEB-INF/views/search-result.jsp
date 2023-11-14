@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,7 @@
 <meta content="" name="description">
 
 <!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
+<link href="../img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,16 +30,16 @@
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link href="../lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link href="../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -64,7 +65,7 @@
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="img/user.jpg" alt=""
+						<img class="rounded-circle" src="../img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -143,37 +144,39 @@
 							class="d-flex align-items-center justify-content-between mb-4">
 							<h6 class="mb-0">| 도서 조회</h6>
 						</div>
-						<table class="table table-borderless text-center">
-							<thead>
-							</thead>
-							<tbody>
-								<tr>
-									<td><select class="form-select form-select-sm mb-3"
-										aria-label=".form-select-sm category">
-											<option selected value="1">일반 서적</option>
-											<option value="2">기술 서적</option>
-									</select></td>
-									<td><select class="form-select form-select-sm mb-3"
-										aria-label=".form-select-sm search">
-											<option selected value="1">도서명</option>
-											<option value="2">저자명</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td colspan="2"><input
-										class="form-control form-control-sm" type="text"
-										placeholder="검색어를 입력하세요" aria-label=".form-control-sm search">
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<button type="button" class="btn btn-primary w-100 m-2">검색</button>
-									</td>
-									<td></td>
-								</tr>
-							</tbody>
-						</table>
+						<form action="/search/filtered" method="post">
+							<table class="table table-borderless text-center">
+								<thead>
+								</thead>
+								<tbody>
+									<tr>
+										<td><select class="form-select form-select-sm mb-3"
+											aria-label=".form-select-sm category" name="category">
+												<option selected value="일반 서적">일반 서적</option>
+												<option value="기술 서적">기술 서적</option>
+										</select></td>
+										<td><select class="form-select form-select-sm mb-3"
+											aria-label=".form-select-sm search" name="searchBy">
+												<option selected value="title">도서명</option>
+												<option value="author">저자명</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td colspan="2"><input
+											class="form-control form-control-sm" type="text"
+											placeholder="검색어를 입력하세요" aria-label=".form-control-sm search"
+											name="searchKey"></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<button type="submit" class="btn btn-primary w-100 m-2">검색</button>
+										</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
 					</div>
 					<!-- Sales Chart End -->
 					<div class="col-sm-12 col-xl-6">
@@ -192,6 +195,21 @@
 										<th scope="col">대여자 목록</th>
 									</tr>
 								</thead>
+								<tbody>
+									<c:forEach items="${informations}" var="info"
+										varStatus="status">
+										<tr>
+											<th scope="row">${status.count}</th>
+											<td><c:out value="${info.title}"></c:out></td>
+											<td><c:out value="${info.author}"></c:out></td>
+											<td><c:out value="${info.bookStatus}"></c:out></td>
+											<td><c:forEach items="${info.renterList}" var="renter"
+													varStatus="stat">
+													<span>${stat.current}</span>
+												</c:forEach></td>
+										</tr>
+									</c:forEach>
+								</tbody>
 							</table>
 						</div>
 					</div>
@@ -228,16 +246,16 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/chart/chart.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="lib/tempusdominus/js/moment.min.js"></script>
-	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script src="../lib/chart/chart.min.js"></script>
+	<script src="../lib/easing/easing.min.js"></script>
+	<script src="../lib/waypoints/waypoints.min.js"></script>
+	<script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="../lib/tempusdominus/js/moment.min.js"></script>
+	<script src="../lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
+	<script src="../js/main.js"></script>
 </body>
 
 </html>

@@ -47,20 +47,8 @@ public class BookManagementController {
 	
 	// ************************************************** 관리자 로그인 ************************************************** //
 	
-	@RequestMapping("/tylibrary/admin")
-	public String index2() {
-		return "admin-login";
-	}
 	
-	@RequestMapping("/tylibrary/admin/login")
-	public String admin_login(@RequestParam(value = "adminId") String adminId, HttpSession session,
-			HttpServletRequest request, Model model) {
-
-		session.setAttribute("adminId", adminId);
-		System.out.println(adminId);
-
-		return "redirect:/tylibrary/books/{b_id}";
-	}
+	
 	
 	
 	// ************************************************** 공통 ************************************************** //	

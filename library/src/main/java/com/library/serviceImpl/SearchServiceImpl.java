@@ -27,7 +27,7 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	@Override
-	public List<SearchDto> getLists(SearchQuery query) throws Exception {
+	public List<SearchResultDto> getLists(SearchQuery query) throws Exception {
 		return searchMapper.getLists(query);
 	}
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.library.mapper.SearchMapper">
+
+	<select id="maxNum" resultType="int">
+		select nvl(max(num),0) from board
+	</select>
+
+	<select id="getDataCount" parameterType="hashMap"
+		resultType="int">
+		select nvl(count(*),0) from books
+		where ${searchKey} like
+		'%' || #{searchValue} || '%'
+	</select>
+
+	<select id="getLists"
+		parameterType="com.library.dto.SearchQuery"
+		resultType="com.library.dto.SearchResultDto">
+		SELECT bi.TITLE, bi.AUTHOR, b.B_STATUS, co.e_id
+		FROM books b
+		JOIN book_info bi ON b.ISBN = bi.ISBN
+		LEFT JOIN checkout co ON b.b_id = co.b_id
+		WHERE bi.category = #{category}
+			AND co.return_date IS NULL
+		<if test="searchKey!=null">
+			AND bi.${searchBy} LIKE CONCAT('%', #{searchKey}, '%')
+		</if>
+	</select>
+
+
+</mapper>

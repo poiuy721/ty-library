@@ -29,16 +29,16 @@
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link href="/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -126,7 +126,7 @@
 					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
-								<h2 class="mb-0 text-center">도서 조회</h2>
+								<h2 class="mb-0 text-center">관리자 페이지</h2>
 							</div>
 						</div>
 					</div>
@@ -139,65 +139,52 @@
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
 					<div class="col-sm-12 col-xl-6">
-						<div
-							class="d-flex align-items-center justify-content-between mb-4">
-							<h6 class="mb-0">| 도서 조회</h6>
-						</div>
-						<form action="/search/filtered" method="post">
-							<table class="table table-borderless text-center">
+						<div class="bg-light text-center rounded p-4">
+
+							<h6 class="mb-0">관리자 홈</h6>
+
+							<table class="table table-borderless">
 								<thead>
 								</thead>
 								<tbody>
 									<tr>
-										<td><select class="form-select form-select-sm mb-3"
-											aria-label=".form-select-sm category" name="category">
-												<option selected value="일반 서적">일반 서적</option>
-												<option value="기술 서적">기술 서적</option>
-										</select></td>
-										<td><select class="form-select form-select-sm mb-3"
-											aria-label=".form-select-sm search" name="searchBy">
-												<option selected value="title">도서명</option>
-												<option value="author">저자명</option>
-										</select></td>
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="go()">도서 조회</button>
+										</td>
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="go()">대여 기록</button>
+										</td>
 									</tr>
 									<tr>
-										<td colspan="2"><input
-											class="form-control form-control-sm" type="text"
-											placeholder="검색어를 입력하세요" aria-label=".form-control-sm search"
-											name="searchKey">
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="go()">도서 등록</button>
 										</td>
-										<td></td>
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="go()">연체 도서</button>
+										</td>
 									</tr>
 									<tr>
-										<td colspan="2">
-											<button type="submit" class="btn btn-primary w-100 m-2">검색</button>
+
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="go()">도서 삭제</button>
 										</td>
-										<td></td>
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="go('admin/stock-count')">재고 조사</button>
+										</td>
+
 									</tr>
 								</tbody>
 							</table>
-						</form>
-					</div>
-					<!-- Sales Chart End -->
-					<div class="col-sm-12 col-xl-6">
-						<div class="bg-light text-center rounded p-4">
-							<div
-								class="d-flex align-items-center justify-content-between mb-4">
-								<h6 class="mb-0">도서 정보</h6>
-							</div>
-							<table class="table small">
-								<thead class="small">
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">도서명</th>
-										<th scope="col">저자명</th>
-										<th scope="col">도서 상태</th>
-										<th scope="col">대여자 목록</th>
-									</tr>
-								</thead>
-							</table>
 						</div>
 					</div>
+					<!-- Sales Chart End -->
+
 				</div>
 			</div>
 			<!-- Footer Start -->
@@ -226,21 +213,27 @@
 		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
 			class="bi bi-arrow-up"></i></a>
 	</div>
+	<script type="text/javascript">
+	function go(url){
+		window.location.href = url;
+	}
+	
+	</script>
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/chart/chart.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="lib/tempusdominus/js/moment.min.js"></script>
-	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script src="/lib/chart/chart.min.js"></script>
+	<script src="/lib/easing/easing.min.js"></script>
+	<script src="/lib/waypoints/waypoints.min.js"></script>
+	<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
+	<script src="/js/main.js"></script>
 </body>
 
 </html>

@@ -145,11 +145,9 @@
 					<div class="col-sm-12 col-xl-12" style="height: 100%">
 						<div id="video-container"
 							class="bg-light rounded d-md-flex align-items-center p-4"
-							style="height: 100%;border: 2px solid gray; overflow: hidden;">
-							<video id="video"
-								style=" object-fit: cover;"></video>
-							<canvas id="canvas"
-								style=" object-fit: cover; display: none;"></canvas>
+							style="height: 100%; border: 2px solid gray; overflow: hidden;">
+							<video id="video" style="object-fit: cover;"></video>
+							<canvas id="canvas" style="object-fit: cover; display: none;"></canvas>
 						</div>
 					</div>
 				</div>
@@ -169,13 +167,9 @@
 
 
 					<!-- 확인 결과 -->
-					<div class="col-sm-12 col-xl-12">
+					<div class="col-12">
 						<div class="bg-light text-center rounded p-4">
-
-							<div
-								class="d-flex align-items-center justify-content-between mb-4">
-								<h6 class="mb-0">재고 검사 완료</h6>
-							</div>
+							<h6 class="mb-0">재고 검사 완료</h6>
 							<div class="table-responsive">
 								<table class="table small">
 									<thead class="small">
@@ -240,14 +234,14 @@
 	     codeReader.listVideoInputDevices()
 	       .then((videoInputDevices) => {
 	    	   let numOfCamera = videoInputDevices.length;
-	    	   if (numOfCamera<0){
+	    	   if (numOfCamera<1){
 	    		   alert ("카메라가 있는 디바이스로 접속해주세요")
 	    		   console.log("카메라를 찾지 못했습니다.")
 	    		   window.history.back();
 	    	   }else if(stock_state == 1){
 	    		   console.log("${stock_state}")
 	    		   $.ajax({
-	                     url: "/stock-camera-ok", 
+	                     url: "/tylibrary/stock-camera-ok", 
 	                     type: "POST",
 	                     data: { cameraState: 2 },	                    
 	                     success: function (data) {
@@ -275,7 +269,7 @@
 	               if (result) {
 	            	 if(result.text != lastResult){
 	            		 lastResult = result.text;
-		                 let urlId = "/stock-is-exist?id="+result.text.split('?id=')[1];
+		                 let urlId = "/tylibrary/stock-is-exist?id="+result.text.split('?id=')[1];
 		                 //ajax사용으로 갱신 후 데이터 띄워줌
 		                 if(stock_state==2){
 		                	 $.ajax({
@@ -287,9 +281,11 @@
 			                    	canvas.height = video.offsetHeight;
 			                 		canvas.getContext('2d').drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight, 0, 0, video.offsetWidth,video.offsetHeight);
 			                 		canvas.style.display = "block";
+			                 		$("#video-container").css({"border-color": "green","border-width":"5px"});
+			                 		setTimeout(() => $("#video-container").css({"border-color": "gray","border-width":"2px"}),1000)
 			                    	setTimeout(() => canvas.style.display="none",1000)
 			                    	$("#book_info1").text(data.b_id);
-			                    	$("#book_info2").text(data.isbn);
+			                    	$("#book_info2").text(data.title);
 			                     },
 			                     error: function () {
 			                    	 alert("오류발생")
