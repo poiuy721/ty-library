@@ -252,7 +252,7 @@
 	                     error: function () {
 	                    	 alert("오류@@발생")
 	                     }
-	                 });
+	               });
 	    		   
 	    	   }
 	    	   selectedDeviceId = videoInputDevices[i].deviceId	    	  

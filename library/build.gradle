@@ -31,7 +31,7 @@ dependencies {
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	implementation 'javax.servlet:jstl'
 		implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	//implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -44,10 +44,10 @@ dependencies {
 	// QR Code - zxing
 	implementation group: 'com.google.zxing', name: 'javase', version: '3.5.0'
 	implementation group: 'com.google.zxing', name: 'core', version: '3.5.0'
-	
+	//image연결
+	implementation 'javax.servlet:jstl:1.2'
 
 }
-
 tasks.named('test') {
 	useJUnitPlatform()
 }

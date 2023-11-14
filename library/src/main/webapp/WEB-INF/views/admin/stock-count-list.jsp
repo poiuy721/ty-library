@@ -143,9 +143,9 @@
 					<div class="col-sm-12 col-xl-12">
 						<form action="stock-count" method="post">
 							<input type="text" name="stock" value="start"
-								style="display: none" /> <input type="submit" id="stock-select"
-								class="btn btn-primary m-2 w-100" value="조사시작"
-								style="margin: 0 !important;" />
+								style="display: none" id="goscan" /> <input type="button"
+								id="stock-select" class="btn btn-primary m-2 w-100" value="조사시작"
+								onclick="determine()" style="margin: 0 !important;" />
 						</form>
 					</div>
 
@@ -241,6 +241,29 @@
 	<script type="text/javascript">
 	let stockScan = document.getElementById("stock-select");
 	let stockFinish = document.getElementById("stock-finish");
+	
+	function determine(){
+		$.ajax({
+            url: "/tylibrary/check-state", 
+            type: "POST",	                    
+            success: function (data) {
+           	 if (data<=1){
+           		let result = confirm("정말로 조사를 시작하시겠습니까?");
+           	    if (result) {
+           	      stockScan.form.submit();
+           	    } else{
+           	      alert("취소되었습니다.");
+           	   	location.reload()
+           	    }
+           	 }else if(data==2) { 
+           		 stockScan.form.submit();
+             }
+           	},            
+            error: function () {
+           	 alert("오류@@발생")
+            }
+        });
+	}
 	
 	if(${stock_state} <= 1){
 		stockScan.value = "조사시작";

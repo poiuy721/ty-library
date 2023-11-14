@@ -120,7 +120,16 @@ public class AdminController {
 		stockService.updateyStockByBId(id);
 		return stockService.selectBooksByBId(id);
 	}
-		
+	
+	//스캔하기 클릭시 스테이트 체크용
+	@RequestMapping("/check-state")
+	@ResponseBody
+	public int determin() {
+		return stockState;
+	}
+	
+	
+	
 	//테스트용	
 	@RequestMapping("/admin/testx")
 	public String asd() {

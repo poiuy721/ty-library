@@ -94,7 +94,7 @@
       //편의를 위해 만든기능 볼 필요 없음
         getIds.addEventListener("click",function () {
         	 $.ajax({
-                 url: "/get-ids", // 컨트롤러 메서드의 URL
+                 url: "/tylibrary/get-ids", // 컨트롤러 메서드의 URL
                  type: "GET",
                  dataType: "json",
                  success: function (data) {
