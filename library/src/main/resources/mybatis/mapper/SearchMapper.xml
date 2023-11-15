@@ -26,7 +26,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE bi.category = #{category}
 			AND co.return_date IS NULL
 		<if test="searchKey!=null">
-			AND bi.${searchBy} LIKE CONCAT('%', #{searchKey}, '%')
+			<if test='searchBy eq "도서명".toString()'>
+				AND bi.title LIKE CONCAT('%', #{searchKey}, '%')
+			</if>
+			<if test='searchBy eq "저자명".toString()'>
+				AND bi.author LIKE CONCAT('%', #{searchKey}, '%')
+			</if>
 		</if>
 	</select>
 

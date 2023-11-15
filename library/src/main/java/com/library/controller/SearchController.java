@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +26,8 @@ import com.library.service.SearchService;
 @Controller
 public class SearchController {
 
+	private final Logger logger=LoggerFactory.getLogger(this.getClass());
+	
 	@Resource
 	private SearchService searchService;
 
@@ -35,11 +39,12 @@ public class SearchController {
 
 	@PostMapping("/search/filtered")
 	public String getSearchFiltered(@ModelAttribute SearchQuery query, Model m) throws Exception {
-		System.out.println(searchService.getLists(query).size());
+
 		List<SearchRemoveDuplicateDto> informations = searchService.removeDuplicates(searchService.getLists(query));
 		m.addAttribute("informations", informations);
 		m.addAttribute("query", query);
-		System.out.println(informations.size());
+
+		
 		return "search-result";
 	}
 

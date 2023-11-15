@@ -191,8 +191,7 @@
 										<th scope="col">#</th>
 										<th scope="col">도서명</th>
 										<th scope="col">저자명</th>
-										<th scope="col">도서 상태</th>
-										<th scope="col">대여자 목록</th>
+										<th scope="col" colspan="2">도서 상태</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -202,11 +201,17 @@
 											<th scope="row">${status.count}</th>
 											<td><c:out value="${info.title}"></c:out></td>
 											<td><c:out value="${info.author}"></c:out></td>
-											<td><c:out value="${info.bookStatus}"></c:out></td>
-											<td><c:forEach items="${info.renterList}" var="renter"
-													varStatus="stat">
-													<span>${stat.current}</span>
-												</c:forEach></td>
+											<td colspan="2">
+												<span class="
+													<c:choose>
+														<c:when test="${info.bookStatus eq '대여 가능'}">text-primary</c:when>
+														<c:otherwise>text-danger</c:otherwise>
+													</c:choose>">
+													<c:out value="${info.bookStatus}">
+													</c:out>
+												</span>
+											</td>
+											<td></td>
 										</tr>
 									</c:forEach>
 								</tbody>
