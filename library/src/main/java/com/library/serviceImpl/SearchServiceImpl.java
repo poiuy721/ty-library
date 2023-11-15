@@ -1,6 +1,9 @@
 package com.library.serviceImpl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,48 @@ public class SearchServiceImpl implements SearchService{
 	@Override
 	public List<SearchResultDto> getLists(SearchQuery query) throws Exception {
 		return searchMapper.getLists(query);
+	}
+	
+	public List<SearchRemoveDuplicateDto> removeDuplicates(List<SearchResultDto> list) {
+
+		Map<String, SearchRemoveDuplicateDto> resultMap = new HashMap<>();
+
+        for (SearchResultDto resultDto : list) {
+            String title = resultDto.getTitle();
+
+            SearchRemoveDuplicateDto dto = resultMap.computeIfAbsent(title, k -> {
+                SearchRemoveDuplicateDto newDto = new SearchRemoveDuplicateDto();
+                newDto.setTitle(resultDto.getTitle());
+                newDto.setAuthor(resultDto.getAuthor());
+                newDto.setRenterList(new ArrayList<>());
+                return newDto;
+            });
+
+            // Add renter to the renterList
+            dto.getRenterList().add(resultDto.getRenter());
+        }
+
+        // Convert the values of resultMap to a List
+        List<SearchRemoveDuplicateDto> resultList = new ArrayList<>(resultMap.values());
+
+        // Set the bookStatus based on the values in the input list
+        for (SearchRemoveDuplicateDto dto : resultList) {
+            String bookStatus = determineBookStatus(list, dto.getTitle());
+            dto.setBookStatus(bookStatus);
+        }
+
+        return resultList;
+    }
+	
+	private static String determineBookStatus(List<SearchResultDto> list, String title) {
+        for (SearchResultDto resultDto : list) {
+            if (resultDto.getTitle().equals(title)) {
+                if ("A".equals(resultDto.getBookStatus())) {
+                    return "대여 가능";
+                }
+            }
+        }
+        return "대여 불가";
 	}
 
 }
