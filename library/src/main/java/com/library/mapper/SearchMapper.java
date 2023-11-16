@@ -14,6 +14,8 @@ public interface SearchMapper {
 	public int getDataCount(String searchKey, String searchValue) throws Exception;
 	
 	public List<SearchResultDto> getLists(SearchQuery query) throws Exception;
+
+	public List<SearchResultDto> getBook(int id);
 	
 
 }

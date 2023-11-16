@@ -8,9 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.library.dto.*;
 import com.library.service.SearchService;
@@ -20,6 +23,7 @@ import com.library.service.SearchService;
  * 
  * search : 최초 접근 화면
  * search/filtered : 검색 결과 화면
+ * searchbook : 대여 가능/불가 클릭 후 나오는 상세정보 화면
  * @author 김태형
  * 
  */
@@ -46,6 +50,16 @@ public class SearchController {
 
 		
 		return "search-result";
+	}
+	
+	@GetMapping("searchbook/{id}")
+	public String getSearchBook(@PathVariable int id,Model m) {
+		
+		List<SearchRemoveDuplicateDto> information = searchService.removeDuplicates(searchService.getBook(id));
+		
+		m.addAttribute("information", information);
+		
+		return "search-book";
 	}
 
 }

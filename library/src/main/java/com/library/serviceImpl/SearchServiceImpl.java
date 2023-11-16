@@ -45,7 +45,10 @@ public class SearchServiceImpl implements SearchService{
                 SearchRemoveDuplicateDto newDto = new SearchRemoveDuplicateDto();
                 newDto.setTitle(resultDto.getTitle());
                 newDto.setAuthor(resultDto.getAuthor());
+                newDto.setPublisher(resultDto.getPublisher());
+                newDto.setCategory(resultDto.getCategory());
                 newDto.setRenterList(new ArrayList<>());
+                newDto.setId(resultDto.getId());
                 return newDto;
             });
 
@@ -74,6 +77,11 @@ public class SearchServiceImpl implements SearchService{
             }
         }
         return "대여 불가";
+	}
+
+	@Override
+	public List<SearchResultDto> getBook(int id) {
+		return searchMapper.getBook(id);
 	}
 
 }

@@ -14,7 +14,10 @@ import lombok.Setter;
 public class SearchResultDto {
 	private String title;
 	private String author;
+	private String publisher;
+	private String category;
 	private String bookStatus;
 	private String renter;
+	private int id;
 	
 }

@@ -13,5 +13,10 @@ public interface SearchService {
 	public List<SearchResultDto> getLists(SearchQuery query) throws Exception;
 	
 	public List<SearchRemoveDuplicateDto> removeDuplicates(List<SearchResultDto> list);
+	
+	
+
+
+	public List<SearchResultDto> getBook(int id);
 
 }

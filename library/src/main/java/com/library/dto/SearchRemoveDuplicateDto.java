@@ -15,6 +15,9 @@ import lombok.Setter;
 public class SearchRemoveDuplicateDto {
 	private String title;
 	private String author;
+	private String publisher;
+	private String category;
 	private String bookStatus;
 	private List<String> renterList;
+	private int id;
 }
