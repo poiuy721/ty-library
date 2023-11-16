@@ -12,7 +12,7 @@
 <meta content="" name="description">
 
 <!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
+<link href="/img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,14 +32,6 @@
 
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
-
-	<script type="text/javascript">
-	
-		function goBack(){
-			window.history.go(-1);
-		}
-		
-	</script>
 
 </head>
 
@@ -128,16 +120,16 @@
 					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
-								<c:if test="${sort eq 'rent'}">
+								<c:if test="${management_type eq 'rent'}">
 			                       <h2 class="mb-0 text-center">대여</h2>
 			                    </c:if>
-			                    <c:if test="${sort eq 'renew'}">
+			                    <c:if test="${management_type eq 'renew'}">
 			                       <h2 class="mb-0 text-center">연장</h2>
 			                    </c:if>
-			                    <c:if test="${sort eq 'assign'}">
+			                    <c:if test="${management_type eq 'assign'}">
 			                       <h2 class="mb-0 text-center">양도</h2>
 			                    </c:if>
-			                    <c:if test="${sort eq 'return'}">
+			                    <c:if test="${management_type eq 'return'}">
 			                       <h2 class="mb-0 text-center">반납</h2>
 			                    </c:if>
 							</div>
@@ -156,16 +148,16 @@
 						<div class="bg-light text-center rounded p-4">
 							<div
 								class="d-flex align-items-center justify-content-between mb-4">
-								<c:if test="${sort eq 'rent'}">
+								<c:if test="${management_type eq 'rent'}">
 			                       <h6 class="mb-0">| 대여 정보 확인</h6>
 			                    </c:if>
-			                    <c:if test="${sort eq 'renew'}">
+			                    <c:if test="${management_type eq 'renew'}">
 			                       <h6 class="mb-0">| 연장 정보 확인</h6>
 			                    </c:if>
-			                    <c:if test="${sort eq 'assign'}">
+			                    <c:if test="${management_type eq 'assign'}">
 			                       <h6 class="mb-0">| 양도 정보 확인</h6>
 			                    </c:if>
-			                    <c:if test="${sort eq 'return'}">
+			                    <c:if test="${management_type eq 'return'}">
 			                       <h6 class="mb-0">| 반납 정보 확인</h6>
 			                    </c:if>
 							</div>
@@ -175,22 +167,22 @@
 								<tbody>
 									<tr>
 										<th scope="row">도서명</th>
-										<td>${bookTitle}</td>
+										<td>${bookInfo.title}</td>
 									</tr>
 									<tr>
-										<c:if test="${sort eq 'rent'}">
+										<c:if test="${management_type eq 'rent'}">
 					                    	<th scope="row">대여기간</th>
 					                    	<td>${rent_date} ~ ${due_date}</td>
 					                    </c:if>
-					                    <c:if test="${sort eq 'renew'}">
+					                    <c:if test="${management_type eq 'renew'}">
 					                    	<th scope="row">연장기간</th>
 					                    	<td>${rent_date} ~ ${due_date}</td>
 					                    </c:if>
-					                    <c:if test="${sort eq 'assign'}">
+					                    <c:if test="${management_type eq 'assign'}">
 					                    	<th scope="row">(양도)<br>대여기간</th>
 					                    	<td>${rent_date} ~ ${due_date}</td>
 					                    </c:if>
-					                    <c:if test="${sort eq 'return'}">
+					                    <c:if test="${management_type eq 'return'}">
 					                    	<th scope="row">반납일자</th>
 					                    	<td>${rent_date}</td>
 					                    </c:if>
@@ -201,17 +193,17 @@
 						<div class="text-center">
 						<br>
 						
-							<c:if test="${sort eq 'rent'}">
-					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/rent/${b_id}'">대여</button>
+							<c:if test="${management_type eq 'rent'}">
+					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/rent'">대여</button>
 					        </c:if>
-					        <c:if test="${sort eq 'renew'}">
-					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/renew/${b_id}'">연장</button>
+					        <c:if test="${management_type eq 'renew'}">
+					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/renew'">연장</button>
 					        </c:if>
-					        <c:if test="${sort eq 'assign'}">
-					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/assign/{b_id}'">양도 받기</button>
+					        <c:if test="${management_type eq 'assign'}">
+					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/assign'">양도 받기</button>
 					        </c:if>
-					        <c:if test="${sort eq 'return'}">
-					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/return/${b_id}'">반납</button>
+					        <c:if test="${management_type eq 'return'}">
+					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/return'">반납</button>
 					        </c:if>
 							<button type="button" class="btn btn-outline-danger m-2" onclick="javascript:form.action='/tylibrary/books/${b_id}">취소</button>
 						</div>

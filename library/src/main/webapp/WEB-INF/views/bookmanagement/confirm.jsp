@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>로그인</title>
+<title>확정</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -57,7 +57,7 @@
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="img/user.jpg" alt=""
+						<img class="rounded-circle" src="/boot/img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -104,8 +104,7 @@
 		<!-- Content Start -->
 		<div class="content">
 			<!-- Navbar Start -->
-			<nav
-				class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+			<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
 				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
@@ -119,7 +118,18 @@
 					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
-								<h2 class="mb-0 text-center">로그인 (사번)</h2>
+								<c:if test="${management_type eq 'rent'}">
+			                       <h2 class="mb-0 text-center">대여</h2>
+			                    </c:if>
+			                    <c:if test="${management_type eq 'renew'}">
+			                       <h2 class="mb-0 text-center">연장</h2>
+			                    </c:if>
+			                    <c:if test="${management_type eq 'assign'}">
+			                       <h2 class="mb-0 text-center">양도</h2>
+			                    </c:if>
+			                    <c:if test="${management_type eq 'return'}">
+			                       <h2 class="mb-0 text-center">반납</h2>
+			                    </c:if>
 							</div>
 						</div>
 					</div>
@@ -133,25 +143,42 @@
 				<div class="row g-4">
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light text-center rounded p-4">
-							<div
-								class="d-flex align-items-center justify-content-between mb-4">
-								<h6 class="mb-0">| 사번 입력</h6>
-							</div>
-							
-							<c:if test="${sort eq 'rent'}">
-			                    <form action="/tylibrary/rent/loginProcess/${b_id}" method="post">
-			                </c:if>
-			                <c:if test="${sort eq 'renew'}">
-			                    <form action="/tylibrary/renew/loginProcess/${b_id}" method="post">
-			                </c:if>
-			                <c:if test="${sort eq 'assign'}">
-			                    <form action="/tylibrary/assign/loginProcess/${b_id}" method="post">
-			                </c:if>
-								<div class="form-floating mb-3">
-									<input type="text" class="form-control" id="e_id" name="e_id" placeholder="사번" required>
-								</div>
-								<button type="submit" class="btn btn-outline-primary m-2">로그인</button>
-							</form>
+							<div class="d-flex align-items-center justify-content-between mb-4">
+								<c:if test="${management_type eq 'rent'}">
+									<h6 class="mb-0">| 대여 완료</h6></div>
+									<p>대여 기간</p>
+									<p><strong>${rent_date} ~ ${due_date}</strong></p>
+								</c:if>
+								<c:if test="${management_type eq 'renew'}">
+									<h6 class="mb-0">| 연장 완료</h6></div>
+									<p>대여 기간</p>
+									<p><strong>${rent_date} ~ ${due_date}</strong></p>
+								</c:if>
+								<c:if test="${management_type eq 'assign'}">
+									<h6 class="mb-0">| 양도 완료</h6></div>
+									<p>대여 기간</p>
+									<p><strong>${rent_date} ~ ${due_date}</strong></p>
+								</c:if>
+								<c:if test="${management_type eq 'return'}">
+									<h6 class="mb-0">| 반납 완료</h6></div>
+									<p>반납 일자</p>
+									<p><strong>${rent_date}</strong></p>
+								</c:if>
+						</div>
+						<div class="text-center">
+						<br>
+						<c:if test="${management_type eq 'rent'}">
+			                <h6>대여가 완료되었습니다.</h6>
+			            </c:if>
+			            <c:if test="${management_type eq 'renew'}">
+			                 <h6>대여기간 연장이 완료되었습니다.</h6>
+			            </c:if>
+			            <c:if test="${management_type eq 'assign'}">
+			                 <h6>양도가 완료되었습니다.</h6>
+			            </c:if>
+			            <c:if test="${management_type eq 'return'}">
+			                 <h6>반납이 완료되었습니다.</h6>
+			            </c:if>
 						</div>
 					</div>
 					<!-- Sales Chart End -->
@@ -168,8 +195,7 @@
 						<div class="col-12 col-sm-6 text-center text-sm-end">
 							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 							Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
-							Distributed By <a class="border-bottom"
-								href="https://themewagon.com" target="_blank">ThemeWagon</a>
+							Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
 						</div>
 					</div>
 				</div>

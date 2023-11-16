@@ -10,7 +10,6 @@ public class CheckoutDTO {
 	private Date rent_date;
 	private Date return_date;
 	
-	
 	// constructor
 	public CheckoutDTO() {}
 	public CheckoutDTO(int b_id, Date rent_date) {
@@ -18,22 +17,18 @@ public class CheckoutDTO {
 		this.b_id = b_id;
 		this.rent_date = rent_date;
 	}
-	public CheckoutDTO(int c_id, int b_id, String e_id, Date rent_date) {
-		super();
-		this.c_id = c_id;
+	public CheckoutDTO(int b_id, String e_id, Date rent_date) {
 		this.b_id = b_id;
 		this.e_id = e_id;
 		this.rent_date = rent_date;
 	}
 	public CheckoutDTO(int c_id, int b_id, String e_id, Date rent_date, Date return_date) {
-		super();
 		this.c_id = c_id;
 		this.b_id = b_id;
 		this.e_id = e_id;
 		this.rent_date = rent_date;
 		this.return_date = return_date;
 	}
-	
 	
 	// getter&setter
 	public int getC_id() {

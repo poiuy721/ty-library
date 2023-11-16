@@ -35,29 +35,6 @@
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
 
-	<script type="text/javascript">	
-
-	// 버튼 모두 표시하는 경우 : sort 구분
-		function Login(id) {
-			 //const id = t.getAttribute("no");
-			 var arr = new Array();
-			 arr.push(id);
-		     $.ajax({
-		    	    url: "/tylibrary/login/${b_id}",
-		    	    data: {arr:arr},
-		    	    dataType : 'json',
-		    	    type: "POST",
-		    	    success : function(data){
-		    	    	//console.log(data);
-		    	    },
-		    	    error : function(data){
-		    	    	var d = JSON.parse(JSON.stringify(data));
-		    	    	location.href = d['responseText'];
-		    	    }
-		     });  
-		}
-	
-	</script>
 </head>
 
 <body>
@@ -186,56 +163,23 @@
 							</table>
 						</div>
 					</div>
-					<div class="col-sm-12 col-xl-6">
-						<div class="bg-light text-center rounded p-4">
-							<div
-								class="d-flex align-items-center justify-content-between mb-4">
-								<h6 class="mb-0">소장 정보</h6>
-							</div>
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">도서 ID</th>
-										<th scope="col">도서 상태</th>
-									</tr>
-								</thead>
-								<tbody>
-								<c:forEach items="${bookStatus}" var="bookStatus" varStatus="status">
-									<c:set var="i" value="${i+1}"/>
-									<tr>
-										<th scope="row">${i}</th>
-										<td>${bookStatus.b_id}</td>
-										<c:choose>
-											<c:when test="${empty bookStatus.b_status}">
-												<td>대여 가능</td>
-					                        </c:when>
-					                        <c:otherwise>
-					                            <td>대여 불가</td>
-					                        </c:otherwise>
-										</c:choose>	
-									</tr>
-								</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
 					<!-- Sales Chart End -->
 
 					<div class="col-sm-12 col-xl-6">
 						<div class="text-center rounded">					
-							<c:if test="${status eq 'NN'}">
-			                    <button type="button" class="btn btn-outline-primary m-2" id="rent" onclick="Login(this.id)">대여</button>
+							<c:if test="${rent_availability eq 'A'}">
+			                    <button type="button" class="btn btn-outline-primary m-2" id="rent" onclick="location.href='/tylibrary/rent/enter_empl_num'">대여</button>
 			                </c:if>
-			                <c:if test="${status eq 'YY'}">
-			                    <button type="button" class="btn btn-outline-primary m-2" id="renew" onclick="Login(this.id)">연장</button>
-								<button type="button" class="btn btn-outline-primary m-2" id="assign" onclick="Login(this.id)">양도</button>
+			                <c:if test="${rent_availability eq 'R'}">
+			                    <button type="button" class="btn btn-outline-primary m-2" id="renew" onclick="location.href='/tylibrary/renew/enter_empl_num'">연장</button>
+								<button type="button" class="btn btn-outline-primary m-2" id="assign" onclick="location.href='/tylibrary/assign/enter_empl_num'">양도</button>
 								<button type="button" class="btn btn-outline-primary m-2" id="return" 
-								<c:choose>
-									<c:when test="${adminId eq 'admin'}"></c:when>
-					                <c:otherwise>style="display:none"</c:otherwise>
-								</c:choose>								
-								onclick="Login(this.id)">반납</button>
+									<c:choose>
+										<c:when test="${adminId eq 'admin'}"></c:when>
+						                <c:otherwise>style="display:none"</c:otherwise>
+									</c:choose>								
+									onclick="/tylibrary/return/check">반납
+								</button>
 			                </c:if>
 					   <!-- <button type="button" class="btn btn-outline-primary m-2" id="return" onclick="openCamera();">반납</button> -->
 						</div>

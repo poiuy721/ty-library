@@ -10,7 +10,6 @@ public class BooksDTO {
 	private String stock_count_status;
 	private Date due_date;
 	
-	
 	// constructor
 	public BooksDTO() {}
 	public BooksDTO(int b_id, String isbn) {
@@ -39,7 +38,6 @@ public class BooksDTO {
 		this.stock_count_status = stock_count_status;
 		this.due_date = due_date;
 	}
-	
 	
 	// getter&setter
 	public int getB_id() {
