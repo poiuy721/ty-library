@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,7 @@
 <meta content="" name="description">
 
 <!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
+<link href="../../img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,16 +30,18 @@
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="/lib/owlcarousel/assets/owl.carousel.min.css"
+<link href="../../lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link href="../../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="/css/style.css" rel="stylesheet">
+<link href="../../css/style.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 
 <body>
@@ -64,7 +67,7 @@
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="img/user.jpg" alt=""
+						<img class="rounded-circle" src="../img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -126,7 +129,7 @@
 					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
-								<h2 class="mb-0 text-center">관리자 페이지</h2>
+								<h2 class="mb-0 text-center">대여 기록</h2>
 							</div>
 						</div>
 					</div>
@@ -139,52 +142,53 @@
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
 					<div class="col-sm-12 col-xl-6">
-						<div class="bg-light text-center rounded p-4">
-
-							<h6 class="mb-0">관리자 홈</h6>
-
-							<table class="table table-borderless">
+						<div
+							class="d-flex align-items-center justify-content-between mb-4">
+							<h6 class="mb-0">| 대여 기록 조회</h6>
+						</div>
+							<table class="table table-borderless text-center">
 								<thead>
 								</thead>
 								<tbody>
+								<tr>
+									<td colspan="2"><input id="daterangepicker"
+										class="form-control form-control-sm" type="text"
+										placeholder="검색 기간을 입력하세요"
+										aria-label=".form-control-sm search"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<button id="searchRentRecordBtn" type="button" class="btn btn-primary w-100 m-2">검색</button>
+									</td>
+									<td></td>
+								</tr>
+							</tbody>
+							</table>
+					</div>
+					<!-- Sales Chart End -->
+					<div class="col-sm-12 col-xl-6">
+						<div class="bg-light text-center rounded p-4">
+							<div
+								class="d-flex align-items-center justify-content-between mb-4">
+								<h6 class="mb-0">도서 정보</h6>
+							</div>
+							<table class="table small">
+								<thead class="small">
 									<tr>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">도서 조회</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('admin/rent-record')">대여 기록</button>
-										</td>
+										<th scope="col">#</th>
+										<th scope="col">도서명</th>
+										<th scope="col">대여자</th>
+										<th scope="col">대여일</th>
+										<th scope="col">반납일</th>
 									</tr>
-									<tr>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">도서 등록</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">연체 도서</button>
-										</td>
-									</tr>
-									<tr>
-
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">도서 삭제</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('admin/stock-count')">재고 조사</button>
-										</td>
-
-									</tr>
+								</thead>
+								<tbody id="receivedData">
+									
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<!-- Sales Chart End -->
-
 				</div>
 			</div>
 			<!-- Footer Start -->
@@ -213,27 +217,25 @@
 		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
 			class="bi bi-arrow-up"></i></a>
 	</div>
-	<script type="text/javascript">
-	function go(url){
-		window.location.href = url;
-	}
-	
-	</script>
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="/lib/chart/chart.min.js"></script>
-	<script src="/lib/easing/easing.min.js"></script>
-	<script src="/lib/waypoints/waypoints.min.js"></script>
-	<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="/lib/tempusdominus/js/moment.min.js"></script>
-	<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script src="../../lib/chart/chart.min.js"></script>
+	<script src="../../lib/easing/easing.min.js"></script>
+	<script src="../../lib/waypoints/waypoints.min.js"></script>
+	<script src="../../lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="../../lib/tempusdominus/js/moment.min.js"></script>
+	<script src="../../lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script src="../../lib/tempusdominus/js/daterangepicker.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="/js/main.js"></script>
+	<script src="../../js/main.js"></script>
+	<script src="../../js/searchRentRecord.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,5 @@
 
 $(function() {
-	
 	$('#daterangepicker').daterangepicker({
 		"locale": {
 			"format": "YYYY-MM-DD",

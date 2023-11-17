@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.library.dto.BooksDTO;
+import com.library.dto.SearchRentRecordDto;
 import com.library.dto.StockBookDTO;
 
 @Mapper
@@ -22,4 +23,5 @@ public interface adminStockMapper {
 	public List<String> getIds();
 	public List<StockBookDTO> selectBooksByNStockNBook();
 	public List<StockBookDTO> selectBooksByYStockNBook();
+	public List<SearchRentRecordDto> selectRentRecordsByDateRange(String startDate,String endDate);
 }

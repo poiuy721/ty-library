@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.library.dto.BooksDTO;
+import com.library.dto.SearchRentRecordDto;
 import com.library.dto.StockBookDTO;
 import com.library.mapper.adminStockMapper;
 import com.library.service.StockService;
@@ -42,6 +43,10 @@ public class StockServiceImpl implements StockService {
 		}
 	public List<StockBookDTO> selectBooksByYStockNBook(){
 		return stockMapper.selectBooksByYStockNBook();
+	}
+	@Override
+	public List<SearchRentRecordDto> selectRentRecordsByDateRange(String startDate, String endDate) {
+		return stockMapper.selectRentRecordsByDateRange(startDate,endDate);
 	}
 	
 }

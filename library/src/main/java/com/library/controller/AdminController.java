@@ -8,11 +8,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.library.dto.BooksDTO;
+import com.library.dto.SearchRentRecordDto;
 import com.library.dto.StockBookDTO;
 import com.library.service.StockService;
 
@@ -96,6 +98,20 @@ public class AdminController {
 		}
 		
 		return "";
+	}
+	
+	
+	@RequestMapping("admin/rent-record")
+	public String getRentRecord() {
+		return "rent-record";
+	}
+	
+	@PostMapping("select-rent-record-by-date-range")
+	@ResponseBody
+	public List<SearchRentRecordDto> getRentRecords(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+		List<SearchRentRecordDto> result=stockService.selectRentRecordsByDateRange(startDate, endDate);
+		
+		return result;
 	}
 	
 	

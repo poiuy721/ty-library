@@ -23,8 +23,8 @@
 		resultType="com.library.dto.StockBookDTO">
 		select book_info.TITLE, books.B_ID
 		from book_info
-		join books 
-		on book_info.ISBN = books.ISBN 
+		join books
+		on book_info.ISBN = books.ISBN
 		WHERE B_ID = #{id}
 	</select>
 
@@ -52,28 +52,28 @@
 		WHERE B_STATUS = 'N' AND
 		STOCK_COUNT_STATUS = 'Y'
 	</select>
-	
+
 	<!-- 조인쿼리 셀렉 -->
 	<select id="selectBooksByNStockNBook"
 		resultType="com.library.dto.StockBookDTO">
 		select book_info.TITLE, books.B_ID
 		from book_info
-		join books 
-		on book_info.ISBN = books.ISBN 
-		and books.STOCK_COUNT_STATUS = 'N' 
+		join books
+		on book_info.ISBN = books.ISBN
+		and books.STOCK_COUNT_STATUS = 'N'
 		and books.B_STATUS = 'N'
 	</select>
-	
+
 	<select id="selectBooksByYStockNBook"
 		resultType="com.library.dto.StockBookDTO">
 		select book_info.TITLE, books.B_ID
 		from book_info
-		join books 
-		on book_info.ISBN = books.ISBN 
-		and books.STOCK_COUNT_STATUS = 'Y' 
+		join books
+		on book_info.ISBN = books.ISBN
+		and books.STOCK_COUNT_STATUS = 'Y'
 		and books.B_STATUS = 'N'
 	</select>
-	
+
 
 
 
@@ -84,8 +84,19 @@
 
 
 
-
-
+	<select id="selectRentRecordsByDateRange" parameterType="map"
+		resultType="com.library.dto.SearchRentRecordDto">
+		SELECT bi.TITLE, e.e_name, co.rent_date,
+		CASE
+		WHEN co.return_date IS NULL THEN '미반납'
+		ELSE co.return_date
+		END AS return_status
+		FROM checkout co
+		JOIN books b ON co.b_id = b.b_id
+		JOIN book_info bi ON b.ISBN = bi.ISBN
+		LEFT JOIN employees e ON co.e_id = e.e_id
+		WHERE co.rent_date BETWEEN #{param1} AND #{param2}
+	</select>
 
 
 </mapper>
