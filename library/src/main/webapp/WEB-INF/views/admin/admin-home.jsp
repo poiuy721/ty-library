@@ -175,7 +175,7 @@
 										</td>
 										<td>
 											<button type="button" class="btn btn-primary m-2"
-												onclick="go('admin/stock-count')">재고 조사</button>
+												onclick="goPost('admin/stock-count',0)">재고 조사</button>
 										</td>
 
 									</tr>
@@ -204,6 +204,11 @@
 					</div>
 				</div>
 			</div>
+			<!-- secreat form!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+					<form id="myForm"  method="post"
+						style="display: none;">
+						<input id="state_input" type="hidden" name="state" value="return">
+					</form>
 			<!-- Footer End -->
 		</div>
 		<!-- Content End -->
@@ -216,6 +221,13 @@
 	<script type="text/javascript">
 	function go(url){
 		window.location.href = url;
+	}
+	function goPost(url,state) {			
+		let form = document.getElementById('myForm');
+		let input = document.getElementById('state_input');
+		form.action = url;
+		input.value = state;
+		form.submit();
 	}
 	
 	</script>

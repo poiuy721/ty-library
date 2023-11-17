@@ -241,13 +241,19 @@
 	<script type="text/javascript">
 	let stockScan = document.getElementById("stock-select");
 	let stockFinish = document.getElementById("stock-finish");
+	let state = ${stock_state}
+	if(!state){
+		alert("잘못된 접근 입니다.");
+		console.log(state);
+		window.history.back();
+	}
 	
 	function determine(){
 		$.ajax({
             url: "/tylibrary/check-state", 
             type: "POST",	                    
             success: function (data) {
-           	 if (data<=1){
+           	 if (data<=2){
            		let result = confirm("정말로 조사를 시작하시겠습니까?");
            	    if (result) {
            	      stockScan.form.submit();
@@ -255,7 +261,7 @@
            	      alert("취소되었습니다.");
            	   	location.reload()
            	    }
-           	 }else if(data==2) { 
+           	 }else if(data==3) { 
            		 stockScan.form.submit();
              }
            	},            
@@ -265,11 +271,11 @@
         });
 	}
 	
-	if(${stock_state} <= 1){
+	if(state <= 2){
 		stockScan.value = "조사시작";
 			stockFinish.style.display="none";
 		
-	}else if(${stock_state} == 2){
+	}else if(state == 3){
 		stockScan.value = "스캔하기"
 			stockFinish.style.display="block";
 	}

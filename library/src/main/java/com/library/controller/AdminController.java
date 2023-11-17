@@ -68,7 +68,7 @@ public class AdminController {
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	@RequestMapping("admin/stock-count")
-	public String stockCount(@RequestParam(required = false) String stock, Model model) {
+	public String stockCount(@RequestParam(required = false) String stock, Model model, String state) {
 		a = stockService.selectBooksByNStateAndNStock();
 		if (stock == null) {
 			// 체크안됨
@@ -82,7 +82,7 @@ public class AdminController {
 			return "admin/stock-count-list";
 		} else if (stock.equals("start")) {
 			System.out.println("재고 스테이트 1 카메라 확인하러 갑니다.");
-			if (stockState == 0) stockState = 1;
+			if (stockState == 1) stockState = 2;
 			model.addAttribute("stock_state", stockState);
 			return "admin/stock-count-scan";
 		} else if (stock.equals("finish")) {
@@ -92,7 +92,7 @@ public class AdminController {
 			// 대여 책 표시
 			// model.addAttribute("book_three",stockService.selectBooksByYState());
 			// 조사완료 버튼
-			stockState = 0;
+			stockState = 1;
 			model.addAttribute("stock_state", stockState);
 			return "admin/stock-count-list";
 		}
@@ -109,7 +109,7 @@ public class AdminController {
 		stockState = Integer.parseInt(cameraState);
 		stockService.updateInitialNStock();
 		System.out.println(cameraState + "	camera state is ok?");
-		return 2;
+		return 3;
 	}
 
 	// 스캔 완료시 y로 변경 후 리턴

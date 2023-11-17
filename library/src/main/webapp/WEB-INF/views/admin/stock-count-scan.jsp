@@ -235,12 +235,12 @@
 				alert ("카메라가 있는 디바이스로 접속해주세요");
 				console.log("카메라를 찾지 못했습니다.");
 				window.history.back();
-				}else if(stock_state == 1){
+				}else if(stock_state == 2){
 					console.log("${stock_state}");
 					$.ajax({
 						url: "/tylibrary/stock-camera-ok",
 						type: "POST",
-						data: { cameraState: 2 },
+						data: { cameraState: 3 },
 						success: function (data) {
 							console.log("Y -> N 상태초기화 성공");
 							console.log(data);
@@ -267,7 +267,7 @@
 							lastResult = result.text;
 							let urlId = "/tylibrary/stock-is-exist?id="+result.text.split('?id=')[1];
 							//ajax사용으로 갱신 후 데이터 띄워줌
-							if(stock_state==2){
+							if(stock_state==3){
 								$.ajax({
 									url: urlId,
 									type: "GET",
