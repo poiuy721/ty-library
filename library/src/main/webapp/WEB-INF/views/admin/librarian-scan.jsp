@@ -1,15 +1,31 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+	pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
 <meta charset="utf-8">
 <title>DASHMIN - Bootstrap Admin Template</title>
+
+<style>
+/* CSS for positioning the video and canvas elements */
+#video-container {
+	position: relative;
+}
+
+#video, #canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+</style>
+
+
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
-
+<script type="text/javascript"
+	src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
 
@@ -40,8 +56,9 @@
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
 </head>
-
 <body>
+
+
 	<div class="container-xxl position-relative bg-white d-flex p-0">
 		<!-- Spinner Start -->
 		<div id="spinner"
@@ -64,7 +81,7 @@
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="img/user.jpg" alt=""
+						<img class="rounded-circle" src="/img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -120,70 +137,77 @@
 			<!-- Navbar End -->
 
 
-			<!-- Sale & Revenue Start -->
-			<div class="container-fluid pt-4 px-4">
-				<div class="row g-4">
-					<div class="col-sm-6 col-xl-3">
-						<div class="bg-light rounded d-md-flex align-items-center p-4">
-							<div class="ms-3">
-								<h2 class="mb-0 text-center">Í¥ÄÎ¶¨Ïûê ÌéòÏù¥ÏßÄ</h2>
-							</div>
+			<!-- Ω∫ƒ≥≥ π⁄Ω∫ -->
+
+			<div class="container-fluid pt-4 px-4"
+				style="width: 100%; height: 40%">
+				<div class="row g-4" style="height: 100%">
+					<div class="col-sm-12 col-xl-12" style="height: 100%">
+						<div id="video-container"
+							class="bg-light rounded d-md-flex align-items-center p-4"
+							style="height: 100%; border: 2px solid gray; overflow: hidden;">
+							<video id="video" style="object-fit: cover;"></video>
+							<canvas id="canvas" style="object-fit: cover; display: none;"></canvas>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Sale & Revenue End -->
 
-
-			<!-- Sales Chart Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
-					<div class="col-sm-12 col-xl-6">
+					<div class="col-sm-12 col-xl-12">
+
+						<button id="switchButton" class="btn btn-primary m-2 w-100"
+							style="margin: 0 !important; margin-top: 0.4em !important">»≠∏È¿¸»Ø</button>
+					</div>
+
+
+					<!-- »Æ¿Œ ∞·∞˙ -->
+					<div id="bookInfo" class="col-12" style="display: none">
 						<div class="bg-light text-center rounded p-4">
-
-							<h6 class="mb-0">Í¥ÄÎ¶¨Ïûê Ìôà</h6>
-
-							<table class="table table-borderless">
-								<thead>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">ÎèÑÏÑú Ï°∞Ìöå</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">ÎåÄÏó¨ Í∏∞Î°ù</button>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">ÎèÑÏÑú Îì±Î°ù</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">Ïó∞Ï≤¥ ÎèÑÏÑú</button>
-										</td>
-									</tr>
-									<tr>
-
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">ÎèÑÏÑú ÏÇ≠Ï†ú</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('admin/stock-count')">Ïû¨Í≥† Ï°∞ÏÇ¨</button>
-										</td>
-
-									</tr>
-								</tbody>
-							</table>
+							<h6 class="mb-0">√• ¡§∫∏</h6>
+							<div class="table-responsive">
+								<table class="table small">
+									<thead class="small">
+										<tr>
+											<th scope="col">µµº≠∏Ì</th>
+											<th scope="col">µµº≠ ID</th>
+										</tr>
+									</thead>
+									<tbody class="small">
+										<tr>
+											<td id="book_info1"></td>
+											<td id="book_info2"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
-					<!-- Sales Chart End -->
+
+					<!-- πˆ∆∞ -->
+					<div id="@@" class="col-12" style="display: none">
+						<div class="bg-light text-center rounded p-4">
+							<h6 class="mb-0">√• ¡§∫∏</h6>
+							<div class="table-responsive">
+								<table class="table small">
+									<thead class="small">
+										<tr>
+											<th scope="col">µµº≠∏Ì</th>
+											<th scope="col">µµº≠ ID</th>
+										</tr>
+									</thead>
+									<tbody class="small">
+										<tr>
+											<td id="book_info1"></td>
+											<td id="book_info2"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
 
 				</div>
 			</div>
@@ -196,7 +220,7 @@
 							&copy; <a href="#">Your Site Name</a>, All Right Reserved.
 						</div>
 						<div class="col-12 col-sm-6 text-center text-sm-end">
-							<!--/*** This template is free as long as you keep the footer author‚Äôs credit link/attribution link/backlink. If you'd like to use the template without the footer author‚Äôs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+							<!--/*** This template is free as long as you keep the footer author°Øs credit link/attribution link/backlink. If you'd like to use the template without the footer author°Øs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 							Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
 							Distributed By <a class="border-bottom"
 								href="https://themewagon.com" target="_blank">ThemeWagon</a>
@@ -210,16 +234,83 @@
 
 
 		<!-- Back to Top -->
-		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
-			class="bi bi-arrow-up"></i></a>
 	</div>
-	<script type="text/javascript">
-	function go(url){
-		window.location.href = url;
-	}
-	
-	</script>
 
+	<script type="text/javascript">
+	const switching = document.getElementById("switchButton");
+	const video = document.getElementById("video");
+	const canvas = document.getElementById("canvas");
+	const bookinfo = document.getElementById("bookInfo");
+	let state = '${state}'//π›≥≥¿Œ¡ˆ ¥Îø©¿Œ¡ˆ
+	if(!state){
+		alert("¿ﬂ∏¯µ» ¡¢±Ÿ ¿‘¥œ¥Ÿ.");
+		console.log("state");
+		window.history.back();
+	}
+	let i = 0;
+	let lastResult = "";
+	
+	//ƒ´∏ﬁ∂Û ∞¸∑√ «‘ºˆ
+	window.addEventListener('load', function () {
+	     let selectedDeviceId;
+	     const codeReader = new ZXing.BrowserMultiFormatReader()
+	     console.log('ZXing code reader initialized')
+	     codeReader.listVideoInputDevices().then((videoInputDevices) => {
+	    	   let numOfCamera = videoInputDevices.length;
+	    	   if (numOfCamera>1){
+	    		   alert ("ƒ´∏ﬁ∂Û∞° ¿÷¥¬ µπŸ¿ÃΩ∫∑Œ ¡¢º”«ÿ¡÷ººø‰")
+	    		   console.log("ƒ´∏ﬁ∂Û∏¶ √£¡ˆ ∏¯«ﬂΩ¿¥œ¥Ÿ.")
+	    		   window.history.back();
+	    	   }
+	    	   selectedDeviceId = videoInputDevices[i].deviceId	    	  
+	    	   switching.addEventListener('click', () => {
+	    		   i++;
+	    		   codeReader.reset();
+	    		   if(i == numOfCamera){
+	    			   i = 0;
+	    			   selectedDeviceId = videoInputDevices[i].deviceId;
+	    		   } else {
+	    			   selectedDeviceId = videoInputDevices[i].deviceId;
+	    			   }
+	    		   codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+	    			   if (result) {
+	    				   if(result.text != lastResult){
+	    					   lastResult = result.text;
+	    					   let urlId = "/tylibrary/check-bookInfo?id="+result.text.split('?id=')[1]+"&state="+state;
+	    					   $.ajax({
+    							   url: urlId,
+    							   type: "GET",
+    							   dataType: "json",
+    							   success: function (data) {
+    								   console.log(data)
+    								   canvas.width = video.offsetWidth;
+    								   canvas.height = video.offsetHeight;
+    								   canvas.getContext('2d').drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight, 0, 0, video.offsetWidth,video.offsetHeight);
+    								   canvas.style.display = "block";
+    								   bookinfo.style.display = "block";
+    								   $("#video-container").css({"border-color": "green","border-width":"5px"});
+    								   setTimeout(() => $("#video-container").css({"border-color": "gray","border-width":"2px"}),1000);
+    								   setTimeout(() => canvas.style.display="none",1000);
+    								   $("#book_info1").text(data.b_id);
+    								   $("#book_info2").text(data.title);
+    								   
+    								   },
+    								   error: function () {
+    									   alert("ø¿∑˘πﬂª˝");
+    									   }
+    								   });
+	    						   
+	    					   }
+	    				   }
+	    			   if (err && !(err instanceof ZXing.NotFoundException)) {
+	    				   console.error(err);
+	    				   }
+	    			   })
+	    			   })
+	    			   switching.click();
+	    	   }).catch((err) => {console.error(err)})
+	     })
+	</script>
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
@@ -234,6 +325,6 @@
 
 	<!-- Template Javascript -->
 	<script src="/js/main.js"></script>
-</body>
 
+</body>
 </html>

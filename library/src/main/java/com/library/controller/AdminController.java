@@ -1,10 +1,11 @@
 package com.library.controller;
 
-
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,126 +21,139 @@ import com.library.service.StockService;
 @RequestMapping("tylibrary")
 public class AdminController {
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	int stockState = 0;
-	
+
 	List<BooksDTO> a;
-	
+
 	@Autowired
 	private StockService stockService;
-	
-	@RequestMapping("admin2")
+
+	@RequestMapping("test")
 	public String admin() {
-		return "/admin/adminhome";
+		return "/admin/calendar";
 	}
-	// admin login
-	@RequestMapping("/admin")
-	public String index2(HttpSession session, @RequestParam(required = false) String adminId) {
-		//세션 조사로 관리자일 경우 if 분기문 관리자 페이지로
-		System.out.println(adminId);
-		session.setAttribute("adminId", adminId);
-		//조건문으로 관리자 확인
-		if(session.getAttribute("adminId")!=null) {
-			//테스트하기 위해 세션 시간 4초만 유지
-			session.setMaxInactiveInterval(4);
-			return "admin/adminhome";
+
+	// admin login ====================
+	@RequestMapping("/admin2")
+	public String index2(HttpSession session, @RequestParam(required = false, defaultValue = "login") String adminId) {
+		String sessionInfo = stockService.checkSession(session, adminId); //세션에 담긴 정보를 확인합니다.
+		if (sessionInfo.equals("admin")) { //정보가 어드민이면 어드민 화면으로
+			return "admin/admin-home";
+		} else if (sessionInfo.equals("librarian")) { //정보가 사서면 사서 화면으로
+			return "admin/librarian-home";
 		}
-		return "admin-login";
+		return "admin/admin-login";
 	}
-	
-	
-	//!!!!!!!미구현 알림!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	@RequestMapping("notyet")
-	public String notyet() {
-		return "test";
+
+	// 반납과 대여 컨트롤러
+	@RequestMapping("admin/librarian")
+	public String notyet(String state, Model model) {
+		System.out.println(state);
+		model.addAttribute("state", state);
+		return "admin/librarian-scan";
 	}
-	
+
 	@RequestMapping("isbn")
 	public String isbn() {
 		return "isbn";
 	}
-	
+
 	@RequestMapping("qrgen")
 	public String qrgen() {
 		return "qrgen";
 	}
-	
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	
+
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 	@RequestMapping("admin/stock-count")
-	public String stockCount(@RequestParam(required = false) String stock,Model model) {	
-		a=stockService.selectBooksByNStateAndNStock();
-		if (stock==null) {
-			//체크안됨
-			model.addAttribute("book_one",stockService.selectBooksByNStockNBook());
-			//체크됨
-			model.addAttribute("book_two",stockService.selectBooksByYStockNBook());
-			//대여 책 표시 
-			//model.addAttribute("book_three",stockService.selectBooksByYState());
-			//조사완료 버튼
-			model.addAttribute("stock_state",stockState);
+	public String stockCount(@RequestParam(required = false) String stock, Model model) {
+		a = stockService.selectBooksByNStateAndNStock();
+		if (stock == null) {
+			// 체크안됨
+			model.addAttribute("book_one", stockService.selectBooksByNStockNBook());
+			// 체크됨
+			model.addAttribute("book_two", stockService.selectBooksByYStockNBook());
+			// 대여 책 표시
+			// model.addAttribute("book_three",stockService.selectBooksByYState());
+			// 조사완료 버튼
+			model.addAttribute("stock_state", stockState);
 			return "admin/stock-count-list";
-		}else if (stock.equals("start")) {
-			System.out.println("@@@@@@@@@@@@@@@@@@@@");
-			if (stockState ==0) stockState = 1;
-			model.addAttribute("stock_state",stockState);
+		} else if (stock.equals("start")) {
+			System.out.println("재고 스테이트 1 카메라 확인하러 갑니다.");
+			if (stockState == 0) stockState = 1;
+			model.addAttribute("stock_state", stockState);
 			return "admin/stock-count-scan";
-		}else if(stock.equals("finish")) {
-			model.addAttribute("book_one",stockService.selectBooksByNStockNBook());
-			//체크됨
-			model.addAttribute("book_two",stockService.selectBooksByYStockNBook());
-			//대여 책 표시 
-			//model.addAttribute("book_three",stockService.selectBooksByYState());
-			//조사완료 버튼
+		} else if (stock.equals("finish")) {
+			model.addAttribute("book_one", stockService.selectBooksByNStockNBook());
+			// 체크됨
+			model.addAttribute("book_two", stockService.selectBooksByYStockNBook());
+			// 대여 책 표시
+			// model.addAttribute("book_three",stockService.selectBooksByYState());
+			// 조사완료 버튼
 			stockState = 0;
-			model.addAttribute("stock_state",stockState);
+			model.addAttribute("stock_state", stockState);
 			return "admin/stock-count-list";
 		}
-		
+
 		return "";
 	}
-	
-	
-	//ajax  모음-------------------------------
-	
-	//카메라 확인 후 n초기화
+
+	// ajax 모음-------------------------------
+	// 재고관련 ajax----------------------------------
+	// 카메라 확인 후 n초기화
 	@RequestMapping("/stock-camera-ok")
 	@ResponseBody
-	public String isCamera(@RequestParam String cameraState) {
+	public int isCamera(@RequestParam String cameraState) {
 		stockState = Integer.parseInt(cameraState);
-		System.out.println(cameraState+"	camera state is ok?");
-		if(cameraState.equals("2")) {
-			stockService.updateInitialNStock();
-			System.out.println(cameraState+"	camera state is ok?");
-		}
-		return "{ data: 2 }";
+		stockService.updateInitialNStock();
+		System.out.println(cameraState + "	camera state is ok?");
+		return 2;
 	}
-	//스캔 완료시 y로 변경 후 리턴
+
+	// 스캔 완료시 y로 변경 후 리턴
 	@RequestMapping("/stock-is-exist")
 	@ResponseBody
 	public StockBookDTO isExist(@RequestParam String id) {
-		stockService.updateyStockByBId(id);
-		return stockService.selectBooksByBId(id);
+		if(1==stockService.updateYStockByBId(id)) {
+			return stockService.selectBooksByBId(id);
+		}
+		return null;
 	}
-	
-	//스캔하기 클릭시 스테이트 체크용
+
+	// 스캔하기 클릭시 스테이트 체크용
 	@RequestMapping("/check-state")
 	@ResponseBody
 	public int determin() {
 		return stockState;
 	}
+	// 반납 대여 관련 ajax----------------------------------
+	@RequestMapping("/check-bookInfo")
+	@ResponseBody
+	public StockBookDTO doSometing(@RequestParam String id,@RequestParam String state) {
+		if(state.equals("return")) {
+			if(stockService.updateNStatusByBid(id)==1) {
+				System.out.println("리턴체크");
+				return stockService.selectBooksByBId(id);
+			}
+		}else if (state.equals("rent")) {
+			return stockService.selectBooksByBId(id);
+		}
+		return stockService.selectBooksByBId(id);
+	}
 	
 	
-	
-	//테스트용	
+	// 테스트용
 	@RequestMapping("/admin/testx")
 	public String asd() {
 		return "/admin/testxcz";
 	}
-	
+
 	@RequestMapping("/get-ids")
 	@ResponseBody
 	public List<String> getId() {
 		return stockService.getIds();
 	}
-	
+
 }

@@ -41,10 +41,47 @@
     }, {offset: '80%'});
 
 
+	function getWeekendDates(startDate, endDate) {
+		var weekendDates = [];
+
+		while (startDate <= endDate) {
+			if (startDate.getDay() === 0 || startDate.getDay() === 6) {
+				// 주말인 경우 날짜를 원하는 형식(예: 'YYYY/MM/DD')으로 포맷팅
+				var formattedDate = startDate.getFullYear() + '/' + (startDate.getMonth() + 1) + '/' + startDate.getDate();
+				weekendDates.push(formattedDate);
+			}
+			startDate.setDate(startDate.getDate() + 1);
+		}
+
+		return weekendDates;
+	}
+
+	function convertDay(toDay, weeks) {
+		let after = new Date(toDay.getTime() + 7 * weeks * 24 * 60 * 60 * 1000);
+		let year = after.getFullYear();
+		let month = after.getMonth() + 1;
+		let day = after.getDate();
+		let ret = year + "/" + (month < 10 ? "0" : "") + month + "/" + day;
+		return ret;
+	}
+
+
+
+
+
+	let toDay = new Date();
+	let minday = convertDay(toDay, 2)
+	var maxday = convertDay(toDay, 4);
+	var weekendDatesArray = getWeekendDates(toDay, new Date(toDay.getTime() + 7 * 4 * 24 * 60 * 60 * 1000));
     // Calender
     $('#calender').datetimepicker({
         inline: true,
-        format: 'L'
+		format: 'Y-m-d',
+		minDate: minday,
+		defaultDate: minday,
+		maxDate: maxday,
+		locale: moment.locale("ko"),
+		disabledDates: weekendDatesArray,
     });
 
 
