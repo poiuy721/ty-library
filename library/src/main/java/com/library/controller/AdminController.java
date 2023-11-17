@@ -36,7 +36,7 @@ public class AdminController {
 	}
 
 	// admin login ====================
-	@RequestMapping("/admin2")
+	@RequestMapping("/admin")
 	public String index2(HttpSession session, @RequestParam(required = false, defaultValue = "login") String adminId) {
 		String sessionInfo = stockService.checkSession(session, adminId); //세션에 담긴 정보를 확인합니다.
 		if (sessionInfo.equals("admin")) { //정보가 어드민이면 어드민 화면으로
