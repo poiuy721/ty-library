@@ -70,6 +70,7 @@ public class AdminController {
 	@RequestMapping("admin/stock-count")
 	public String stockCount(@RequestParam(required = false) String stock, Model model, String state) {
 		a = stockService.selectBooksByNStateAndNStock();
+		stockState = state == null ? stockState: Integer.parseInt(state);
 		if (stock == null) {
 			// 체크안됨
 			model.addAttribute("book_one", stockService.selectBooksByNStockNBook());

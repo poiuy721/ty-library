@@ -175,7 +175,7 @@
 										</td>
 										<td>
 											<button type="button" class="btn btn-primary m-2"
-												onclick="goPost('admin/stock-count',0)">재고 조사</button>
+												onclick="goPost('admin/stock-count',1)">재고 조사</button>
 										</td>
 
 									</tr>
