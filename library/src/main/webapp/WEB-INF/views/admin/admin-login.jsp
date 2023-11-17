@@ -54,7 +54,7 @@
                                 <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Admin Page</h3>
                             </a>
                         </div>
-                        <form action="/tylibrary/admin2" method="post"> 
+                        <form action="/tylibrary/admin" method="post"> 
 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="adminId" name="adminId">
 	                            <label for="adminId">Input Admin Id</label>
