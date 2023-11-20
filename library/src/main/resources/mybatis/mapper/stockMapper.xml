@@ -4,7 +4,7 @@
 
 <mapper namespace="com.library.mapper.adminStockMapper">
 
-	<!-- 초기화 -->
+	<!-- update -->
 	<update id="updateInitialNStock">
 		UPDATE books
 		SET STOCK_COUNT_STATUS = 'N'
@@ -18,7 +18,16 @@
 		STOCK_COUNT_STATUS = 'Y'
 		WHERE B_ID = #{id}
 	</update>
+	
+	<update id="updateNStatusByBid" parameterType="String">
+		UPDATE BOOKS
+		SET
+		B_STATUS = 'N'
+		WHERE B_ID = #{id}
+	</update>
 
+
+	<!-- select -->
 	<select id="selectBooksByBId" parameterType="string"
 		resultType="com.library.dto.StockBookDTO">
 		select book_info.TITLE, books.B_ID

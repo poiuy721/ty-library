@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,7 +64,7 @@
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="/img/user.jpg" alt=""
+						<img class="rounded-circle" src="img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -124,11 +123,10 @@
 			<!-- Sale & Revenue Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
-					<div class="col-sm-12 col-xl-12">
+					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
-							<div style="margin: auto">
-								<h2 class="mb-0 text-center"
-									style="item-align: center !important;">재고 조사</h2>
+							<div class="ms-3">
+								<h2 class="mb-0 text-center">도서관 페이지</h2>
 							</div>
 						</div>
 					</div>
@@ -140,78 +138,47 @@
 			<!-- Sales Chart Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
-					<div class="col-sm-12 col-xl-12">
-						<form action="stock-count" method="post">
-							<input type="text" name="stock" value="start"
-								style="display: none" id="goscan" /> <input type="button"
-								id="stock-select" class="btn btn-primary m-2 w-100" value="조사시작"
-								onclick="determine()" style="margin: 0 !important;" />
-						</form>
-					</div>
-
-
-					<!-- Sales Chart End -->
-					<div class="col-12">
+					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light text-center rounded p-4">
-							<h6 class="mb-0">재고 검사 미완료</h6>
-							<div class="table-responsive">
-								<table class="table small">
-									<thead class="small">
-										<tr>
-											<th scope="col">#</th>
-											<th scope="col">도서 ID</th>
-											<th scope="col">도서명</th>
-										</tr>
-									</thead>
-									<tbody class="small">
-										<c:forEach items="${book_one}" var="book"
-											varStatus="loopStatus">
-											<tr>
-												<th scope="row">${loopStatus.index + 1}</th>
-												<td>${book.b_id}</td>
-												<td>${book.title}</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
+
+							<h6 class="mb-0">도서관 홈</h6>
+
+							<table class="table table-borderless">
+								<thead>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="go()">도서 조회</button>
+										</td>
+
+									</tr>
+									<tr>
+
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="goPost('rent')">도서 대여</button>
+										</td>
+									</tr>
+									<tr>
+
+
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="goPost('return')">도서 반납</button>
+										</td>
+
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
-
-					<div class="col-12">
-						<div class="bg-light text-center rounded p-4">
-							<h6 class="mb-0">재고 검사 완료</h6>
-							<div class="table-responsive">
-								<table class="table small">
-									<thead class="small">
-										<tr>
-											<th scope="col">#</th>
-											<th scope="col">도서 ID</th>
-											<th scope="col">도서명</th>
-										</tr>
-									</thead>
-									<tbody class="small">
-										<c:forEach items="${book_two}" var="book"
-											varStatus="loopStatus">
-											<tr>
-												<th scope="row">${loopStatus.index + 1}</th>
-												<td>${book.b_id}</td>
-												<td>${book.title}</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-12 col-xl-12" id="stock-finish">
-						<form action="stock-count" method="post">
-							<input type="text" name="stock" value="finish"
-								style="display: none" /> <input type="submit" id="stock-select"
-								class="btn btn-primary m-2 w-100" value="조사종료"
-								style="margin: 0 !important;" />
-						</form>
-					</div>
+					<!-- secreat form!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+					<form id="myForm" action="admin/librarian" method="post"
+						style="display: none;">
+						<input id="state_input" type="hidden" name="state" value="return">
+					</form>
 				</div>
 			</div>
 			<!-- Footer Start -->
@@ -237,48 +204,19 @@
 
 
 		<!-- Back to Top -->
+		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+			class="bi bi-arrow-up"></i></a>
 	</div>
 	<script type="text/javascript">
-	let stockScan = document.getElementById("stock-select");
-	let stockFinish = document.getElementById("stock-finish");
-	let state = ${stock_state}
-	if(!state){
-		alert("잘못된 접근 입니다.");
-		console.log(state);
-		window.history.back();
-	}
-	
-	function determine(){
-		$.ajax({
-            url: "/tylibrary/check-state", 
-            type: "POST",	                    
-            success: function (data) {
-           	 if (data<=2){
-           		let result = confirm("정말로 조사를 시작하시겠습니까?");
-           	    if (result) {
-           	      stockScan.form.submit();
-           	    } else{
-           	      alert("취소되었습니다.");
-           	   	location.reload()
-           	    }
-           	 }else if(data==3) { 
-           		 stockScan.form.submit();
-             }
-           	},            
-            error: function () {
-           	 alert("오류@@발생")
-            }
-        });
-	}
-	
-	if(state <= 2){
-		stockScan.value = "조사시작";
-			stockFinish.style.display="none";
-		
-	}else if(state == 3){
-		stockScan.value = "스캔하기"
-			stockFinish.style.display="block";
-	}
+		function go(url) {
+			window.location.href = url;
+		}
+		function goPost(state) {			
+			let form = document.getElementById('myForm');
+			let input = document.getElementById('state_input')
+			input.value = state;
+			form.submit();
+		}
 	</script>
 
 	<!-- JavaScript Libraries -->

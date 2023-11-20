@@ -2,14 +2,18 @@ package com.library.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.library.dto.BooksDTO;
 import com.library.dto.SearchRentRecordDto;
 import com.library.dto.StockBookDTO;
 
 public interface StockService {
-
+	//update ================================
 	public void updateInitialNStock();
-	public void updateyStockByBId(String id);
+	public int updateYStockByBId(String id);
+	public int updateNStatusByBid(String id);
+	//select ================================
 	public StockBookDTO selectBooksByBId(String id);
 	public List<BooksDTO> selectBooksByYState();
 	public List<BooksDTO> selectBooksByNStateAndNStock();

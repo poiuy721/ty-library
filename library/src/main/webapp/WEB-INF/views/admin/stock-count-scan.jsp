@@ -218,94 +218,89 @@
 
 	<script type="text/javascript">
 	const switching = document.getElementById("switchButton");
-	const gotolist = document.getElementById("to-list");
 	const video = document.getElementById("video");
 	const canvas = document.getElementById("canvas");
-	const cap = document.getElementById("cap");	
 	let stock_state = ${stock_state};
 	let i = 0;
 	let lastResult = "";
 	
 	//카메라 관련 함수
 	window.addEventListener('load', function () {
-	     let selectedDeviceId;
-	     const codeReader = new ZXing.BrowserMultiFormatReader()
-	     console.log('ZXing code reader initialized')
-	     codeReader.listVideoInputDevices()
-	       .then((videoInputDevices) => {
-	    	   let numOfCamera = videoInputDevices.length;
-	    	   if (numOfCamera<1){
-	    		   alert ("카메라가 있는 디바이스로 접속해주세요")
-	    		   console.log("카메라를 찾지 못했습니다.")
-	    		   window.history.back();
-	    	   }else if(stock_state == 1){
-	    		   console.log("${stock_state}")
-	    		   $.ajax({
-	                     url: "/tylibrary/stock-camera-ok", 
-	                     type: "POST",
-	                     data: { cameraState: 2 },	                    
-	                     success: function (data) {
-	                    	 console.log("Y -> N 상태초기화 성공");
-	                    	 stock_state = 2;
-	                    	 console.log("${stock_state}")
+		let selectedDeviceId;
+		const codeReader = new ZXing.BrowserMultiFormatReader();
+		console.log('ZXing code reader initialized');
+		codeReader.listVideoInputDevices().then((videoInputDevices) => {//사용가능한 카메라가 있는지 찾아 videoInputDevices로 배열생성 
+			let numOfCamera = videoInputDevices.length;
+			if (numOfCamera<1){
+				alert ("카메라가 있는 디바이스로 접속해주세요");
+				console.log("카메라를 찾지 못했습니다.");
+				window.history.back();
+				}else if(stock_state == 2){
+					console.log("${stock_state}");
+					$.ajax({
+						url: "/tylibrary/stock-camera-ok",
+						type: "POST",
+						data: { cameraState: 3 },
+						success: function (data) {
+							console.log("Y -> N 상태초기화 성공");
+							console.log(data);
+							stock_state = data;
 	                     },
 	                     error: function () {
 	                    	 alert("오류@@발생")
 	                     }
-	               });
-	    		   
-	    	   }
-	    	   selectedDeviceId = videoInputDevices[i].deviceId	    	  
-	    	  switching.addEventListener('click', () => {
-	    		   i++;
-	    		   codeReader.reset()
-	        	if(i == numOfCamera){
-	        		i = 0;
-	        		selectedDeviceId = videoInputDevices[i].deviceId
-	        	}else{
-	        		selectedDeviceId = videoInputDevices[i].deviceId
-	        	}
-	           codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
-	               if (result) {
-	            	 if(result.text != lastResult){
-	            		 lastResult = result.text;
-		                 let urlId = "/tylibrary/stock-is-exist?id="+result.text.split('?id=')[1];
-		                 //ajax사용으로 갱신 후 데이터 띄워줌
-		                 if(stock_state==2){
-		                	 $.ajax({
-			                     url: urlId,
-			                     type: "GET",
-			                     dataType: "json",
-			                     success: function (data) {	 
-			                    	canvas.width = video.offsetWidth;
-			                    	canvas.height = video.offsetHeight;
-			                 		canvas.getContext('2d').drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight, 0, 0, video.offsetWidth,video.offsetHeight);
-			                 		canvas.style.display = "block";
-			                 		$("#video-container").css({"border-color": "green","border-width":"5px"});
-			                 		setTimeout(() => $("#video-container").css({"border-color": "gray","border-width":"2px"}),1000)
-			                    	setTimeout(() => canvas.style.display="none",1000)
-			                    	$("#book_info1").text(data.b_id);
-			                    	$("#book_info2").text(data.title);
-			                     },
-			                     error: function () {
-			                    	 alert("오류발생")
-			                     }
-			                 });
-		                 }		            
-	            	 }
-	               }
-	               if (err && !(err instanceof ZXing.NotFoundException)) {
-	                 console.error(err)
-	                 document.getElementById('result').textContent = err
-	               }
-	             })
-	         })
-	         switching.click();
-	       })
-	       .catch((err) => {
-	         console.error(err)
-	       })
-	   })
+	                     });
+					}
+			selectedDeviceId = videoInputDevices[i].deviceId;
+			switching.addEventListener('click', () => {
+				i++;
+				codeReader.reset();
+				if(i == numOfCamera){
+					i = 0;
+					selectedDeviceId = videoInputDevices[i].deviceId
+					}else{
+						selectedDeviceId = videoInputDevices[i].deviceId;
+						}
+				codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+					if (result) {
+						if(result.text != lastResult){
+							lastResult = result.text;
+							let urlId = "/tylibrary/stock-is-exist?id="+result.text.split('?id=')[1];
+							//ajax사용으로 갱신 후 데이터 띄워줌
+							if(stock_state==3){
+								$.ajax({
+									url: urlId,
+									type: "GET",
+									dataType: "json",
+									success: function (data) {
+										if(data){
+											canvas.width = video.offsetWidth;
+											canvas.height = video.offsetHeight;
+											canvas.getContext('2d').drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight, 0, 0, video.offsetWidth,video.offsetHeight);
+											canvas.style.display = "block";
+											$("#video-container").css({"border-color": "green","border-width":"5px"});
+											setTimeout(() => $("#video-container").css({"border-color": "gray","border-width":"2px"}),1000);
+											setTimeout(() => canvas.style.display="none",1000);
+											$("#book_info1").text(data.b_id);
+											$("#book_info2").text(data.title);
+											}
+										},
+										error: function () {
+											alert("오류발생");
+											}
+										});
+								}
+							}
+						}
+					if (err && !(err instanceof ZXing.NotFoundException)) {
+						console.error(err);
+						document.getElementById('result').textContent = err;
+						}
+					})
+					})
+					switching.click();
+			}).catch((err) => {console.error(err)})
+		})
 	</script>
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
