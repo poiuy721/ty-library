@@ -159,7 +159,8 @@
 						<form action="stock-count">
 							<input type="submit" id="stock-select"
 								class="btn btn-primary m-2 w-100" value="현황보기"
-								style="margin: 0 !important;" />
+								style="margin: 0 !important;" /><input type="text" name="state"
+								value="1" style="display: none" />
 						</form>
 						<button id="switchButton" class="btn btn-primary m-2 w-100"
 							style="margin: 0 !important; margin-top: 0.4em !important">화면전환</button>
@@ -220,7 +221,7 @@
 	const switching = document.getElementById("switchButton");
 	const video = document.getElementById("video");
 	const canvas = document.getElementById("canvas");
-	let stock_state = ${stock_state};
+	let stock_state = ${state};
 	let i = 0;
 	let lastResult = "";
 	
@@ -285,8 +286,9 @@
 											$("#book_info2").text(data.title);
 											}
 										},
-										error: function () {
+										error: function (data) {
 											alert("오류발생");
+											//alert(data.[0]);
 											}
 										});
 								}

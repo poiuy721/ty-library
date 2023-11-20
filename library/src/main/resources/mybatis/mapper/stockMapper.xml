@@ -12,7 +12,7 @@
 		B_STATUS != 'Y'
 	</update>
 
-	<update id="updateyStockByBId" parameterType="String">
+	<update id="updateYStockByBId" parameterType="String">
 		UPDATE BOOKS
 		SET
 		STOCK_COUNT_STATUS = 'Y'

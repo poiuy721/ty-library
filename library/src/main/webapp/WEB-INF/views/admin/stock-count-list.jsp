@@ -143,8 +143,10 @@
 					<div class="col-sm-12 col-xl-12">
 						<form action="stock-count" method="post">
 							<input type="text" name="stock" value="start"
-								style="display: none" id="goscan" /> <input type="button"
-								id="stock-select" class="btn btn-primary m-2 w-100" value="조사시작"
+								style="display: none" id="goscan" /> <input type="text"
+								name="state" value="1" style="display: none" /><input
+								type="button" id="stock-select"
+								class="btn btn-primary m-2 w-100" value="조사시작"
 								onclick="determine()" style="margin: 0 !important;" />
 						</form>
 					</div>
@@ -207,8 +209,9 @@
 					<div class="col-sm-12 col-xl-12" id="stock-finish">
 						<form action="stock-count" method="post">
 							<input type="text" name="stock" value="finish"
-								style="display: none" /> <input type="submit" id="stock-select"
-								class="btn btn-primary m-2 w-100" value="조사종료"
+								style="display: none" /> <input type="text" name="state"
+								value="1" style="display: none" /><input type="submit"
+								id="stock-select" class="btn btn-primary m-2 w-100" value="조사종료"
 								style="margin: 0 !important;" />
 						</form>
 					</div>
@@ -241,7 +244,7 @@
 	<script type="text/javascript">
 	let stockScan = document.getElementById("stock-select");
 	let stockFinish = document.getElementById("stock-finish");
-	let state = ${stock_state}
+	let state = ${state} == null ? null : ${state};
 	if(!state){
 		alert("잘못된 접근 입니다.");
 		console.log(state);
@@ -259,7 +262,6 @@
            	      stockScan.form.submit();
            	    } else{
            	      alert("취소되었습니다.");
-           	   	location.reload()
            	    }
            	 }else if(data==3) { 
            		 stockScan.form.submit();

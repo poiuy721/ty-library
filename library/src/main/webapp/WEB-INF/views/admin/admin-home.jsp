@@ -123,8 +123,8 @@
 			<!-- Sale & Revenue Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
-					<div class="col-sm-6 col-xl-3">
-						<div class="bg-light rounded d-md-flex align-items-center p-4">
+					<div class="col-sm-12 col-xl-12">
+						<div class="bg-light text-center rounded p-4">
 							<div class="ms-3">
 								<h2 class="mb-0 text-center">관리자 페이지</h2>
 							</div>
@@ -138,7 +138,7 @@
 			<!-- Sales Chart Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
-					<div class="col-sm-12 col-xl-6">
+					<div class="col-sm-12 col-xl-12">
 						<div class="bg-light text-center rounded p-4">
 
 							<h6 class="mb-0">관리자 홈</h6>
@@ -154,7 +154,7 @@
 										</td>
 										<td>
 											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">대여 기록</button>
+												onclick="go('admin/rent-record')">대여 기록</button>
 										</td>
 									</tr>
 									<tr>

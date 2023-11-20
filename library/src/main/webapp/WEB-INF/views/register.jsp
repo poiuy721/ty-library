@@ -8,6 +8,18 @@
 
 <meta charset="utf-8">
 <title>DASHMIN - Bootstrap Admin Template</title>
+<style>
+/* CSS for positioning the video and canvas elements */
+#video-container {
+	position: relative;
+}
+
+#video {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+</style>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -43,6 +55,8 @@
 <link href="css/style.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
 </head>
 
 <body>
@@ -141,89 +155,111 @@
 
 
 			<!-- Sales Chart Start -->
-			<div class="container-fluid pt-4 px-4">
-				<div class="row g-4">
-					<div class="col-sm-12 col-xl-6">
-						<div
-							class="d-flex align-items-center justify-content-between mb-4">
-							<h6 class="mb-0">| 도서 등록</h6>
+			<div class="container-fluid pt-4 px-4"
+				style="width: 100%; height: 40%; display: none" id="scan">
+				<div class="row g-4" style="height: 100%">
+					<div class="col-sm-12 col-xl-12" style="height: 100%">
+						<div id="video-container"
+							class="bg-light rounded d-md-flex align-items-center p-4"
+							style="height: 100%; border: 2px solid gray; overflow: hidden;">
+							<video id="video" style="object-fit: cover;"></video>
 						</div>
+						<button id="switchButton" class="btn btn-primary m-2 w-100"
+							style="margin: 0 !important; margin-top: 0.2em !important;">화면전환</button>
 					</div>
+				</div>
+			</div>
+			<div class="container-fluid pt-4 px-4" style="margin-top: 1.4em;">
+				<div class="row g-4">
+
+
 					<!-- Sales Chart End -->
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light rounded p-4">
-						
-						<form action="/selectBookInfo" method="post">
-						
-							<table class="table table-borderless small">
-								<tbody>
-									<tr>
-										<td>
-											
-											<div class="form-floating mb-3">
-												
-													<input type="text" class="form-control"
-														id="floatingInputISBN" placeholder="ISBN" name ="isbn"> <label
-														for="floatingInputISBN">ISBN</label>
-												
-											</div>
-										</td>
-										<td><button type="button" class="btn btn-secondary m-2 isbnBtn" id ="clickIsbn" >Search</button></td>
-												
-									</tr>
 
- 
-									
+							<form action="/selectBookInfo" method="post">
 
-
-									<tr>
-										<td colspan="2">
-											<div class="form-floating mb-3">
-												<input type="text" class="form-control" value="" name="title"
-													id="floatingInputTitle" placeholder="도서명"> <label
-													for="floatingInputTitle">도서명</label>
-											</div>
-										</td>
-										<td></td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div class="form-floating mb-3">
-												<input type="text" class="form-control" value="" name="author"
-													id="floatingInputAuthor" placeholder="저자명"> <label
-													for="floatingInputAuthor">저자명</label>
-											</div>
-										</td>
-										<td></td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div class="form-floating mb-3">
-												<input type="text" class="form-control" value="" name="publisher"
-													id="floatingInputPublisher" placeholder="출판사"> <label
-													for="floatingInputPublisher">출판사</label>
-											</div>
-										</td>
-										<td></td>
-									</tr>
-									<tr>
-									
-									<td colspan="2">
-											<div class="form-floating mb-3">
-												<input type="text" class="form-control" value="" name="category"
-													id="floatingInputCategory" placeholder="카테고리"> <label
-													for="floatingInputCategory">카테고리</label>
-											</div>
-										</td>
-										<td></td>
+								<table class="table table-borderless small">
+									<tbody>
 										<tr>
-										<td colspan="2">
-											<button class="btn btn-primary w-100 m-2" type="submit">등록</button>
-											
-										</td>
-									</tr>
-								</tbody>
-							</table>
+											<td>
+
+												<div class="form-floating mb-3">
+
+													<input type="text" class="form-control"
+														id="floatingInputISBN" placeholder="ISBN" name="isbn">
+													<label for="floatingInputISBN">ISBN</label>
+
+												</div>
+											</td>
+											<td>
+												<div class="d-flex align-items-center">
+													<!-- 수평으로 정렬하는 div -->
+													<button type="button" class="btn btn-secondary m-2 isbnBtn"
+														id="clickIsbn">Search</button>
+													<button type="button" class="btn btn-secondary"
+														id="scanIsbn">
+														<img src="img/scan.png" style="width: 20px; height: 20px;" />
+													</button>
+												</div>
+											</td>
+
+										</tr>
+
+
+
+
+
+										<tr>
+											<td colspan="2">
+												<div class="form-floating mb-3">
+													<input type="text" class="form-control" value=""
+														name="title" id="floatingInputTitle" placeholder="도서명">
+													<label for="floatingInputTitle">도서명</label>
+												</div>
+											</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<div class="form-floating mb-3">
+													<input type="text" class="form-control" value=""
+														name="author" id="floatingInputAuthor" placeholder="저자명">
+													<label for="floatingInputAuthor">저자명</label>
+												</div>
+											</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<div class="form-floating mb-3">
+													<input type="text" class="form-control" value=""
+														name="publisher" id="floatingInputPublisher"
+														placeholder="출판사"> <label
+														for="floatingInputPublisher">출판사</label>
+												</div>
+											</td>
+											<td></td>
+										</tr>
+										<tr>
+
+											<td colspan="2">
+												<div class="form-floating mb-3">
+													<input type="text" class="form-control" value=""
+														name="category" id="floatingInputCategory"
+														placeholder="카테고리"> <label
+														for="floatingInputCategory">카테고리</label>
+												</div>
+											</td>
+											<td></td>
+										<tr>
+											<td colspan="2">
+												<button class="btn btn-primary w-100 m-2" type="submit">등록</button>
+
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</form>
 						</div>
 					</div>
@@ -253,39 +289,80 @@
 
 		<!-- Back to Top -->
 	</div>
+
+	<script type="text/javascript">
+	const scan = document.getElementById("scan");
+	const switching = document.getElementById("switchButton");
+	let i = 0;
 	
-<script type="text/javascript">															
-									$("#clickIsbn").click(function(){ 
-										 const isbn = $("#floatingInputISBN").val();
-										$.ajax({
-													type : 'get', // 타입 (get, post, put 등등)    
-													url : '/searchIsbn',
-													// 요청할 서버url   
-													async : true, // 비동기화 여부 (default : true)   
-													
-													//dataType : 'String', // 데이터 타입 (html, xml, json, text 등등)    
-													data :{ 
-														name: isbn
-													},
-													success : function(data) {
-														console.log(" ajax 통신성공!!");
-														console.log(data);
-														
-														
-														$('input[name=title]').attr('value',data.title);
-														$('input[name=author]').attr('value',data.author);
-														$('input[name=publisher]').attr('value',data.publisher);
-													      														
-													},
-													error : function(request,
-															status, error) { // 결과 에러 콜백함수        
-														console.log(error)
-													}
-												})
-									})
-									</script>
-									
-									
+	$("#scanIsbn").click(function () {
+		const codeReader = new ZXing.BrowserMultiFormatReader();
+		console.log('ZXing code reader initialized');
+		codeReader.listVideoInputDevices().then((videoInputDevices) => {//사용가능한 카메라가 있는지 찾아 videoInputDevices로 배열생성 
+			let numOfCamera = videoInputDevices.length;
+			if (numOfCamera<-1){
+				alert ("카메라가 있는 디바이스로 접속해주세요");
+				console.log("카메라를 찾지 못했습니다.");
+			}else{
+				scan.style.display="block";
+			}
+			let selectedDeviceId = videoInputDevices[i].deviceId;
+			$("#switchButton").off('click').on('click', () => {
+				i++;
+				codeReader.reset();
+				if(i == numOfCamera){
+					i = 0;
+					selectedDeviceId = videoInputDevices[i].deviceId
+					}else{
+						selectedDeviceId = videoInputDevices[i].deviceId;
+						}
+				codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+					if (result) {
+							$('#floatingInputISBN').val(result.text);
+							scan.style.display="none";
+							i=0;
+							codeReader.reset();
+						}
+					if (err && !(err instanceof ZXing.NotFoundException)) {
+						console.error(err);
+						document.getElementById('result').textContent = err;
+						}
+					})
+					})
+					switching.click();
+			}).catch((err) => {console.error(err)})
+		})
+	
+	
+		$("#clickIsbn").click(function() {
+			const isbn = $("#floatingInputISBN").val();
+			$.ajax({
+				type : 'get', // 타입 (get, post, put 등등)    
+				url : '/searchIsbn',
+				// 요청할 서버url   
+				async : true, // 비동기화 여부 (default : true)   
+
+				//dataType : 'String', // 데이터 타입 (html, xml, json, text 등등)    
+				data : {
+					name : isbn
+				},
+				success : function(data) {
+					console.log(" ajax 통신성공!!");
+					console.log(data);
+
+					$('input[name=title]').attr('value', data.title);
+					$('input[name=author]').attr('value', data.author);
+					$('input[name=publisher]').attr('value', data.publisher);
+
+				},
+				error : function(request, status, error) { // 결과 에러 콜백함수        
+					console.log(error)
+				}
+			})
+		})
+	</script>
+
+
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
