@@ -45,8 +45,7 @@ public class bookmanagementServiceImpl implements bookmanagementService{
 
 	
 	@Override
-	public EmployeeDTO checkEmplInfoByBid(String bookId, String e_id, String management_type) {
-		int b_id = Integer.parseInt(bookId);
+	public EmployeeDTO checkEmplInfoByBid(int b_id, String e_id, String management_type) {
 		
 		EmployeeDTO employee = null; 
 		EmployeeDTO returnValue = null;
@@ -73,9 +72,8 @@ public class bookmanagementServiceImpl implements bookmanagementService{
 	
 
 	@Override
-	public String getRecentReturnDate(String bookId) {
+	public String getRecentReturnDate(int b_id) {
 		
-		int b_id = Integer.parseInt(bookId);
 		BooksDTO book = bookmanagementMapper.selectBooks(b_id);
 		
 		// date to string + 날짜 타입 지정
@@ -88,9 +86,9 @@ public class bookmanagementServiceImpl implements bookmanagementService{
 	}
 	
 	@Override
-	public void updateBooks(String bookId, String due_date) {
+	public void updateBooks(int b_id, String due_date) {
 		
-		int b_id = Integer.parseInt(bookId);
+		//int b_id = Integer.parseInt(bookId);
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyyy-MM-dd");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -111,9 +109,9 @@ public class bookmanagementServiceImpl implements bookmanagementService{
 
 
 	@Override
-	public void insertCheckout(String bookId, String e_id) {
+	public void insertCheckout(int b_id, String e_id) {
 		
-		int b_id = Integer.parseInt(bookId);
+		//int b_id = Integer.parseInt(bookId);
 		String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyyy-MM-dd");
@@ -135,9 +133,9 @@ public class bookmanagementServiceImpl implements bookmanagementService{
 	
 
 	@Override
-	public void updateCheckout(String bookId, String e_id) {
+	public void updateCheckout(int b_id, String e_id) {
 		
-		int b_id = Integer.parseInt(bookId);
+		//int b_id = Integer.parseInt(bookId);
 		String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyyy-MM-dd");
@@ -165,26 +163,22 @@ public class bookmanagementServiceImpl implements bookmanagementService{
 	// ===================================================================
 
 	@Override
-	public BookInfoDTO selectBookInfo(String bookId) {
-		int b_id = Integer.parseInt(bookId);
+	public BookInfoDTO selectBookInfo(int b_id) {
 		return bookmanagementMapper.selectBookInfo(b_id);
 	}
 	
 	@Override
-	public BooksDTO selectBooks(String bookId) {
-		int b_id = Integer.parseInt(bookId);
+	public BooksDTO selectBooks(int b_id) {
 		return bookmanagementMapper.selectBooks(b_id);
 	}
 
 	@Override
-	public EmployeeDTO selectEmplInfoByBid(String bookId) {
-		int b_id = Integer.parseInt(bookId);
+	public EmployeeDTO selectEmplInfoByBid(int b_id) {
 		return bookmanagementMapper.selectEmplInfoByBid(b_id);
 	}
 
 	@Override
-	public String selectCidByBid(String bookId) {
-		int b_id = Integer.parseInt(bookId);
+	public String selectCidByBid(int b_id) {
 		return bookmanagementMapper.selectCidByBid(b_id);
 	}
 

@@ -105,11 +105,14 @@
 		<!-- Content Start -->
 		<div class="content">
 			<!-- Navbar Start -->
-			<nav
-				class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+			<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
 				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
+				<ul class="nav justify-content-end">
+		            <li style="font-size:11px; vertical-align:middle; text-align:right" >사원 번호: ${employee.e_id}  | 사원명 : ${employee.e_name}
+		            </li>
+		        </ul>	
 			</nav>
 			<!-- Navbar End -->
 

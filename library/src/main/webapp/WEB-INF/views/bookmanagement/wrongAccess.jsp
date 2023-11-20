@@ -57,18 +57,25 @@
 								<p class="text-center mb-0">잘못된 접근입니다.<br/>다시 시도해주세요.</p>
 							</c:if>
 							<c:if test="${error_type eq 'cant_renew'}">
-								<p class="text-center mb-0">잘못된 접근입니다.(사번 오류)<br/>사번을 올바르게 입력하거나 '양도' 메뉴를 이용해주세요.</p>
+								<p class="text-center mb-0">잘못된 접근입니다. [사번 오류]<br/><br/>사번을 올바르게 입력하거나<br/>'양도' 메뉴를 이용해주세요.</p>
 							</c:if>
 							<c:if test="${error_type eq 'cant_assign'}">
-								<p class="text-center mb-0">잘못된 접근입니다.(사번 오류)<br/>사번을 올바르게 입력하거나 '연장' 메뉴를 이용해주세요.</p>
+								<p class="text-center mb-0">잘못된 접근입니다. [사번 오류]<br/><br/>사번을 올바르게 입력하거나<br/>'연장' 메뉴를 이용해주세요.</p>
 							</c:if>
+							<c:if test="${error_type eq 'error_assign'}">
+								<p class="text-center mb-0">양도 정보가 없거나<br/>양도가 이미 완료되었습니다.</p>
+							</c:if>
+							<c:if test="${error_type eq 'error_renew'}">
+								<p class="text-center mb-0">양도 정보가 없거나<br/>연장이 이미 완료되었습니다.</p>
+							</c:if>
+						<%
+						// error_type 세션값 삭제
+						session.removeAttribute("error_type");
+						%>
                             
                         </div>
 							<button type="button" class="btn btn-primary py-3 w-100 mb-4" onclick="location='/tylibrary/books/${b_id}'">도서 페이지로 이동</button>
-						<%
-						// wrong_access 세션값 삭제
-						session.removeAttribute("wrong_access");
-						%>
+
                     </div>
                 </div>
             </div>
