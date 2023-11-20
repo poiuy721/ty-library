@@ -23,4 +23,5 @@ public interface StockService {
 	public List<StockBookDTO> selectBooksByYStockNBook();
 	
 	public List<SearchRentRecordDto> selectRentRecordsByDateRange(String startDate,String endDate);
+	public String checkSession(HttpSession session, String adminId);
 }
