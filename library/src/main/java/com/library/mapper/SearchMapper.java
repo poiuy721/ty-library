@@ -16,6 +16,8 @@ public interface SearchMapper {
 	public List<SearchResultDto> getLists(SearchQuery query) throws Exception;
 
 	public List<SearchResultDto> getBook(int id);
+
+	public List<OverdueDto> getOverdue();
 	
 
 }

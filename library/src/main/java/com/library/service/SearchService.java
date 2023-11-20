@@ -19,4 +19,7 @@ public interface SearchService {
 
 	public List<SearchResultDto> getBook(int id);
 
+
+	public List<OverdueDto> getOverdue();
+
 }

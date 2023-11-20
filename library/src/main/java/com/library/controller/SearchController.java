@@ -28,6 +28,7 @@ import com.library.service.SearchService;
  * 
  */
 @Controller
+@RequestMapping("tylibrary")
 public class SearchController {
 
 	private final Logger logger=LoggerFactory.getLogger(this.getClass());
@@ -36,7 +37,7 @@ public class SearchController {
 	private SearchService searchService;
 
 
-	@RequestMapping("search")
+	@RequestMapping("/search")
 	public String getSearch() {
 		return "search";
 	}
@@ -52,7 +53,7 @@ public class SearchController {
 		return "search-result";
 	}
 	
-	@GetMapping("searchbook/{id}")
+	@GetMapping("/searchbook/{id}")
 	public String getSearchBook(@PathVariable int id,Model m) {
 		
 		List<SearchRemoveDuplicateDto> information = searchService.removeDuplicates(searchService.getBook(id));
@@ -60,6 +61,15 @@ public class SearchController {
 		m.addAttribute("information", information);
 		
 		return "search-book";
+	}
+	
+	@GetMapping("/admin/overdue")
+	public String getOverdue(Model m) {
+		
+		List<OverdueDto> informations = searchService.getOverdue();
+		m.addAttribute("informations",informations);
+		
+		return "overdue";
 	}
 
 }

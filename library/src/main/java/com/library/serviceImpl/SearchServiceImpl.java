@@ -84,4 +84,9 @@ public class SearchServiceImpl implements SearchService{
 		return searchMapper.getBook(id);
 	}
 
+	@Override
+	public List<OverdueDto> getOverdue() {
+		return searchMapper.getOverdue();
+	}
+
 }
