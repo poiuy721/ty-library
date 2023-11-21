@@ -131,7 +131,7 @@
 					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
-								<h2 class="mb-0 text-center">도서 등록</h2>
+								<h2 class="mb-0 text-center">도서 삭제</h2>
 							</div>
 						</div>
 					</div>
@@ -146,114 +146,24 @@
 					<div class="col-sm-12 col-xl-6">
 						<div
 							class="d-flex align-items-center justify-content-between mb-4">
-							<h6 class="mb-0">| 도서 등록</h6>
+							<h6 class="mb-0">| 정말로 해당 도서를 삭제하시겠습니까?</h6>
 						</div>
 					</div>
 					<!-- Sales Chart End -->
+					
+					<form id="deleteForm">
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light rounded p-4">
 
-							<form action="/selectBookInfo" method="post">
 
-								<table class="table table-borderless small">
-									<tbody>
-										<tr>
-											<td>
-
-												<div class="form-floating mb-3">
-
-													<input type="text" class="form-control"
-														id="floatingInputISBN" placeholder="ISBN" name="isbn">
-													<label for="floatingInputISBN">ISBN</label>
-
-												</div>
-												<!-- isbn잘못 입력시 -->
-													<div>
-									<span id="result_checkPsw" style="font-size: 12px"></span>
-								</div>
-												
-												
-											</td>
-											<td><button type="button"
-													class="btn btn-secondary m-2 isbnBtn" id="clickIsbn">Search</button></td>
-
-										</tr>
-
-
-
-
-
-										<tr>
-											<td colspan="2">
-												<div class="form-floating mb-3">
-													<input type="text" class="form-control" value=""
-														name="title" id="floatingInputTitle" placeholder="도서명">
-													<label for="floatingInputTitle">도서명</label>
-												</div>
-											</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												<div class="form-floating mb-3">
-													<input type="text" class="form-control" value=""
-														name="author" id="floatingInputAuthor" placeholder="저자명">
-													<label for="floatingInputAuthor">저자명</label>
-												</div>
-											</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												<div class="form-floating mb-3">
-													<input type="text" class="form-control" value=""
-														name="publisher" id="floatingInputPublisher"
-														placeholder="출판사"> <label
-														for="floatingInputPublisher">출판사</label>
-												</div>
-											</td>
-											<td></td>
-										</tr>
-										<tr>
-											<!-- 
-									<td colspan="2">
-											<div class="form-floating mb-3">
-												<input type="text" class="form-control" value="" name="category"
-													id="floatingInputCategory" placeholder="카테고리"> <label
-													for="floatingInputCategory">카테고리</label>
-											</div>
-										</td>
-										<td></td>
-										<tr>
-										<td colspan="2">
-										 -->
-											<td colspan="2">
-												<div class="form-floating mb-3">
-													<select class="form-select" name="category"
-														id="floatingInputCategory" aria-label="카테고리 선택">
-														<option value="" disabled selected></option>
-														<!-- 다른 옵션들을 추가하세요 -->
-														<option value="일반서적">일반 서적</option>
-														<option value="기술서적">기술 서적</option>
-														
-													</select> <label for="floatingInputCategory">카테고리</label>
-												</div>
-											</td>
-											<td></td>
-											<tr>
-											<td colspan="2">
-										 
-											<button class="btn btn-primary w-100 m-2" type="submit">등록</button>
-
-											</td>
-										</tr>
-										
-								
-									</tbody>
-							</table>
-							</form>
+        	<input type="hidden" id="b_idToDelete" name="b_id" value="">
+							<center><button type="button"  onclick="confirmDelete()" class="btn btn-primary rounded-pill m-2">YES</button>
+							<button type="button"  onclick="cancelDelete()" class="btn btn-danger rounded-pill m-2"> NO </button></center>
+							
 						</div>
 					</div>
+					</form>
+					
 				</div>
 			</div>
 			<!-- Footer Start -->
@@ -280,56 +190,38 @@
 
 		<!-- Back to Top -->
 	</div>
-	
-<script type="text/javascript">
-	$("#clickIsbn").click(function() {
-		const isbn = $("#floatingInputISBN").val();
-		$.ajax({
-			type : 'get', // 타입 (get, post, put 등등)    
-			url : '/searchIsbn',
-			// 요청할 서버url   
-			async : true, // 비동기화 여부 (default : true)   
+  <script>
+     function confirmDelete() {
+    	    var b_idToDelete = document.getElementById('b_idToDelete').value;
+    	    var previousUrl = document.getElementById('previousUrl');
+			let b_id = "${b_id}";
+			
+    	    // 서버로 도서 삭제 요청 보내기
+    	    $.ajax({
+    	        type: 'post',
+    	        url: '/deleteBook',
+    	        async: true,
+    	        data: {
+    	            b_id: b_id
+    	        },
+    	        success: function (data) {
+    	            console.log("도서 삭제 성공!!");
+    	            alert("삭제 되었습니다.");
+    	            // 서버에서 성공적으로 삭제되면 delete.jsp로 이동
+    	            window.location.href = '/delete';
+    	        },
+    	        error: function (request, status, error) {
+    	            console.log(error);
+    	        }
+    	    });
+    	}
 
-			//dataType : 'String', // 데이터 타입 (html, xml, json, text 등등)    
-			data : {
-				name : isbn
-			},
-			success : function(data) {
-				console.log(" ajax 통신성공!!");
-				console.log(data);
+        function cancelDelete() {
+            // 이전 페이지로 이동
+            window.location.href = '/delete';
+        }
+    </script>	
 
-				$('input[name=title]').attr('value', data.title);
-				$('input[name=author]').attr('value', data.author);
-				$('input[name=publisher]').attr('value', data.publisher);
-
-			},
-			error : function(request, status, error) { // 결과 에러 콜백함수        
-				console.log(error)
-			}
-		})
-	})
-</script>
-
-<!-- isbn잘못 입력시 상태창 -->
-<script>
-
-$("#floatingInputISBN").blur(function () {
-	let isbnCheck = /^.{13}$/;	
-    let result = "";
-
-    if (!isbnCheck.test($("#floatingInputISBN").val())) {
-      result =
-        "없는 정보 입니다.";
-      $("#result_checkPsw").html(result).css("color", "red");
-      $("#floatingInputISBN").val("");
-    } else {
-      result = "해당 ISBN으로 도서를 조회합니다.";
-      $("#result_checkPsw").html(result).css("color", "green");
-    }
-  });
-  
-</script>				
-									
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script

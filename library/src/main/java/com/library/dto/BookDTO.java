@@ -7,8 +7,8 @@ public class BookDTO {
 	private String author;
 	private String publisher;
 	private String category;
-	private int b_id;
 	
+	private String b_id;
 	
 	public String getIsbn() {
 		return isbn;
@@ -50,11 +50,11 @@ public class BookDTO {
 		this.category = category;
 	}
 
-	public int getB_id() {
+	public String getB_id() {
 		return b_id;
 	}
 
-	public void setB_id(int b_id) {
+	public void setB_id(String b_id) {
 		this.b_id = b_id;
 	}
 
@@ -74,4 +74,15 @@ public class BookDTO {
 		this.publisher=publisher;
 		this.category=category;
 	}
+	
+	public BookDTO(String b_id, String isbn, String title, String author) {
+		this.isbn=isbn;
+		this.b_id=b_id;
+		this.title=title;
+		this.author=author;
+	}
+	
+	
+	
+		
 }

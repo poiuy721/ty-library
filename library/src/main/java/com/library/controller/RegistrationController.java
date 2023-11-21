@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +33,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.library.dto.BookDTO;
+import com.library.dto.BookDeleteDto;
 import com.library.mapper.LibMapper;
 
 
@@ -46,18 +48,30 @@ LibMapper libMapper;
 
 @RequestMapping("/test")
 public String test() {
-	return "test";
+	return "delete";
 }
 
-@RequestMapping("/insertMain")
+@RequestMapping("/insertMain") 
 public String insertMain() {
 	
 	return "register";
 }
 
+@RequestMapping("/deleteCheck")
+public String deleteCheck(@RequestParam String b_id, Model model) {
+	model.addAttribute("b_id", b_id);
+	return "deleteCheck";
+}
+
+@RequestMapping("/delete")
+public String delete() {
 	
-	//책 등록
-		
+	return "delete";
+}
+
+
+
+	//책 등록		
 @RequestMapping("/selectBookInfo")
 
 public String RegistrationController(
@@ -80,6 +94,30 @@ public String RegistrationController(
      }
 	
 }
+@PostMapping("/bringBooksInfo")
+@ResponseBody
+public List<BookDeleteDto> bringBooksInfo(
+        @RequestParam("isbn") String isbn, Model model) {
+
+    // LibMapper를 통해 책 정보를 가져오기
+    List<BookDeleteDto> bookInfo = libMapper.bringBooksInfo(isbn);
+
+    // 모델에 책 정보 추가
+    
+
+    
+    return bookInfo;
+}
+@PostMapping("/deleteBook")
+public String deleteBook(
+		@RequestParam("b_id") String b_id) {
+	System.out.println("deleteBook 메소드 호출됨. b_id: " + b_id);
+	        // 도서 삭제 로직을 수행
+		 libMapper.deleteBook(b_id);
+	      
+		 return "delete";
+	}
+	
 
 
 
@@ -120,9 +158,7 @@ public String insertBooks(HttpServletRequest httpServletRequest, Model model) {
 	return "test";
 }
 
-	
-	
-    
+
 	// ============ &&& isbn 받아오기 (JSON 버전) &&& ============ 
 	@RequestMapping(value ="/searchIsbn")
 		@ResponseBody
@@ -220,6 +256,10 @@ public String insertBooks(HttpServletRequest httpServletRequest, Model model) {
 	        return null;
 	        
 	    }
+	    
+	    
+	 
+	    
 	    }
 	  
 	
@@ -227,5 +267,4 @@ public String insertBooks(HttpServletRequest httpServletRequest, Model model) {
 	 
 
 	
-
 

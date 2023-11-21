@@ -131,7 +131,7 @@
 					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
-								<h2 class="mb-0 text-center">도서 등록</h2>
+								<h2 class="mb-0 text-center">도서 삭제</h2>
 							</div>
 						</div>
 					</div>
@@ -146,14 +146,14 @@
 					<div class="col-sm-12 col-xl-6">
 						<div
 							class="d-flex align-items-center justify-content-between mb-4">
-							<h6 class="mb-0">| 도서 등록</h6>
+							<h6 class="mb-0">| 도서 삭제</h6>
 						</div>
 					</div>
 					<!-- Sales Chart End -->
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light rounded p-4">
 
-							<form action="/selectBookInfo" method="post">
+							<form action="/bringBooksInfo" method="post">
 
 								<table class="table table-borderless small">
 									<tbody>
@@ -164,143 +164,77 @@
 
 													<input type="text" class="form-control"
 														id="floatingInputISBN" placeholder="ISBN" name="isbn">
-													<label for="floatingInputISBN">ISBN</label>
-
-												</div>
-												<!-- isbn잘못 입력시 -->
-													<div>
-									<span id="result_checkPsw" style="font-size: 12px"></span>
-								</div>
-												
-												
+													<label for="floatingInputISBN">ISBN으로 검색</label>
 											</td>
 											<td><button type="button"
 													class="btn btn-secondary m-2 isbnBtn" id="clickIsbn">Search</button></td>
 
 										</tr>
 
+										<div class="container-fluid pt-4 px-4">
+											<div class="row g-4">
+												<div class="col-sm-12 col-xl-6">
+													<div class="bg-light rounded h-100 p-4">
 
-
-
-
-										<tr>
-											<td colspan="2">
-												<div class="form-floating mb-3">
-													<input type="text" class="form-control" value=""
-														name="title" id="floatingInputTitle" placeholder="도서명">
-													<label for="floatingInputTitle">도서명</label>
-												</div>
-											</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												<div class="form-floating mb-3">
-													<input type="text" class="form-control" value=""
-														name="author" id="floatingInputAuthor" placeholder="저자명">
-													<label for="floatingInputAuthor">저자명</label>
-												</div>
-											</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												<div class="form-floating mb-3">
-													<input type="text" class="form-control" value=""
-														name="publisher" id="floatingInputPublisher"
-														placeholder="출판사"> <label
-														for="floatingInputPublisher">출판사</label>
-												</div>
-											</td>
-											<td></td>
-										</tr>
-										<tr>
-											<!-- 
-									<td colspan="2">
-											<div class="form-floating mb-3">
-												<input type="text" class="form-control" value="" name="category"
-													id="floatingInputCategory" placeholder="카테고리"> <label
-													for="floatingInputCategory">카테고리</label>
-											</div>
-										</td>
-										<td></td>
-										<tr>
-										<td colspan="2">
-										 -->
-											<td colspan="2">
-												<div class="form-floating mb-3">
-													<select class="form-select" name="category"
-														id="floatingInputCategory" aria-label="카테고리 선택">
-														<option value="" disabled selected></option>
-														<!-- 다른 옵션들을 추가하세요 -->
-														<option value="일반서적">일반 서적</option>
-														<option value="기술서적">기술 서적</option>
-														
-													</select> <label for="floatingInputCategory">카테고리</label>
-												</div>
-											</td>
-											<td></td>
-											<tr>
-											<td colspan="2">
-										 
-											<button class="btn btn-primary w-100 m-2" type="submit">등록</button>
-
-											</td>
-										</tr>
-										
-								
+														<table class="table">
+															<thead>
+																<tr>
+																	<th scope="col">번호</th>
+																	<th scope="col">제목</th>
+																	<th scope="col">도서아이디</th>
+																
+																	<th scope="col">X</th>
+																</tr>
+															</thead>
+															<tbody id="content">
+															</tbody>
+														</table>
+													</div>
 									</tbody>
-							</table>
+								</table>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Footer Start -->
 
-			<div class="container-fluid pt-4 px-4">
-				<div class="bg-light rounded-top p-4">
-					<div class="row">
-						<div class="col-12 col-sm-6 text-center text-sm-start">
-							&copy; <a href="#">Your Site Name</a>, All Right Reserved.
-						</div>
-						<div class="col-12 col-sm-6 text-center text-sm-end">
-							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-							Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
-							Distributed By <a class="border-bottom"
-								href="https://themewagon.com" target="_blank">ThemeWagon</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Footer End -->
 		</div>
 		<!-- Content End -->
 
 
 		<!-- Back to Top -->
 	</div>
+	<script type="text/javascript">
 	
-<script type="text/javascript">
 	$("#clickIsbn").click(function() {
 		const isbn = $("#floatingInputISBN").val();
 		$.ajax({
-			type : 'get', // 타입 (get, post, put 등등)    
-			url : '/searchIsbn',
+			type : 'post', // 타입 (get, post, put 등등)    
+			url : '/bringBooksInfo',
 			// 요청할 서버url   
 			async : true, // 비동기화 여부 (default : true)   
 
 			//dataType : 'String', // 데이터 타입 (html, xml, json, text 등등)    
 			data : {
-				name : isbn
+				isbn : isbn
 			},
 			success : function(data) {
 				console.log(" ajax 통신성공!!");
 				console.log(data);
-
-				$('input[name=title]').attr('value', data.title);
-				$('input[name=author]').attr('value', data.author);
-				$('input[name=publisher]').attr('value', data.publisher);
+				$('#content').empty();
+				var content='';
+				var num=1;
+				for(var i=0;i<data.length;i++){
+					content+='<tr>'
+					content+='<td>'+num+'</td>'
+					content+='<td>'+data[i].title+'</td>'
+					content+='<td>'+data[i].b_id+'</td>'
+					content += '<td><button type="button" class="btn btn-danger deleteBtn" data-b_id="' + data[i].b_id + '">Delete</button></td>'
+					content+='</tr>'
+					num ++;	
+				}
+						
+				$('#content').append(content);
 
 			},
 			error : function(request, status, error) { // 결과 에러 콜백함수        
@@ -308,28 +242,49 @@
 			}
 		})
 	})
+	
 </script>
 
-<!-- isbn잘못 입력시 상태창 -->
+<script type="text/javascript">
+    $(document).on('click', '.deleteBtn', function () {
+        var b_idToDelete = $(this).data('b_id');
+       console.log(b_idToDelete);
+        // 현재 페이지 URL 저장
+       
+        var previousUrl = window.location.href;
+        // 삭제 확인 페이지로 이동
+        
+      
+        window.location.href = '/deleteCheck?b_id='+b_idToDelete;
+    });
+</script>
+
+<!-- 바로삭제 
 <script>
+    $(document).on('click', '.deleteBtn', function () {
+        var b_idToDelete = $(this).data('b_id');
+        var currentRow = $(this); // 현재 행을 저장하는 변수 추가
 
-$("#floatingInputISBN").blur(function () {
-	let isbnCheck = /^.{13}$/;	
-    let result = "";
-
-    if (!isbnCheck.test($("#floatingInputISBN").val())) {
-      result =
-        "없는 정보 입니다.";
-      $("#result_checkPsw").html(result).css("color", "red");
-      $("#floatingInputISBN").val("");
-    } else {
-      result = "해당 ISBN으로 도서를 조회합니다.";
-      $("#result_checkPsw").html(result).css("color", "green");
-    }
-  });
-  
-</script>				
-									
+        // 서버로 도서 삭제 요청 보내기
+        $.ajax({
+            type: 'post',
+            url: '/deleteBook', 
+            async: true,
+            data: {
+                b_id: b_idToDelete
+            },
+            success: function (data) {
+                console.log("도서 삭제 성공!!");
+                // 서버에서 성공적으로 삭제되면 해당 행을 화면에서도 삭제
+                currentRow.closest('tr').remove(); // 수정된 부분
+            },
+            error: function (request, status, error) {
+                console.log(error);
+            }
+        });
+    });
+</script>
+-->
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
