@@ -139,18 +139,20 @@ public class BookManagementController {
 				model.addAttribute("management_type", "rent");
 
 				return "bookmanagement/selectDate";
+				//return "bookmanagement/selectDate_jquery";
 			}
 		}
 
 		// ============ &&& 대여 기간 선택 &&& ============
 		@RequestMapping(value = "/tylibrary/rent/due")
 		@ResponseBody
-		public String rent_due(@RequestParam(value = "arr[]") String[] arr, HttpSession session, HttpServletRequest request,
+		public String rent_due(@RequestParam(value = "arr[]") String[] pickedDate, HttpSession session, HttpServletRequest request,
 				Model model) {
 
 			// 대여 정보 확인 페이지에 표시될 내용
 			String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			String due_date = arr[0] + "-" + arr[1] + "-" + arr[2];
+			String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
+			//String due_date = pickedDate[0].replace("/", "-");
 
 			// 세션에 정보 저장
 			session.setAttribute("rent_date", rent_date);
@@ -214,18 +216,20 @@ public class BookManagementController {
 				session.setAttribute("employee", employee);
 				model.addAttribute("recent_return_date", recent_return_date);
 				return "bookmanagement/selectDate_renew";
+				//return "bookmanagement/selectDate_jquery_renew";
 			}
 		}
 
 		// ============ &&& 연장 : 기간 선택 &&& ============
 		@RequestMapping(value = "/tylibrary/renew/due")
 		@ResponseBody
-		public String renew_due(@RequestParam(value = "arr[]") String[] arr, HttpSession session,
+		public String renew_due(@RequestParam(value = "arr[]") String[] pickedDate, HttpSession session,
 				HttpServletRequest request, Model model) {
 
 			// 연장 정보 확인 페이지에 표시될 내용
 			String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			String due_date = arr[0] + "-" + arr[1] + "-" + arr[2];
+			String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
+			//String due_date = pickedDate[0].replace("/", "-");
 
 			// 세션에 정보 저장 
 			session.setAttribute("rent_date", rent_date);
@@ -292,18 +296,20 @@ public class BookManagementController {
 				session.setAttribute("employee", employee);
 				model.addAttribute("management_type", "assign");
 				return "bookmanagement/selectDate";
+				//return "bookmanagement/selectDate_jquery";
 			}
 		}
 
 		// ============ &&& 대여 기간 선택 &&& ============
 		@RequestMapping(value = "/tylibrary/assign/due")
 		@ResponseBody
-		public String assign_due(@RequestParam(value = "arr[]") String[] arr, HttpSession session,
+		public String assign_due(@RequestParam(value = "arr[]") String[] pickedDate, HttpSession session,
 				HttpServletRequest request, Model model) {
 
 			// 대여 정보 확인 페이지에 표시될 내용
 			String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			String due_date = arr[0] + "-" + arr[1] + "-" + arr[2];
+			String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
+			//String due_date = pickedDate[0].replace("/", "-");
 
 			// 세션에 정보 저장 > 저장해야 jsp 화면에 정보 표시됨 **
 			session.setAttribute("rent_date", rent_date);
