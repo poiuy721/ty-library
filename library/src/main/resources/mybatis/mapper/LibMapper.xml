@@ -34,18 +34,22 @@ insert into books(isbn,b_status,stock_count_status,due_date)
     SELECT books.b_id, books.isbn, book_info.title, book_info.author
     FROM books
     JOIN book_info ON books.isbn = book_info.isbn
-    WHERE books.isbn = #{isbn} AND books.b_status != 'B'
+    WHERE books.isbn = #{isbn} AND books.b_status != 'D'
 </select>
 
 
 <update id="deleteBook" parameterType="com.library.dto.BookDeleteDto">
    update books
    set
-      b_status = "B"
+      b_status = "D"
    where
       b_id = #{b_id}
 </update>
 
+<select id="getLastInsertId">
+select LAST_INSERT_ID()
+
+</select>
 
 
 

@@ -144,7 +144,7 @@
 							class="d-flex align-items-center justify-content-between mb-4">
 							<h6 class="mb-0">| 도서 조회</h6>
 						</div>
-						<form action="/search/filtered" method="post">
+						<form action="/tylibrary/search/filtered" method="post">
 							<table class="table table-borderless text-center">
 								<thead>
 								</thead>

@@ -9,7 +9,7 @@
 		UPDATE books
 		SET STOCK_COUNT_STATUS = 'N'
 		WHERE
-		B_STATUS != 'Y'
+		B_STATUS = 'A'
 	</update>
 
 	<update id="updateYStockByBId" parameterType="String">
@@ -22,7 +22,7 @@
 	<update id="updateNStatusByBid" parameterType="String">
 		UPDATE BOOKS
 		SET
-		B_STATUS = 'N'
+		B_STATUS = 'A'
 		WHERE B_ID = #{id}
 	</update>
 
@@ -44,21 +44,21 @@
 		resultType="com.library.dto.BooksDTO">
 		SELECT *
 		FROM books
-		WHERE B_STATUS = 'Y'
+		WHERE B_STATUS != 'A'
 	</select>
 	<!-- 대여 아닌거 재고 상태 조회 -->
 	<select id="selectBooksByNStateAndNStock"
 		resultType="com.library.dto.BooksDTO">
 		SELECT *
 		FROM books
-		WHERE B_STATUS = 'N' AND
+		WHERE B_STATUS = 'A' AND
 		STOCK_COUNT_STATUS = 'N'
 	</select>
 	<select id="selectBooksByNStateAndYStock"
 		resultType="com.library.dto.BooksDTO">
 		SELECT *
 		FROM books
-		WHERE B_STATUS = 'N' AND
+		WHERE B_STATUS = 'A' AND
 		STOCK_COUNT_STATUS = 'Y'
 	</select>
 
@@ -70,7 +70,7 @@
 		join books
 		on book_info.ISBN = books.ISBN
 		and books.STOCK_COUNT_STATUS = 'N'
-		and books.B_STATUS = 'N'
+		and books.B_STATUS = 'A'
 	</select>
 
 	<select id="selectBooksByYStockNBook"
@@ -80,7 +80,7 @@
 		join books
 		on book_info.ISBN = books.ISBN
 		and books.STOCK_COUNT_STATUS = 'Y'
-		and books.B_STATUS = 'N'
+		and books.B_STATUS = 'A'
 	</select>
 
 

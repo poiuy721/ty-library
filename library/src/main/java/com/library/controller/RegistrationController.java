@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -36,235 +34,204 @@ import com.library.dto.BookDTO;
 import com.library.dto.BookDeleteDto;
 import com.library.mapper.LibMapper;
 
-
 @Controller
+@RequestMapping("tylibrary/admin")
 public class RegistrationController {
 
-BookDTO Books = new BookDTO(); // *** ArrayList 형태로 바꿔도 무방 ***
-	
+	private int id;
+	private String url;
 
-@Autowired
-LibMapper libMapper;
+	BookDTO Books = new BookDTO(); // *** ArrayList 형태로 바꿔도 무방 ***
 
-@RequestMapping("/test")
-public String test() {
-	return "delete";
-}
+	@Autowired
+	LibMapper libMapper;
 
-@RequestMapping("/insertMain") 
-public String insertMain() {
-	
-	return "register";
-}
-
-@RequestMapping("/deleteCheck")
-public String deleteCheck(@RequestParam String b_id, Model model) {
-	model.addAttribute("b_id", b_id);
-	return "deleteCheck";
-}
-
-@RequestMapping("/delete")
-public String delete() {
-	
-	return "delete";
-}
-
-
-
-	//책 등록		
-@RequestMapping("/selectBookInfo")
-
-public String RegistrationController(
-		@RequestParam("isbn") String isbn) {
-	
-
-     int match = libMapper.selectBookInfo(isbn);
-    
-     System.out.println(this.getClass().getName() + "::RegistrationController()::" 
-    		 + "match=" + match);
-     
-     if(match == 0) {
-    	
-    	 System.out.println("없는 책");
-    	 return "forward:/insertBookInfo";
-    	 
-     }else {
-    	 System.out.println("이미 있는 책");
-    	 return "forward:/insertBooks";
-     }
-	
-}
-@PostMapping("/bringBooksInfo")
-@ResponseBody
-public List<BookDeleteDto> bringBooksInfo(
-        @RequestParam("isbn") String isbn, Model model) {
-
-    // LibMapper를 통해 책 정보를 가져오기
-    List<BookDeleteDto> bookInfo = libMapper.bringBooksInfo(isbn);
-
-    // 모델에 책 정보 추가
-    
-
-    
-    return bookInfo;
-}
-@PostMapping("/deleteBook")
-public String deleteBook(
-		@RequestParam("b_id") String b_id) {
-	System.out.println("deleteBook 메소드 호출됨. b_id: " + b_id);
-	        // 도서 삭제 로직을 수행
-		 libMapper.deleteBook(b_id);
-	      
-		 return "delete";
+	@RequestMapping("/register-book/done")
+	public String test() {
+		return "register-check";
 	}
-	
 
+	@RequestMapping("/register-book")
+	public String insertMain() {
 
+		return "register";
+	}
 
+	// 책 등록
 
+	@RequestMapping("/selectBookInfo")
 
+	public String register(
+			@RequestParam("isbn") String isbn) {
 
-@RequestMapping("/insertBookInfo")
-public String insertBookInfo(HttpServletRequest httpServletRequest, Model model) {
-	System.out.println("insertBookInfo");
+		int match = libMapper.selectBookInfo(isbn);
+		if (match == 0) {
 
-	String isbn = httpServletRequest.getParameter("isbn");
-    String title = httpServletRequest.getParameter("title");
-    String author = httpServletRequest.getParameter("author");
-    String publisher = httpServletRequest.getParameter("publisher");
-    String category = httpServletRequest.getParameter("category");
-    model.addAttribute("isbn", isbn);
-    model.addAttribute("title", title);
-    model.addAttribute("author", author);
-    model.addAttribute("publisher", publisher);
-    model.addAttribute("category", category); 
-    
-    libMapper.insertBookInfo(new BookDTO(isbn,title,author,publisher,category));
-    libMapper.insertBooks(new BookDTO (isbn));
-    
-	return "test";
-}
+			return "forward:/tylibrary/admin/insertBookInfo";
 
+		} else {
+			return "forward:/tylibrary/admin/insertBooks";
+		}
 
-@RequestMapping("/insertBooks")
-public String insertBooks(HttpServletRequest httpServletRequest, Model model) {
-	System.out.println("insertBooks");
+	}
 
-	String isbn = httpServletRequest.getParameter("isbn");
-    model.addAttribute("isbn", isbn);
-    libMapper.insertBooks(new BookDTO (isbn));
-    
-    
-	return "test";
-}
+	@RequestMapping("/insertBookInfo")
+	public String insertBookInfo(HttpServletRequest httpServletRequest, Model model) {
 
+		String isbn = httpServletRequest.getParameter("isbn");
+		String title = httpServletRequest.getParameter("title");
+		String author = httpServletRequest.getParameter("author");
+		String publisher = httpServletRequest.getParameter("publisher");
+		String category = httpServletRequest.getParameter("category");
+		model.addAttribute("isbn", isbn);
+		model.addAttribute("title", title);
+		model.addAttribute("author", author);
+		model.addAttribute("publisher", publisher);
+		model.addAttribute("category", category);
 
-	// ============ &&& isbn 받아오기 (JSON 버전) &&& ============ 
-	@RequestMapping(value ="/searchIsbn")
-		@ResponseBody
-		 public BookDTO searchIsbn_json(@RequestParam("name")String isbn) throws IOException{
-		 
-		System.out.println(isbn);
-		//9788994492032
-		//9791193026052
-				//bookIsbn = "978896372065"; // 임의로 값 넣어둔 것 ***
-				BookDTO book = new BookDTO();
-				
-				StringBuilder urlBuilder = new StringBuilder("https://www.nl.go.kr/seoji/SearchApi.do?cert_key=461ef3112bc97ed275fbed101ea88fbabffae5fa94df34ee5a54dff44beb7c99"
-						+ "&result_style=json&page_no=1&page_size=1&isbn="+isbn); /*URL*/
-				URL url = new URL(urlBuilder.toString());
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestMethod("GET");
-				conn.setRequestProperty("Content-type", "application/json");
-				System.out.println("Response code: " + conn.getResponseCode());
-				BufferedReader rd;
+		libMapper.insertBookInfo(new BookDTO(isbn, title, author, publisher, category));
+		libMapper.insertBooks(new BookDTO(isbn));
 
-				// 서비스코드 정상이면 200~300사이의 숫자 나옴
-				if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-						rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-				} else {
-						rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-				}
-				StringBuilder sb = new StringBuilder();
-				String line;
-				while ((line = rd.readLine()) != null) {
-						sb.append(line);
-				}
-				rd.close();
-				conn.disconnect();
+		this.id = libMapper.getLastInsertId();
 
-				try {
-					JSONObject result = (JSONObject) new JSONParser().parse(sb.toString());
-					JSONArray bookdata = (JSONArray) result.get("docs");
-					System.out.println(bookdata);
+		this.url = httpServletRequest.getParameter("qrcode") + "/books/" + id;
 
-					for(int i=0; i<bookdata.size(); i++){
-						result = (JSONObject) bookdata.get(i);
-					
-					    String title = (String) result.get("TITLE");
-					    String publisher = (String) result.get("PUBLISHER");
-					    String author = (String) result.get("AUTHOR");
-					    
-					    book = new BookDTO(isbn, title, author, publisher,"cat");
-					}
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				
-				return book;
-		 }
-	
-	
+		return "register-check";
+	}
+
+	@RequestMapping("/insertBooks")
+	public String insertBooks(HttpServletRequest httpServletRequest, Model model) {
+
+		String isbn = httpServletRequest.getParameter("isbn");
+		model.addAttribute("isbn", isbn);
+		libMapper.insertBooks(new BookDTO(isbn));
+
+		this.id = libMapper.getLastInsertId();
+
+		this.url = httpServletRequest.getParameter("qrcode") + "/books/" + id;
+
+		return "register-check";
+	}
+
+	// ============ &&& isbn 받아오기 (JSON 버전) &&& ============
+	@RequestMapping(value = "/searchIsbn")
+	@ResponseBody
+	public BookDTO searchIsbn_json(@RequestParam("name") String isbn) throws IOException {
+
+		BookDTO book = new BookDTO();
+
+		StringBuilder urlBuilder = new StringBuilder(
+				"https://www.nl.go.kr/seoji/SearchApi.do?cert_key=461ef3112bc97ed275fbed101ea88fbabffae5fa94df34ee5a54dff44beb7c99"
+						+ "&result_style=json&page_no=1&page_size=1&isbn=" + isbn); /* URL */
+		URL url = new URL(urlBuilder.toString());
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		BufferedReader rd;
+
+		// 서비스코드 정상이면 200~300사이의 숫자 나옴
+		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+
+		try {
+			JSONObject result = (JSONObject) new JSONParser().parse(sb.toString());
+			JSONArray bookdata = (JSONArray) result.get("docs");
+
+			for (int i = 0; i < bookdata.size(); i++) {
+				result = (JSONObject) bookdata.get(i);
+
+				String title = (String) result.get("TITLE");
+				String publisher = (String) result.get("PUBLISHER");
+				String author = (String) result.get("AUTHOR");
+
+				book = new BookDTO(isbn, title, author, publisher, "cat");
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return book;
+	}
+
 	// =========== QR 생성 ============
-	
-	
-	    @GetMapping("/produceBookQR")
-	    public ResponseEntity<byte[]> produceBookQR() throws WriterException, IOException {
-	    	// QR 정보
-	      
-	        // QR Code - Image 생성
-	        try {
-	        	
-	        	int width = 200;
-	  	        int height = 200;
-	  	        //books 테이블에 넣을 정보
-	  	       
-	  	     
-	  	        //String url = "https://609b-118-32-180-157.ngrok-free.app/https://www.aladin.co.kr/home/welcome.aspx";
-	  	        
-	  	        //test url
-	  	        String url = "https://www.aladin.co.kr/home/welcome.aspx";
-	  	        
-	  	        // QR Code - BitMatrix: qr code 정보 생성
-	  	        BitMatrix encode = new MultiFormatWriter()
-	  	        			.encode(url, BarcodeFormat.QR_CODE, width, height);
 
-		        //output Stream
-	            ByteArrayOutputStream out = new ByteArrayOutputStream();
-	            
-	            //Bitmatrix, file.format, outputStream
-	            MatrixToImageWriter.writeToStream(encode, "PNG", out);
-	            
-	            System.out.println("okokokokok");
-	            return ResponseEntity.ok()
-	                    .contentType(MediaType.IMAGE_PNG)
-	                    .body(out.toByteArray());
-	        }catch (Exception e){
-	        	e.printStackTrace();
-	        	System.out.println("nknknknknk");
-	        }
-	        return null;
-	        
-	    }
-	    
-	    
-	 
-	    
-	    }
-	  
-	
-	 
-	 
+	@GetMapping("/produceBookQR")
+	public ResponseEntity<byte[]> produceBookQR() throws WriterException, IOException {
+		// QR 정보
 
-	
+		// QR Code - Image 생성
+		try {
 
+			int width = 200;
+			int height = 200;
+			// books 테이블에 넣을 정보
+
+			// String url =
+			// "https://609b-118-32-180-157.ngrok-free.app/https://www.aladin.co.kr/home/welcome.aspx";
+
+			// QR Code - BitMatrix: qr code 정보 생성
+			BitMatrix encode = new MultiFormatWriter()
+					.encode(this.url, BarcodeFormat.QR_CODE, width, height);
+
+			// output Stream
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+			// Bitmatrix, file.format, outputStream
+			MatrixToImageWriter.writeToStream(encode, "PNG", out);
+
+			return ResponseEntity.ok()
+					.contentType(MediaType.IMAGE_PNG)
+					.body(out.toByteArray());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	@RequestMapping("/delete")
+	public String delete() {
+
+		return "delete";
+	}
+
+	@RequestMapping("/delete-check")
+	public String deleteCheck(@RequestParam String b_id, Model model) {
+		model.addAttribute("b_id", b_id);
+		return "deleteCheck";
+	}
+
+	@PostMapping("/bringBooksInfo")
+	@ResponseBody
+	public List<BookDeleteDto> bringBooksInfo(
+			@RequestParam("isbn") String isbn, Model model) {
+
+		// LibMapper를 통해 책 정보를 가져오기
+		List<BookDeleteDto> bookInfo = libMapper.bringBooksInfo(isbn);
+
+		// 모델에 책 정보 추가
+
+		return bookInfo;
+	}
+
+	@PostMapping("/deleteBook")
+	public String deleteBook(
+			@RequestParam("b_id") String b_id) {
+		System.out.println("deleteBook 메소드 호출됨. b_id: " + b_id);
+		// 도서 삭제 로직을 수행
+		libMapper.deleteBook(b_id);
+
+		return "delete";
+	}
+
+}

@@ -39,14 +39,15 @@ public class AdminController {
 
 	// admin login ====================
 	@RequestMapping("/admin")
-	public String index2(HttpSession session, @RequestParam(required = false, defaultValue = "login") String adminId, Model model) {
-		String sessionInfo = stockService.checkSession(session, adminId); //세션에 담긴 정보를 확인합니다.
-		if (sessionInfo.equals("admin")) { //정보가 어드민이면 어드민 화면으로
+	public String index2(HttpSession session, @RequestParam(required = false, defaultValue = "login") String adminId,
+			Model model) {
+		String sessionInfo = stockService.checkSession(session, adminId); // 세션에 담긴 정보를 확인합니다.
+		if (sessionInfo.equals("admin")) { // 정보가 어드민이면 어드민 화면으로
 			return "admin/admin-home";
-		} else if (sessionInfo.equals("librarian")) { //정보가 사서면 사서 화면으로
+		} else if (sessionInfo.equals("librarian")) { // 정보가 사서면 사서 화면으로
 			return "admin/librarian-home";
 		}
-		return "admin/admin-login"; //의미 없는 정보면 다시 로그인 화면으로
+		return "admin/admin-login"; // 의미 없는 정보면 다시 로그인 화면으로
 	}
 
 	// 반납과 대여 컨트롤러
@@ -82,7 +83,8 @@ public class AdminController {
 			model.addAttribute("state", state == null ? 0 : stockState);
 			return "admin/stock-count-list";
 		} else if (stock.equals("start")) {
-			if (stockState == 1) stockState = 2;
+			if (stockState == 1)
+				stockState = 2;
 			model.addAttribute("state", stockState);
 			return "admin/stock-count-scan";
 		} else if (stock.equals("finish")) {
@@ -99,25 +101,24 @@ public class AdminController {
 
 		return "";
 	}
-	
-	
+
 	@RequestMapping("admin/rent-record")
 	public String getRentRecord() {
 		return "rent-record";
 	}
-	
+
 	@PostMapping("select-rent-record-by-date-range")
 	@ResponseBody
-	public List<SearchRentRecordDto> getRentRecords(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
-		List<SearchRentRecordDto> result=stockService.selectRentRecordsByDateRange(startDate, endDate);
-		
+	public List<SearchRentRecordDto> getRentRecords(@RequestParam("startDate") String startDate,
+			@RequestParam("endDate") String endDate) {
+		List<SearchRentRecordDto> result = stockService.selectRentRecordsByDateRange(startDate, endDate);
+
 		return result;
 	}
-	
-	
-	//ajax  모음-------------------------------
-	
-	//카메라 확인 후 n초기화
+
+	// ajax 모음-------------------------------
+
+	// 카메라 확인 후 n초기화
 	@RequestMapping("/stock-camera-ok")
 	@ResponseBody
 	public int isCamera(@RequestParam String cameraState) {
@@ -130,8 +131,7 @@ public class AdminController {
 	@RequestMapping("/stock-is-exist")
 	@ResponseBody
 	public StockBookDTO isExist(@RequestParam String id) {
-		if(1==stockService.updateYStockByBId(id)) {
-			System.out.println("확인2");
+		if (1 == stockService.updateYStockByBId(id)) {
 			return stockService.selectBooksByBId(id);
 		}
 		return null;
@@ -143,21 +143,21 @@ public class AdminController {
 	public int determin() {
 		return stockState;
 	}
+
 	// 반납 대여 관련 ajax----------------------------------
 	@RequestMapping("/check-bookInfo")
 	@ResponseBody
-	public StockBookDTO doSometing(@RequestParam String id,@RequestParam String state) {
-		if(state.equals("return")) {
-			if(stockService.updateNStatusByBid(id)==1) { //추가 checkout 테이블 변경
+	public StockBookDTO doSometing(@RequestParam String id, @RequestParam String state) {
+		if (state.equals("return")) {
+			if (stockService.updateNStatusByBid(id) == 1) { // 추가 checkout 테이블 변경
 				return stockService.selectBooksByBId(id);
 			}
-		}else if (state.equals("rent")) {
-			return stockService.selectBooksByBId(id); //여기는 jsp에서 연결하는 로직 추가
+		} else if (state.equals("rent")) {
+			return stockService.selectBooksByBId(id); // 여기는 jsp에서 연결하는 로직 추가
 		}
 		return null;
 	}
-	
-	
+
 	// 테스트용
 	@RequestMapping("/admin/testx")
 	public String asd() {

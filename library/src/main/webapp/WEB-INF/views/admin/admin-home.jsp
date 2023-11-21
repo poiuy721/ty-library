@@ -150,7 +150,7 @@
 									<tr>
 										<td>
 											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">도서 조회</button>
+												onclick="go('search')">도서 조회</button>
 										</td>
 										<td>
 											<button type="button" class="btn btn-primary m-2"
@@ -160,18 +160,18 @@
 									<tr>
 										<td>
 											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">도서 등록</button>
+												onclick="go('admin/register-book')">도서 등록</button>
 										</td>
 										<td>
 											<button type="button" class="btn btn-primary m-2"
-												onclick="go('test')">연체 도서</button>
+												onclick="go('admin/overdue')">연체 도서</button>
 										</td>
 									</tr>
 									<tr>
 
 										<td>
 											<button type="button" class="btn btn-primary m-2"
-												onclick="go('admin/admin-login')">도서 삭제</button>
+												onclick="go('admin/delete')">도서 삭제</button>
 										</td>
 										<td>
 											<button type="button" class="btn btn-primary m-2"

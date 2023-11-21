@@ -31,16 +31,16 @@
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link href="/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -149,7 +149,7 @@
 							<h6 class="mb-0">| QR코드</h6>
 							
 						</div>
-						 <img src="${pageContext.request.contextPath}/produceBookQR" alt="QR Code">
+						 <img src="${pageContext.request.contextPath}/tylibrary/admin/produceBookQR" alt="QR Code">
 					</div>
 					<!-- Sales Chart End -->
 					<div class="col-sm-12 col-xl-6">
@@ -161,7 +161,7 @@
 								<tbody>
 									
 										<td colspan="2">
-											<button onclick="printQRAsPDF()" class="btn btn-primary w-100 m-2" type="submit">Print QR as PDF</button>
+											<button onclick="printQRAsPDF()" class="btn btn-primary w-100 m-2" type="button">Print QR as PDF</button>
 											
 										</td>
 									
@@ -197,19 +197,18 @@
 		<!-- Back to Top -->
 	</div>
 	
-<script type="text/javascript">		
 									
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/chart/chart.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="lib/tempusdominus/js/moment.min.js"></script>
-	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script src="/lib/chart/chart.min.js"></script>
+	<script src="/lib/easing/easing.min.js"></script>
+	<script src="/lib/waypoints/waypoints.min.js"></script>
+	<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment.min.js"></script>
+	<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 	
 	<!-- 프린트pdf버튼 스크립트 -->
  <script>
@@ -221,7 +220,7 @@
 
             // QR 코드 이미지를 동적으로 생성
             var qrImage = new Image();
-            qrImage.src = "${pageContext.request.contextPath}/produceBookQR";
+            qrImage.src = "${pageContext.request.contextPath}/tylibrary/admin/produceBookQR";
 
             // 이미지 로딩 후 PDF에 추가
             qrImage.onload = function() {
@@ -231,7 +230,7 @@
         }
     </script>
 	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
+	<script src="/js/main.js"></script>
 </body>
 
 </html>

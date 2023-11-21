@@ -12,31 +12,30 @@ import com.library.dto.*;
 import com.library.mapper.SearchMapper;
 import com.library.service.SearchService;
 
-@Service //객체 생성
-public class SearchServiceImpl implements SearchService{
-	
-	@Autowired
-	private SearchMapper searchMapper; // BoardMapper의 의존성 주입
-	
-	
-	@Override
-	public int maxNum() throws Exception {
-		return searchMapper.maxNum();
-	}
+@Service // 객체 생성
+public class SearchServiceImpl implements SearchService {
 
-	@Override
-	public int getDataCount(String searchKey, String searchValue) throws Exception {
-		return searchMapper.getDataCount(searchKey, searchValue);
-	}
+    @Autowired
+    private SearchMapper searchMapper;
 
-	@Override
-	public List<SearchResultDto> getLists(SearchQuery query) throws Exception {
-		return searchMapper.getLists(query);
-	}
-	
-	public List<SearchRemoveDuplicateDto> removeDuplicates(List<SearchResultDto> list) {
+    @Override
+    public int maxNum() throws Exception {
+        return searchMapper.maxNum();
+    }
 
-		Map<String, SearchRemoveDuplicateDto> resultMap = new HashMap<>();
+    @Override
+    public int getDataCount(String searchKey, String searchValue) throws Exception {
+        return searchMapper.getDataCount(searchKey, searchValue);
+    }
+
+    @Override
+    public List<SearchResultDto> getLists(SearchQuery query) throws Exception {
+        return searchMapper.getLists(query);
+    }
+
+    public List<SearchRemoveDuplicateDto> removeDuplicates(List<SearchResultDto> list) {
+
+        Map<String, SearchRemoveDuplicateDto> resultMap = new HashMap<>();
 
         for (SearchResultDto resultDto : list) {
             String title = resultDto.getTitle();
@@ -67,8 +66,8 @@ public class SearchServiceImpl implements SearchService{
 
         return resultList;
     }
-	
-	private static String determineBookStatus(List<SearchResultDto> list, String title) {
+
+    private static String determineBookStatus(List<SearchResultDto> list, String title) {
         for (SearchResultDto resultDto : list) {
             if (resultDto.getTitle().equals(title)) {
                 if ("A".equals(resultDto.getBookStatus())) {
@@ -77,16 +76,16 @@ public class SearchServiceImpl implements SearchService{
             }
         }
         return "대여 불가";
-	}
+    }
 
-	@Override
-	public List<SearchResultDto> getBook(int id) {
-		return searchMapper.getBook(id);
-	}
+    @Override
+    public List<SearchResultDto> getBook(int id) {
+        return searchMapper.getBook(id);
+    }
 
-	@Override
-	public List<OverdueDto> getOverdue() {
-		return searchMapper.getOverdue();
-	}
+    @Override
+    public List<OverdueDto> getOverdue() {
+        return searchMapper.getOverdue();
+    }
 
 }
