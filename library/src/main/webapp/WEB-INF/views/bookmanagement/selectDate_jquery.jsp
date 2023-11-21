@@ -278,11 +278,13 @@ input.form-control::placeholder {
 				maxDate: "+1M"
 			});
 			
-			var arr = new Array();
-			
+			// 기본 연장 기간 설정
 			let today = new Date();
 			let basic_return_date = new Date(today.setDate(today.getDate()+14));
 			let brd = basic_return_date.getFullYear()+"/"+leftPad(basic_return_date.getMonth()+1)+"/"+leftPad(basic_return_date.getDate());
+			
+			// ========== 기본 대여 기간 설정 : start ==========
+			var arr = new Array();
 			arr.push(brd);
 	
 		    var url;
@@ -301,13 +303,12 @@ input.form-control::placeholder {
 			    error : function(data){		
 			    }
 			});
+			// ========== 기본 대여 기간 설정 : end ==========
 	
-			// FOR DEMO PURPOSE
+			// 날짜 선택 시, 날짜 데이터 전송
 			$('#datepicker').on('change', function() {
 				var pickedDate = $('input').val();
-	
 				$('#pickedDate').html(pickedDate);
-				console.log(pickedDate);
 	
 				var arr = new Array();
 				arr.push(pickedDate);
@@ -327,6 +328,7 @@ input.form-control::placeholder {
 			// 기본 대여 기간 설정       
 			$( "#datepicker" ).datepicker( 'setDate', '14D' );
 			
+			// 공백에 '0' 삽입하는 메소드
 	        function leftPad(value) {
 	            if (value < 10) {
 	                value = "0" + value;

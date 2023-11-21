@@ -178,12 +178,7 @@ input.form-control::placeholder {
 					<div class="col-sm-6 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
-								<c:if test="${management_type eq 'rent'}">
-									<h2 class="mb-0 text-center">대여</h2>
-								</c:if>
-								<c:if test="${management_type eq 'assign'}">
-									<h2 class="mb-0 text-center">양도</h2>
-								</c:if>
+								<h2 class="mb-0 text-center">연장</h2>
 							</div>
 						</div>
 					</div>
@@ -199,13 +194,13 @@ input.form-control::placeholder {
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light rounded p-4">
 							<div class="d-flex align-items-center justify-content-between mb-4">
-								<h6 class="mb-0">| 대여 기간 선택</h6>
+								<h6 class="mb-0">| 대여 연장 선택</h6>
 							</div>
 							<ul class="mb-0 text-left">
-								<li>기본 대여 기간은 2주입니다.</li>
-								<li>기본 대여 기간을 초과하여 대여하기를 원하신다면, 하단 달력에서 반납 일자를 선택하여 주시길
+								<li>기본 연장 기간은 2주입니다.</li>
+								<li>기본 연장 기간을 초과하여 연장하기를 원하신다면, 하단 달력에서 반납 일자를 선택하여 주시길
 									바랍니다.</li>
-								<li>최대 대여 기간은 다음달 까지입니다.</li>
+								<li>최대 연장 기간은 기존 선택하신 반납 일자부터 다음달 까지입니다.</li>
 							</ul>
 						</div>
 					</div>
@@ -223,21 +218,15 @@ input.form-control::placeholder {
 				                    <div class="input-group-append"><span class="input-group-text px-4"><i>선택</i></span></div>
 				                </div>
 				            </div><!-- DEnd ate Picker Input -->
-					        <div class="text-center">
-								<button type="button" class="btn btn-outline-primary m-2" onclick ="location='/tylibrary/renew/check'">다음</button>
-							</div>
+
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="text-center">
-				<c:if test="${management_type eq 'rent'}">
-					<button type="button" class="btn btn-outline-primary m-2" onclick="location='/tylibrary/rent/check'">다음</button>
-				</c:if>
-				<c:if test="${management_type eq 'assign'}">
-					<button type="button" class="btn btn-outline-primary m-2" onclick="location='/tylibrary/assign/check'">다음</button>
-				</c:if>
+				<button type="button" class="btn btn-outline-primary m-2" onclick="location='/tylibrary/renew/check'">다음</button>
 			</div>
+
 			<!-- Sales Chart End -->
 
 				<!-- Footer Start -->
@@ -274,9 +263,12 @@ input.form-control::placeholder {
 			let recent_return_date1 = new Date(rrd_str.slice(0,4) + '/' + rrd_str.slice(4, 6) + '/' + rrd_str.slice(6,8));
 			let recent_return_date2 = new Date(rrd_str.slice(0,4) + '/' + rrd_str.slice(4, 6) + '/' + rrd_str.slice(6,8));
 			
+			// 기본 연장 기간 설정
 			let basic_return_date = new Date(recent_return_date1.setDate(recent_return_date1.getDate()+14));
+			// 최대 연장 기간 설정
 			let max_return_date = new Date(recent_return_date2.setMonth(recent_return_date2.getMonth()+1));
 			
+			// 날짜 포맷 변경 (: yyyy/MM/dd)
 			let rrd = rrd_str.slice(0,4) + '/' + rrd_str.slice(4, 6) + '/' + rrd_str.slice(6,8)
 			let brd = basic_return_date.getFullYear()+"/"+leftPad(basic_return_date.getMonth()+1)+"/"+leftPad(basic_return_date.getDate());
 			let mrd = max_return_date.getFullYear()+"/"+leftPad(max_return_date.getMonth()+1)+"/"+leftPad(max_return_date.getDate());
@@ -308,12 +300,10 @@ input.form-control::placeholder {
 			    }
 			}); 
 	
-			// FOR DEMO PURPOSE
+			// 날짜 선택 시, 날짜 데이터 전송
 			$('#datepicker').on('change', function() {
 				var pickedDate = $('input').val();
-	
 				$('#pickedDate').html(pickedDate);
-				console.log(pickedDate);
 	
 				var arr = new Array();
 				arr.push(pickedDate);
@@ -332,6 +322,7 @@ input.form-control::placeholder {
 		
 		});
 		
+		// 공백에 '0' 삽입하는 메소드
         function leftPad(value) {
             if (value < 10) {
                 value = "0" + value;
