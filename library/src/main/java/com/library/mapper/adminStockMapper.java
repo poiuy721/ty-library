@@ -18,8 +18,10 @@ public interface adminStockMapper {
 	public void updateInitialNStock(); //재고 조사 시작시 모든 stock 상태 N으로 초기화.
 	public int updateYStockByBId(String id); //입력 id에 맞는 stock 상태 Y으로 초기화
 	public int updateNStatusByBid(String id); //입력 id에 맞는 Status 상태 N으로 초기화
+	public int updateReturn(String c_id, String date);
 	//select=================================================
 	public StockBookDTO selectBooksByBId(String id);
+	public String isReturnalbe(String id);
 	public List<BooksDTO> selectBooksByYState();
 	public List<BooksDTO> selectBooksByNStateAndNStock();
 	public List<BooksDTO> selectBooksByNStateAndYStock();

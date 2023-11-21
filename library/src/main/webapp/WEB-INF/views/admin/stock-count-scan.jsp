@@ -175,14 +175,14 @@
 								<table class="table small">
 									<thead class="small">
 										<tr>
-											<th scope="col">도서명</th>
 											<th scope="col">도서 ID</th>
+											<th scope="col">도서 명</th>
 										</tr>
 									</thead>
 									<tbody class="small">
 										<tr>
-											<td id="book_info1">""</td>
-											<td id="book_info2">""</td>
+											<td id="book_info1"></td>
+											<td id="book_info2"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -279,7 +279,7 @@
 											canvas.height = video.offsetHeight;
 											canvas.getContext('2d').drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight, 0, 0, video.offsetWidth,video.offsetHeight);
 											canvas.style.display = "block";
-											$("#video-container").css({"border-color": "green","border-width":"5px"});
+											$("#video-container").css({"border-color": "#26abff","border-width":"7px"});
 											setTimeout(() => $("#video-container").css({"border-color": "gray","border-width":"2px"}),1000);
 											setTimeout(() => canvas.style.display="none",1000);
 											$("#book_info1").text(data.b_id);
@@ -288,7 +288,6 @@
 										},
 										error: function (data) {
 											alert("오류발생");
-											//alert(data.[0]);
 											}
 										});
 								}

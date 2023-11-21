@@ -1,5 +1,7 @@
 package com.library.serviceImpl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -32,9 +34,17 @@ public class StockServiceImpl implements StockService {
 		return stockMapper.updateNStatusByBid(id);
 	}
 	
+	public int updateReturn(String c_id, String date) {
+		return stockMapper.updateReturn(c_id, date);
+	}
+	
 	//select ========================================================
 	public StockBookDTO selectBooksByBId(String id) {
 		return stockMapper.selectBooksByBId(id);
+	}
+	
+	public String isReturnalbe(String id) {
+		return stockMapper.isReturnalbe(id);
 	}
 
 	public List<BooksDTO> selectBooksByYState() {
@@ -65,7 +75,18 @@ public class StockServiceImpl implements StockService {
 		return stockMapper.selectRentRecordsByDateRange(startDate,endDate);
 	}
 	
-
+	//return 구현
+	public StockBookDTO returnMethod(String id) {
+		if(stockMapper.isReturnalbe(id).equals("")) {
+			Date currentDate = new Date();	       
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");	        
+	        String formattedDate = sdf.format(currentDate);
+			stockMapper.updateReturn(id, formattedDate);
+		}
+		return stockMapper.selectBooksByBId(id);
+	}
+	
+	
 	public String checkSession(HttpSession session, String ID) {
 		// 세션에 admin이나 librarian이 없음 추가
 		if (ID.equals("admin") && session.getAttribute("admin") == null) {

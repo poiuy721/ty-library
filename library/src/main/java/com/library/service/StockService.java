@@ -13,8 +13,10 @@ public interface StockService {
 	public void updateInitialNStock();
 	public int updateYStockByBId(String id);
 	public int updateNStatusByBid(String id);
+	public int updateReturn(String c_id, String date);
 	//select ================================
 	public StockBookDTO selectBooksByBId(String id);
+	public String isReturnalbe(String id);
 	public List<BooksDTO> selectBooksByYState();
 	public List<BooksDTO> selectBooksByNStateAndNStock();
 	public List<BooksDTO> selectBooksByNStateAndYStock();
@@ -22,6 +24,8 @@ public interface StockService {
 	public List<StockBookDTO> selectBooksByNStockNBook();
 	public List<StockBookDTO> selectBooksByYStockNBook();
 	
+	
+	public StockBookDTO returnMethod(String id);
 	public List<SearchRentRecordDto> selectRentRecordsByDateRange(String startDate,String endDate);
 	public String checkSession(HttpSession session, String adminId);
 }

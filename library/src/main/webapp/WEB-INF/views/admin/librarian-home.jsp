@@ -150,7 +150,7 @@
 									<tr>
 										<td>
 											<button type="button" class="btn btn-primary m-2"
-												onclick="go()">도서 조회</button>
+												onclick="go('search')">도서 조회</button>
 										</td>
 
 									</tr>
@@ -175,7 +175,7 @@
 						</div>
 					</div>
 					<!-- secreat form!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-					<form id="myForm" action="admin/librarian" method="post"
+					<form id="myForm" action="librarian" method="post"
 						style="display: none;">
 						<input id="state_input" type="hidden" name="state" value="return">
 					</form>

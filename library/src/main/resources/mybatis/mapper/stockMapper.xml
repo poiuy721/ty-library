@@ -25,7 +25,13 @@
 		B_STATUS = 'A'
 		WHERE B_ID = #{id}
 	</update>
-
+	<!-- update return -->
+	<update id="updateReturn">
+		UPDATE CHECKOUT
+		SET
+		RETURN_DATE = #{date}
+		WHERE C_ID = #{c_id}	
+	</update>
 
 	<!-- select -->
 	<select id="selectBooksByBId" parameterType="string"
@@ -36,8 +42,13 @@
 		on book_info.ISBN = books.ISBN
 		WHERE B_ID = #{id}
 	</select>
-
-
+	
+	<!-- 리턴 조회 -->
+	<select id="isReturnalbe">
+		SELECT C_ID FROM CHECKOUT
+		WHERE B_ID = #{id} 
+		AND RETURN_DATE = NULL; 
+	</select>
 
 	<!-- 대여중 조회 -->
 	<select id="selectBooksByYState"

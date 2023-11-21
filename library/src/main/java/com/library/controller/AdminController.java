@@ -51,7 +51,7 @@ public class AdminController {
 	}
 
 	// 반납과 대여 컨트롤러
-	@RequestMapping("admin/librarian")
+	@RequestMapping("librarian")
 	public String notyet(String state, Model model) {
 		model.addAttribute("state", state);
 		return "admin/librarian-scan";
@@ -150,7 +150,7 @@ public class AdminController {
 	public StockBookDTO doSometing(@RequestParam String id, @RequestParam String state) {
 		if (state.equals("return")) {
 			if (stockService.updateNStatusByBid(id) == 1) { // 추가 checkout 테이블 변경
-				return stockService.selectBooksByBId(id);
+				return stockService.returnMethod(id);
 			}
 		} else if (state.equals("rent")) {
 			return stockService.selectBooksByBId(id); // 여기는 jsp에서 연결하는 로직 추가
