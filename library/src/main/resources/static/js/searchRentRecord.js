@@ -19,9 +19,9 @@ $('#searchRentRecordBtn').click(function(){
 			$.each(data,function(i){
 				str += '<td>' + (i+1) +'</td>';
 				str += '<td>' + data[i].title +'</td>';
-				str += '<td>' + data[i].renter +'</td>';
+				str += '<td style="width:60px;">' + data[i].renter +'</td>';
 				str += '<td>' + data[i].rentDate +'</td>';
-				str += '<td>' + data[i].returnDate +'</td>';
+				str += '<td style="width:60px;">' + data[i].returnDate +'</td>';
 				str += '</tr>'
 			})
 			

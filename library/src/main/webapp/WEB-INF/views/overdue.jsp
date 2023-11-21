@@ -7,7 +7,7 @@
 <head>
 
 <meta charset="utf-8">
-<title>DASHMIN - Bootstrap Admin Template</title>
+<title>연체 도서 목록</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -19,6 +19,9 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   font-family: 'Noto Sans KR', sans-serif;
+  span{
+  	white-space:nowrap;
+  }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,7 +48,7 @@
 <link href="/css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body >
 	<div class="container-xxl position-relative bg-white d-flex p-0">
 		<!-- Spinner Start -->
 		<div id="spinner"
@@ -170,13 +173,14 @@
 										<tr>
 											<th scope="row">${status.count}</th>
 											<td><c:out value="${info.title}"></c:out></td>
-											<td><c:out value="${info.e_name}"></c:out></td>
+											<td style="width:60px;"><c:out value="${info.e_name}"></c:out></td>
 											<td><c:out value="${info.due_date}"></c:out></td>
-											<td><c:out value="${info.day_difference}"></c:out></td>
+											<td style="width:60px;"><c:out value="${info.day_difference}"></c:out></td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
+							<button class="btn btn-outline-primary w-100 m-2" onclick="history.back();">뒤로 가기</button>
 						</div>
 					</div>
 				</div>
@@ -186,9 +190,6 @@
 			<div class="container-fluid pt-4 px-4">
 				<div class="bg-light rounded-top p-4">
 					<div class="row">
-						<div class="col-12 col-sm-6 text-center text-sm-start">
-							&copy; <a href="#">Your Site Name</a>, All Right Reserved.
-						</div>
 						<div class="col-12 col-sm-6 text-center text-sm-end">
 							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 							Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
@@ -204,8 +205,6 @@
 
 
 		<!-- Back to Top -->
-		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
-			class="bi bi-arrow-up"></i></a>
 	</div>
 
 	<!-- JavaScript Libraries -->

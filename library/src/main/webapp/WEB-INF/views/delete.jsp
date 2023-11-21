@@ -165,31 +165,30 @@
 													<input type="text" class="form-control"
 														id="floatingInputISBN" placeholder="ISBN" name="isbn">
 													<label for="floatingInputISBN">ISBN으로 검색</label>
+												</div>
 											</td>
 											<td><button type="button"
 													class="btn btn-secondary m-2 isbnBtn" id="clickIsbn">Search</button></td>
 
 										</tr>
+										<tr>
+											<td colspan="2">
 
-										<div class="container-fluid pt-4 px-4">
-											<div class="row g-4">
-												<div class="col-sm-12 col-xl-6">
-													<div class="bg-light rounded h-100 p-4">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th scope="col">번호</th>
+																			<th scope="col">제목</th>
+																			<th scope="col">도서 ID</th>
 
-														<table class="table">
-															<thead>
-																<tr>
-																	<th scope="col">번호</th>
-																	<th scope="col">제목</th>
-																	<th scope="col">도서아이디</th>
-																
-																	<th scope="col">X</th>
-																</tr>
-															</thead>
-															<tbody id="content">
-															</tbody>
-														</table>
-													</div>
+																			<th scope="col"></th>
+																		</tr>
+																	</thead>
+																	<tbody id="content">
+																	</tbody>
+																</table>
+											</td>
+										</tr>
 									</tbody>
 								</table>
 							</form>
@@ -205,61 +204,66 @@
 		<!-- Back to Top -->
 	</div>
 	<script type="text/javascript">
-	
-	$("#clickIsbn").click(function() {
-		const isbn = $("#floatingInputISBN").val();
-		$.ajax({
-			type : 'post', // 타입 (get, post, put 등등)    
-			url : '/bringBooksInfo',
-			// 요청할 서버url   
-			async : true, // 비동기화 여부 (default : true)   
+		$("#clickIsbn")
+				.click(
+						function() {
+							const isbn = $("#floatingInputISBN").val();
+							$
+									.ajax({
+										type : 'post', // 타입 (get, post, put 등등)    
+										url : '/bringBooksInfo',
+										// 요청할 서버url   
+										async : true, // 비동기화 여부 (default : true)   
 
-			//dataType : 'String', // 데이터 타입 (html, xml, json, text 등등)    
-			data : {
-				isbn : isbn
-			},
-			success : function(data) {
-				console.log(" ajax 통신성공!!");
-				console.log(data);
-				$('#content').empty();
-				var content='';
-				var num=1;
-				for(var i=0;i<data.length;i++){
-					content+='<tr>'
-					content+='<td>'+num+'</td>'
-					content+='<td>'+data[i].title+'</td>'
-					content+='<td>'+data[i].b_id+'</td>'
-					content += '<td><button type="button" class="btn btn-danger deleteBtn" data-b_id="' + data[i].b_id + '">Delete</button></td>'
-					content+='</tr>'
-					num ++;	
-				}
-						
-				$('#content').append(content);
+										//dataType : 'String', // 데이터 타입 (html, xml, json, text 등등)    
+										data : {
+											isbn : isbn
+										},
+										success : function(data) {
+											console.log(" ajax 통신성공!!");
+											console.log(data);
+											$('#content').empty();
+											var content = '';
+											var num = 1;
+											for (var i = 0; i < data.length; i++) {
+												content += '<tr>'
+												content += '<td>' + num
+														+ '</td>'
+												content += '<td>'
+														+ data[i].title
+														+ '</td>'
+												content += '<td>'
+														+ data[i].b_id
+														+ '</td>'
+												content += '<td><button type="button" class="btn btn-sm btn-danger rounded-pill deleteBtn" data-b_id="' + data[i].b_id + '">삭제</button></td>'
+												content += '</tr>'
+												num++;
+											}
 
-			},
-			error : function(request, status, error) { // 결과 에러 콜백함수        
-				console.log(error)
-			}
-		})
-	})
-	
-</script>
+											$('#content').append(content);
 
-<script type="text/javascript">
-    $(document).on('click', '.deleteBtn', function () {
-        var b_idToDelete = $(this).data('b_id');
-       console.log(b_idToDelete);
-        // 현재 페이지 URL 저장
-       
-        var previousUrl = window.location.href;
-        // 삭제 확인 페이지로 이동
-        
-      
-        window.location.href = '/deleteCheck?b_id='+b_idToDelete;
-    });
-</script>
+										},
+										error : function(request, status, error) { // 결과 에러 콜백함수        
+											console.log(error)
+										}
+									})
+						})
+	</script>
 
-<!-- 바로삭제 
+	<script type="text/javascript">
+		$(document).on('click', '.deleteBtn', function() {
+			var b_idToDelete = $(this).data('b_id');
+			console.log(b_idToDelete);
+			// 현재 페이지 URL 저장
+
+			var previousUrl = window.location.href;
+			// 삭제 확인 페이지로 이동
+
+			window.location.href = '/deleteCheck?b_id=' + b_idToDelete;
+		});
+	</script>
+
+	<!-- 바로삭제 
 <script>
     $(document).on('click', '.deleteBtn', function () {
         var b_idToDelete = $(this).data('b_id');

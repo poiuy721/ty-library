@@ -143,27 +143,27 @@
 			<!-- Sales Chart Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
-					<div class="col-sm-12 col-xl-6">
-						<div
-							class="d-flex align-items-center justify-content-between mb-4">
-							<h6 class="mb-0">| 정말로 해당 도서를 삭제하시겠습니까?</h6>
-						</div>
-					</div>
+					<div class="col-sm-12 col-xl-6"></div>
 					<!-- Sales Chart End -->
-					
+
 					<form id="deleteForm">
-					<div class="col-sm-12 col-xl-6">
-						<div class="bg-light rounded p-4">
+						<div class="col-sm-12 col-xl-6">
+							<div class="bg-light rounded p-4 text-center">
 
+								<h6 class="mb-0">도서를 삭제하시겠습니까?</h6>
+								<br>
+								<input type="hidden" id="b_idToDelete" name="b_id" value="">
+								<center>
+									<button type="button" onclick="confirmDelete()"
+										class="btn btn-primary rounded-pill m-2">YES</button>
+									<button type="button" onclick="cancelDelete()"
+										class="btn btn-danger rounded-pill m-2">NO</button>
+								</center>
 
-        	<input type="hidden" id="b_idToDelete" name="b_id" value="">
-							<center><button type="button"  onclick="confirmDelete()" class="btn btn-primary rounded-pill m-2">YES</button>
-							<button type="button"  onclick="cancelDelete()" class="btn btn-danger rounded-pill m-2"> NO </button></center>
-							
+							</div>
 						</div>
-					</div>
 					</form>
-					
+
 				</div>
 			</div>
 			<!-- Footer Start -->
@@ -171,9 +171,6 @@
 			<div class="container-fluid pt-4 px-4">
 				<div class="bg-light rounded-top p-4">
 					<div class="row">
-						<div class="col-12 col-sm-6 text-center text-sm-start">
-							&copy; <a href="#">Your Site Name</a>, All Right Reserved.
-						</div>
 						<div class="col-12 col-sm-6 text-center text-sm-end">
 							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 							Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
@@ -190,37 +187,35 @@
 
 		<!-- Back to Top -->
 	</div>
-  <script>
-     function confirmDelete() {
-    	    var b_idToDelete = document.getElementById('b_idToDelete').value;
-    	    var previousUrl = document.getElementById('previousUrl');
+	<script>
+		function confirmDelete() {
+			var b_idToDelete = document.getElementById('b_idToDelete').value;
+			var previousUrl = document.getElementById('previousUrl');
 			let b_id = "${b_id}";
-			
-    	    // 서버로 도서 삭제 요청 보내기
-    	    $.ajax({
-    	        type: 'post',
-    	        url: '/deleteBook',
-    	        async: true,
-    	        data: {
-    	            b_id: b_id
-    	        },
-    	        success: function (data) {
-    	            console.log("도서 삭제 성공!!");
-    	            alert("삭제 되었습니다.");
-    	            // 서버에서 성공적으로 삭제되면 delete.jsp로 이동
-    	            window.location.href = '/delete';
-    	        },
-    	        error: function (request, status, error) {
-    	            console.log(error);
-    	        }
-    	    });
-    	}
 
-        function cancelDelete() {
-            // 이전 페이지로 이동
-            window.location.href = '/delete';
-        }
-    </script>	
+			// 서버로 도서 삭제 요청 보내기
+			$.ajax({
+				type : 'post',
+				url : '/deleteBook',
+				async : true,
+				data : {
+					b_id : b_id
+				},
+				success : function(data) {
+					// 서버에서 성공적으로 삭제되면 delete.jsp로 이동
+					window.location.href = '/delete';
+				},
+				error : function(request, status, error) {
+					console.log(error);
+				}
+			});
+		}
+
+		function cancelDelete() {
+			// 이전 페이지로 이동
+			window.location.href = '/delete';
+		}
+	</script>
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
