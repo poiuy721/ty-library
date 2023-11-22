@@ -12,29 +12,29 @@
 		B_STATUS = 'A'
 	</update>
 
-	<update id="updateYStockByBId" parameterType="String">
+	<update id="updateYStockByBId" >
 		UPDATE BOOKS
 		SET
 		STOCK_COUNT_STATUS = 'Y'
 		WHERE B_ID = #{id}
 	</update>
 	
-	<update id="updateNStatusByBid" parameterType="String">
+	<update id="updateNStatusByBid" >
 		UPDATE BOOKS
 		SET
 		B_STATUS = 'A'
 		WHERE B_ID = #{id}
 	</update>
 	<!-- update return -->
-	<update id="updateReturn">
+	<update id="updateReturn" >
 		UPDATE CHECKOUT
 		SET
-		RETURN_DATE = #{date}
-		WHERE C_ID = #{c_id}	
+		RETURN_DATE = #{param2}
+		WHERE C_ID = #{param1}	
 	</update>
 
 	<!-- select -->
-	<select id="selectBooksByBId" parameterType="string"
+	<select id="selectBooksByBId" 
 		resultType="com.library.dto.StockBookDTO">
 		select book_info.TITLE, books.B_ID
 		from book_info
@@ -45,9 +45,10 @@
 	
 	<!-- 리턴 조회 -->
 	<select id="isReturnalbe">
-		SELECT B_ID 
-		FROM BOOKS
-		WHERE B_STATUS = 'R'
+		SELECT C_ID 
+		FROM CHECKOUT
+		WHERE RETURN_DATE is NULL
+		AND B_ID = #{id}
 	</select>
 
 	<!-- 대여중 조회 -->

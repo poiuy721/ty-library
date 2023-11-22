@@ -21,7 +21,7 @@ public class StockServiceImpl implements StockService {
 	@Autowired
 	private adminStockMapper stockMapper;
 
-	//update =======================================================
+	// update =======================================================
 	public void updateInitialNStock() {
 		stockMapper.updateInitialNStock();
 	}
@@ -29,20 +29,20 @@ public class StockServiceImpl implements StockService {
 	public int updateYStockByBId(int id) {
 		return stockMapper.updateYStockByBId(id);
 	}
-	
+
 	public int updateNStatusByBid(int id) {
 		return stockMapper.updateNStatusByBid(id);
 	}
-	
+
 	public int updateReturn(int c_id, String date) {
 		return stockMapper.updateReturn(c_id, date);
 	}
-	
-	//select ========================================================
+
+	// select ========================================================
 	public StockBookDTO selectBooksByBId(int id) {
 		return stockMapper.selectBooksByBId(id);
 	}
-	
+
 	public int isReturnalbe(int id) {
 		return stockMapper.isReturnalbe(id);
 	}
@@ -70,29 +70,33 @@ public class StockServiceImpl implements StockService {
 	public List<StockBookDTO> selectBooksByYStockNBook() {
 		return stockMapper.selectBooksByYStockNBook();
 	}
-	
+
 	public int selectBooksByRstaus(int id) {
 		return stockMapper.selectBooksByRstaus(id);
 	}
+
 	@Override
 	public List<SearchRentRecordDto> selectRentRecordsByDateRange(String startDate, String endDate) {
-		return stockMapper.selectRentRecordsByDateRange(startDate,endDate);
+		return stockMapper.selectRentRecordsByDateRange(startDate, endDate);
 	}
-	
-	//return 구현
+
+	// return 구현
 	public StockBookDTO returnMethod(int id) {
-		if(stockMapper.isReturnalbe(id)==id) {
+		int c_id = stockMapper.isReturnalbe(id);
+		System.out.println(c_id);
+		if (c_id > 0) {
 			System.out.println("if if 진입");
-			Date currentDate = new Date();	       
-	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");	        
-	        String formattedDate = sdf.format(currentDate);
-			stockMapper.updateReturn(id, formattedDate);
+			Date currentDate = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String formattedDate = sdf.format(currentDate);
+			System.out.println(formattedDate);
+			stockMapper.updateReturn(c_id, formattedDate);
+			stockMapper.updateNStatusByBid(id);
 		}
 		System.out.println("메소드 리턴전");
 		return stockMapper.selectBooksByBId(id);
 	}
-	
-	
+
 	public String checkSession(HttpSession session, String ID) {
 		// 세션에 admin이나 librarian이 없음 추가
 		if (ID.equals("admin") && session.getAttribute("admin") == null) {
