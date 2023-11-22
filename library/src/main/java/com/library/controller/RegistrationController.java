@@ -108,7 +108,7 @@ public class RegistrationController {
 
 		this.id = libMapper.getLastInsertId();
 
-		this.url = httpServletRequest.getParameter("qrcode") + "/books/" + id;
+		this.url = httpServletRequest.getParameter("qrcode") + "/tylibrary/books/" + id;
 
 		return "register-check";
 	}
@@ -181,7 +181,7 @@ public class RegistrationController {
 
 			// QR Code - BitMatrix: qr code 정보 생성
 			BitMatrix encode = new MultiFormatWriter()
-					.encode(this.url, BarcodeFormat.QR_CODE, width, height);
+					.encode(url, BarcodeFormat.QR_CODE, width, height);
 
 			// output Stream
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
