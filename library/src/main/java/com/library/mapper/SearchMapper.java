@@ -19,5 +19,5 @@ public interface SearchMapper {
 
 	public List<OverdueDto> getOverdue();
 	
-
+	public int selectBooksByRstaus(int id);
 }

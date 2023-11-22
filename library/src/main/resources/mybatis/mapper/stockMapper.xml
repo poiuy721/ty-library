@@ -45,9 +45,9 @@
 	
 	<!-- 리턴 조회 -->
 	<select id="isReturnalbe">
-		SELECT C_ID FROM CHECKOUT
-		WHERE B_ID = #{id} 
-		AND RETURN_DATE = NULL; 
+		SELECT B_ID 
+		FROM BOOKS
+		WHERE B_STATUS = 'R'
 	</select>
 
 	<!-- 대여중 조회 -->
@@ -57,6 +57,14 @@
 		FROM books
 		WHERE B_STATUS != 'A'
 	</select>
+	
+		<select id="selectBooksByRstaus">
+		SELECT COUNT(b_id)
+		FROM books
+		WHERE B_STATUS = 'R'
+		AND B_ID = #{id}
+	</select>
+	
 	<!-- 대여 아닌거 재고 상태 조회 -->
 	<select id="selectBooksByNStateAndNStock"
 		resultType="com.library.dto.BooksDTO">

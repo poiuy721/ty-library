@@ -26,24 +26,24 @@ public class StockServiceImpl implements StockService {
 		stockMapper.updateInitialNStock();
 	}
 
-	public int updateYStockByBId(String id) {
+	public int updateYStockByBId(int id) {
 		return stockMapper.updateYStockByBId(id);
 	}
 	
-	public int updateNStatusByBid(String id) {
+	public int updateNStatusByBid(int id) {
 		return stockMapper.updateNStatusByBid(id);
 	}
 	
-	public int updateReturn(String c_id, String date) {
+	public int updateReturn(int c_id, String date) {
 		return stockMapper.updateReturn(c_id, date);
 	}
 	
 	//select ========================================================
-	public StockBookDTO selectBooksByBId(String id) {
+	public StockBookDTO selectBooksByBId(int id) {
 		return stockMapper.selectBooksByBId(id);
 	}
 	
-	public String isReturnalbe(String id) {
+	public int isReturnalbe(int id) {
 		return stockMapper.isReturnalbe(id);
 	}
 
@@ -70,14 +70,18 @@ public class StockServiceImpl implements StockService {
 	public List<StockBookDTO> selectBooksByYStockNBook() {
 		return stockMapper.selectBooksByYStockNBook();
 	}
+	
+	public int selectBooksByRstaus(int id) {
+		return stockMapper.selectBooksByRstaus(id);
+	}
 	@Override
 	public List<SearchRentRecordDto> selectRentRecordsByDateRange(String startDate, String endDate) {
 		return stockMapper.selectRentRecordsByDateRange(startDate,endDate);
 	}
 	
 	//return 구현
-	public StockBookDTO returnMethod(String id) {
-		if(stockMapper.isReturnalbe(id).equals("")) {
+	public StockBookDTO returnMethod(int id) {
+		if(stockMapper.isReturnalbe(id)==id) {
 			Date currentDate = new Date();	       
 	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");	        
 	        String formattedDate = sdf.format(currentDate);

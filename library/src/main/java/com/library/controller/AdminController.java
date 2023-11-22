@@ -130,7 +130,7 @@ public class AdminController {
 	// 스캔 완료시 y로 변경 후 리턴
 	@RequestMapping("/stock-is-exist")
 	@ResponseBody
-	public StockBookDTO isExist(@RequestParam String id) {
+	public StockBookDTO isExist(@RequestParam int id) {
 		if (1 == stockService.updateYStockByBId(id)) {
 			return stockService.selectBooksByBId(id);
 		}
@@ -147,9 +147,11 @@ public class AdminController {
 	// 반납 대여 관련 ajax----------------------------------
 	@RequestMapping("/check-bookInfo")
 	@ResponseBody
-	public StockBookDTO doSometing(@RequestParam String id, @RequestParam String state) {
+	public StockBookDTO doSometing(@RequestParam int id, @RequestParam String state) {
+		System.out.println(id);
+		System.out.println(state);
 		if (state.equals("return")) {
-			if (stockService.updateNStatusByBid(id) == 1) { // 추가 checkout 테이블 변경
+			if (stockService.selectBooksByRstaus(id)==1) { // 추가 checkout 테이블 변경
 				return stockService.returnMethod(id);
 			}
 		} else if (state.equals("rent")) {
