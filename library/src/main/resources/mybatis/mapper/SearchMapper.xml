@@ -27,14 +27,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN checkout co ON b.b_id = co.b_id
 		WHERE bi.category = #{category}
 		AND co.return_date IS NULL
-		<if test="searchKey!=null">
-			<if test='searchBy eq "도서명".toString()'>
-				AND bi.title LIKE CONCAT('%', #{searchKey}, '%')
-			</if>
-			<if test='searchBy eq "저자명".toString()'>
-				AND bi.author LIKE CONCAT('%', #{searchKey}, '%')
-			</if>
-		</if>
+		AND b.b_status !='D'
+		<if test="searchKey != '' and searchBy != null">
+          <choose>
+              <when test="searchBy.equals('title')">
+                  AND bi.TITLE LIKE CONCAT('%', #{searchKey}, '%')
+              </when>
+              <when test="searchBy.equals('author')">
+                  AND bi.AUTHOR LIKE CONCAT('%', #{searchKey}, '%')
+              </when>
+              <otherwise>
+              </otherwise>
+          </choose>
+      </if>
 	</select>
 
 	<select id="getBook" parameterType="int"
