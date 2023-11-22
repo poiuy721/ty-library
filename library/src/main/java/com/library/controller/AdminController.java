@@ -151,7 +151,9 @@ public class AdminController {
 		System.out.println(id);
 		System.out.println(state);
 		if (state.equals("return")) {
+			System.out.println(stockService.selectBooksByRstaus(id));
 			if (stockService.selectBooksByRstaus(id)==1) { // 추가 checkout 테이블 변경
+				System.out.println("if 진입");
 				return stockService.returnMethod(id);
 			}
 		} else if (state.equals("rent")) {

@@ -82,11 +82,13 @@ public class StockServiceImpl implements StockService {
 	//return 구현
 	public StockBookDTO returnMethod(int id) {
 		if(stockMapper.isReturnalbe(id)==id) {
+			System.out.println("if if 진입");
 			Date currentDate = new Date();	       
 	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");	        
 	        String formattedDate = sdf.format(currentDate);
 			stockMapper.updateReturn(id, formattedDate);
 		}
+		System.out.println("메소드 리턴전");
 		return stockMapper.selectBooksByBId(id);
 	}
 	
