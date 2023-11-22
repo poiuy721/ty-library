@@ -48,7 +48,7 @@
 		
         
         //url front 원하는 값 넣으면됨 현재는 현재 페이지 http:~~~~~~~~ /+ books?id= 로 정해놨음
-        urlFront.value = window.location.href.split('qrgen')[0] + "books?id="
+        urlFront.value = window.location.href.split('qrgen')[0] + "books/"
         let qrcodeInstance;
 		function makeURL(){
 			//http:~~~~~~~~ + /books?id= + textInput(id)
@@ -63,7 +63,7 @@
                 //실질적으로 qr 만드는 부분 qrcodeDiv에 text를 담음 text는 만들어진 url임
                 qrcodeInstance = new QRCode(qrcodeDiv, text);
                 //파일명에 id를 가져다 박음
-                textFileName.value = text.split('?id=')[1];
+                textFileName.value = text.split('/books/')[1];
                 //전체 url 보여줌
                 urlFull.value=text;
             }

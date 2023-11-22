@@ -266,7 +266,7 @@
 					if (result) {
 						if(result.text != lastResult){
 							lastResult = result.text;
-							let urlId = "/tylibrary/stock-is-exist?id="+result.text.split('?id=')[1];
+							let urlId = "/tylibrary/stock-is-exist?id="+result.text.split('/books/')[1];
 							//ajax사용으로 갱신 후 데이터 띄워줌
 							if(stock_state==3){
 								$.ajax({

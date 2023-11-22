@@ -94,7 +94,7 @@ public class RegistrationController {
 
 		this.id = libMapper.getLastInsertId();
 
-		this.url = httpServletRequest.getParameter("qrcode") + "/books/" + id;
+		this.url = httpServletRequest.getParameter("qrcode") + "/tylibrary/books/" + id;
 
 		return "register-check";
 	}

@@ -70,7 +70,7 @@ td {
 	font-weight: 600;
 }
 
-.Calendar>tbody>tr>td>p {
+.Calendar>tbody>tr>td {
 	font-family: 'Montserrat', sans-serif;
 	height: 35px;
 	width: 35px;
@@ -78,12 +78,13 @@ td {
 	transition-duration: .2s;
 	line-height: 35px;
 	margin: 2.5px;
-	display: block;
+	padding : 0 ;
 	text-align: center;
 }
 
 .disable {
 	color: lightgray;
+	margin : 0;
 }
 
 .today {
@@ -91,6 +92,8 @@ td {
 	color: #fff;
 	font-weight: 600;
 	cursor: pointer;
+	margin : 0;
+	border-radius: 1em 0 0 1em;
 }
 
 .selectable {
@@ -107,19 +110,22 @@ td {
 	color: #fff;
 	font-weight: 600;
 	cursor: pointer;
+	margin : 0;
 }
 .rentperiod{
 	background: #7FABD6;
 	color: #fff;
 	font-weight: 400;
-
+	margin : 0;
 	
 }
-.choiceDay, .after2weeks {
+.choiceDay{
 	background-color: #009CFF ;
 	color: #fff;
 	font-weight: 600;
 	cursor: pointer;
+	margin : 0;
+	border-radius: 0 1em 1em 0;
 }
 </style>
 
@@ -351,7 +357,7 @@ function leftPad(value) {
 				<div class="row g-4">
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light rounded p-4">
-							<table class="Calendar">
+							<table class="Calendar" style="width : 100%;">
 								<thead>
 									<tr>
 										<td onClick="MoveMonth(-1);" style="cursor: pointer;">&#60;</td>

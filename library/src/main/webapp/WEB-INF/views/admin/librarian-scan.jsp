@@ -276,7 +276,7 @@
                    if (result) {
                       if(result.text != lastResult){
                          lastResult = result.text;
-                         let urlId = "/tylibrary/check-bookInfo?id="+result.text.split('?id=')[1]+"&state="+state;
+                         let urlId = "/tylibrary/check-bookInfo?id="+result.text.split('/books/')[1]+"&state="+state;
                          $.ajax({
                             url: urlId,
                             type: "GET",

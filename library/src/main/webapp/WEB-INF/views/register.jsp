@@ -320,7 +320,7 @@
 	</div>
 
 	<script type="text/javascript">
-	$("#qrcode").val(window.location.host.split("admin")[0]);
+	$("#qrcode").val(window.location.host);
 	
 	const scan = document.getElementById("scan");
 	const switching = document.getElementById("switchButton");
