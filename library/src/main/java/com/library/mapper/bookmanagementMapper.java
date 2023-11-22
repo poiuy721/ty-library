@@ -13,10 +13,13 @@ import com.library.dto.EmployeeDTO;
 @Mapper
 public interface bookmanagementMapper {
 
-	// 전체 사원 조회
+		// 전체 사원 조회
 		List<EmployeeDTO> selectAllEmplInfo();
 		// 대여자 정보 조회
 		EmployeeDTO selectEmplInfoByBid(@Param("b_id") int b_id);
+		// 양도: DB 저장 중복 검사 시
+		String selectCidByBid(@Param("b_id") int b_id);
+		
 		// 대여 정보 업로드
 		void updateBooks(BooksDTO books);
 		// 책 정보 조회
@@ -27,18 +30,5 @@ public interface bookmanagementMapper {
 		void insertCheckout(CheckoutDTO checkout);
 		// 양도: 대여 기록 업데이트
 		void updateCheckout(CheckoutDTO checkout);
-		// 양도: DB 저장 중복 검사 시
-		String selectCidByBid(@Param("b_id") int b_id);
 		
-		
-		//
-		String getRecentReturnDate(@Param("b_id") String b_id);
-		EmployeeDTO checkEmplInfo(@Param("e_id") String e_id);
-		
-		// 연장
-		void renewBooks(BooksDTO books);
-		
-		// 책 추가
-		void insertBooks(BooksDTO books);
-		void insertBookInfo(BookInfoDTO bookInfo);
 }

@@ -7,10 +7,12 @@
 <head>
 <meta charset="utf-8">
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
 
 <title>대여 기간 선택</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -18,7 +20,7 @@
 <meta content="" name="description">
 
 <!-- Favicon -->
-<link href="/boot/img/favicon.ico" rel="icon">
+<link href="/img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,73 +32,71 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="/boot/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-<link href="/boot/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="/boot/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="/boot/css/style.css" rel="stylesheet">
-
+<link href="/css/style.css" rel="stylesheet">
 
 <style>
-/*
-*
-* ==========================================
-* CUSTOM UTIL CLASSES
-* ==========================================
-*
-*/
-.datepicker td, .datepicker th {
-    width: 2.5rem;
-    height: 2.5rem;
-    font-size: 0.85rem;
-}
-
-.datepicker {
-    margin-bottom: 3rem;
-}
-
-/*
-*
-* ==========================================
-* FOR DEMO PURPOSES
-* ==========================================
-*
-*/
-body {
-    min-height: 100vh;
-    background-color: #fafafa;
-}
-
-.input-group {
-    border-radius: 30rem;
-}
-
-input.form-control {
-    border-radius: 30rem 0 0 30rem;
-    border: none;
-}
-
-input.form-control:focus {
-    box-shadow: none;
-}
-
-input.form-control::placeholder {
-    font-style: italic;
-}
-
-.input-group-text {
-    border-radius: 0 30rem 30rem 0;
-    border: none;
-}
-
-.datepicker-dropdown {
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-
-</style>
+		/*
+		*
+		* ==========================================
+		* CUSTOM UTIL CLASSES
+		* ==========================================
+		*
+		*/
+		.datepicker td, .datepicker th {
+		    width: 2.5rem;
+		    height: 2.5rem;
+		    font-size: 0.85rem;
+		}
+		
+		.datepicker {
+		    margin-bottom: 3rem;
+		}
+		
+		/*
+		*
+		* ==========================================
+		* FOR DEMO PURPOSES
+		* ==========================================
+		*
+		*/
+		body {
+		    min-height: 100vh;
+		    background-color: #fafafa;
+		}
+		
+		.input-group {
+		    border-radius: 30rem;
+		}
+		
+		input.form-control {
+		    border-radius: 30rem 0 0 30rem;
+		    border: none;
+		}
+		
+		input.form-control:focus {
+		    box-shadow: none;
+		}
+		
+		input.form-control::placeholder {
+		    font-style: italic;
+		}
+		
+		.input-group-text {
+		    border-radius: 0 30rem 30rem 0;
+		    border: none;
+		}
+		
+		.datepicker-dropdown {
+		    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+		}
+	</style>
 
 </head>
 
@@ -113,7 +113,7 @@ input.form-control::placeholder {
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="/boot/img/user.jpg" alt=""
+						<img class="rounded-circle" src="/img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -342,17 +342,18 @@ input.form-control::placeholder {
 	</script>
 
 		<!-- JavaScript Libraries -->
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="/boot/lib/chart/chart.min.js"></script>
-		<script src="/boot/lib/easing/easing.min.js"></script>
-		<script src="/boot/lib/waypoints/waypoints.min.js"></script>
-		<script src="/boot/lib/owlcarousel/owl.carousel.min.js"></script>
-		<script src="/boot/lib/tempusdominus/js/moment.min.js"></script>
-		<script src="/boot/lib/tempusdominus/js/moment-timezone.min.js"></script>
-		<script src="/boot/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+		<script src="/lib/chart/chart.min.js"></script>
+		<script src="/lib/easing/easing.min.js"></script>
+		<script src="/lib/waypoints/waypoints.min.js"></script>
+		<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+		<script src="/lib/tempusdominus/js/moment.min.js"></script>
+		<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+		<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 		<!-- Template Javascript -->
-		<script src="/boot/js/main.js"></script>
+		<script src="/js/main.js"></script>
 		
 
 </body>

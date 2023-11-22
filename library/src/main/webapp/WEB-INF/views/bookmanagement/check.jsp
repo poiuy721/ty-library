@@ -208,7 +208,7 @@
 					        <c:if test="${management_type eq 'return'}">
 					              <button type="submit" class="btn btn-outline-primary m-2" onclick="javascript:form.action='/tylibrary/return'">반납</button>
 					        </c:if>
-							<button type="button" class="btn btn-outline-danger m-2" onclick="javascript:form.action='/tylibrary/books/${b_id}">취소</button>
+							<button type="button" class="btn btn-outline-danger m-2" onclick="history.back();">뒤로</button>
 						</div>
 					</form>	
 					</div>

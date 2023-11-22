@@ -56,6 +56,9 @@
                             <c:if test="${error_type eq 'input_error'}">
 								<p class="text-center mb-0">잘못된 접근입니다.<br/>다시 시도해주세요.</p>
 							</c:if>
+							<c:if test="${error_type eq 'cant_rent'}">
+								<p class="text-center mb-0">이미 대여 중인 도서입니다.<br/>다시 시도해주세요.</p>
+							</c:if>
 							<c:if test="${error_type eq 'cant_renew'}">
 								<p class="text-center mb-0">잘못된 접근입니다. [사번 오류]<br/><br/>사번을 올바르게 입력하거나<br/>'양도' 메뉴를 이용해주세요.</p>
 							</c:if>

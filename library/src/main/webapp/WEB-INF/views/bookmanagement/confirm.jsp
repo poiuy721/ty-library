@@ -57,10 +57,8 @@
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="/boot/img/user.jpg" alt=""
-							style="width: 40px; height: 40px;">
-						<div
-							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+						<img class="rounded-circle" src="/boot/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+						<div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
 					</div>
 					<div class="ms-3">
 						<h6 class="mb-0">Jhon Doe</h6>
@@ -68,31 +66,26 @@
 					</div>
 				</div>
 				<div class="navbar-nav w-100">
-					<a href="index.html" class="nav-item nav-link active"><i
-						class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+					<a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
 					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
+						<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
 						<div class="dropdown-menu bg-transparent border-0">
-							<a href="button.html" class="dropdown-item">Buttons</a> <a
-								href="typography.html" class="dropdown-item">Typography</a> <a
-								href="element.html" class="dropdown-item">Other Elements</a>
+							<a href="button.html" class="dropdown-item">Buttons</a> 
+							<a href="typography.html" class="dropdown-item">Typography</a> 
+							<a href="element.html" class="dropdown-item">Other Elements</a>
 						</div>
 					</div>
-					<a href="widget.html" class="nav-item nav-link"><i
-						class="fa fa-th me-2"></i>Widgets</a> <a href="form.html"
-						class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-					<a href="table.html" class="nav-item nav-link"><i
-						class="fa fa-table me-2"></i>Tables</a> <a href="chart.html"
-						class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+					<a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a> 
+					<a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
+					<a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a> 
+					<a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
 					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
+						<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
 						<div class="dropdown-menu bg-transparent border-0">
-							<a href="signin.html" class="dropdown-item">Sign In</a> <a
-								href="signup.html" class="dropdown-item">Sign Up</a> <a
-								href="404.html" class="dropdown-item">404 Error</a> <a
-								href="blank.html" class="dropdown-item">Blank Page</a>
+							<a href="signin.html" class="dropdown-item">Sign In</a> 
+							<a href="signup.html" class="dropdown-item">Sign Up</a> 
+							<a href="404.html" class="dropdown-item">404 Error</a> 
+							<a href="blank.html" class="dropdown-item">Blank Page</a>
 						</div>
 					</div>
 				</div>
@@ -168,26 +161,27 @@
 									<p>반납 일자</p>
 									<p><strong>${rent_date}</strong></p>
 								</c:if>
-						</div>
-						<div class="text-center">
-						<br>
-						<c:if test="${management_type eq 'rent'}">
-			                <h6>대여가 완료되었습니다.</h6>
-			            </c:if>
-			            <c:if test="${management_type eq 'renew'}">
-			                 <h6>대여기간 연장이 완료되었습니다.</h6>
-			            </c:if>
-			            <c:if test="${management_type eq 'assign'}">
-			                 <h6>양도가 완료되었습니다.</h6>
-			            </c:if>
-			            <c:if test="${management_type eq 'return'}">
-			                 <h6>반납이 완료되었습니다.</h6>
-			            </c:if>
+							</div>
+							<div class="text-center"><br>
+								<c:if test="${management_type eq 'rent'}">
+					                <h6>대여가 완료되었습니다.</h6>
+					            </c:if>
+					            <c:if test="${management_type eq 'renew'}">
+					                 <h6>대여기간 연장이 완료되었습니다.</h6>
+					            </c:if>
+					            <c:if test="${management_type eq 'assign'}">
+					                 <h6>양도가 완료되었습니다.</h6>
+					            </c:if>
+					            <c:if test="${management_type eq 'return'}">
+					                 <h6>반납이 완료되었습니다.</h6>
+					            </c:if>
+					            
+					            <button type="button" class="btn btn-outline-primary m-2" onclick="location.href='search'">도서 조회 홈으로</button>
+							</div>
 						</div>
 					</div>
+
 					<!-- Sales Chart End -->
-				</div>
-			</div>
 			<!-- Footer Start -->
 
 			<div class="container-fluid pt-4 px-4">
@@ -204,13 +198,11 @@
 					</div>
 				</div>
 			</div>
-			<!-- Footer End -->
-		</div>
+		<!-- Footer End -->
+
 		<!-- Content End -->
 
-
 		<!-- Back to Top -->
-	</div>
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

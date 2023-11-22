@@ -85,9 +85,7 @@ public class bookmanagementServiceImpl implements bookmanagementService {
 
 	@Override
 	public void updateBooks(int b_id, String due_date) {
-
-		// int b_id = Integer.parseInt(bookId);
-
+		
 		SimpleDateFormat format = new SimpleDateFormat("yyyyy-MM-dd");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date dd = null;
