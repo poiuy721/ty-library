@@ -205,6 +205,10 @@
 				</div>
 			</div>
 			<!-- Footer End -->
+			<br>
+			<div class="text-center">
+				<a href="/tylibrary/logout">로그아웃</a>
+			</div>
 		</div>
 		<!-- Content End -->
 
@@ -227,20 +231,6 @@
 
 	<!-- Template Javascript -->
 	<script src="/js/main.js"></script>
-
-<!--  //한 화면에 버튼 다 표시하는 경우
-	<button type="button" class="btn btn-outline-primary m-2" id="rent" onclick="Login(this.id)">대여</button>
-	<button type="button" class="btn btn-outline-primary m-2" id="renew" onclick="Login(this.id)">연장</button>
-	<button type="button" class="btn btn-outline-primary m-2" id="assign" onclick="Login(this.id)">양도</button>
-	<button type="button" class="btn btn-outline-primary m-2" id="return"
-		<c:choose>
-			<c:when test="${adminId eq 'admin'}"></c:when>
-			<c:otherwise>style="display:none"</c:otherwise>
-		</c:choose>
-	onclick="Login(this.id);">반납</button>
--->
-
-
 
 
 </body>

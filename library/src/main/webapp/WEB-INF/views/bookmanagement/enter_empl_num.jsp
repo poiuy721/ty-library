@@ -32,6 +32,10 @@
 
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
+
+
+
+
 </head>
 
 <body>
@@ -120,14 +124,9 @@
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
 								<h2 class="mb-0 text-center">로그인 (사번)</h2>
-								<br/>
-								<p style="
-									<c:choose>
-										<c:when test="${input_error eq 'error'}"></c:when>
-						                <c:otherwise>display:none;</c:otherwise>
-									</c:choose>	
-									font-size:12px; text-align:middle;"> 존재하지 않는 사번입니다.<br/>다시 입력해 주십시오.
-								</p>
+								<div>
+									<span id="result_checkPsw" style="font-size: 12px"></span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -145,25 +144,18 @@
 								class="d-flex align-items-center justify-content-between mb-4">
 								<h6 class="mb-0">| 사번 입력</h6>
 							</div>
-							<c:if test="${management_type eq 'rent'}">
-			                    <form action="/tylibrary/rent/loginProcess" method="post">
-			                </c:if>
-			                <c:if test="${management_type eq 'renew'}">
-			                    <form action="/tylibrary/renew/loginProcess" method="post">
-			                </c:if>
-			                <c:if test="${management_type eq 'assign'}">
-			                    <form action="/tylibrary/assign/loginProcess" method="post">
-			                </c:if>
 								<div class="form-floating mb-3">
 									<input type="text" class="form-control" id="e_id" name="e_id" placeholder="사번" required>
+									<div><span id="result_checkID" style="font-size: 12px"></span></div>
+									<input type="password" class="form-control" id="e_password" name="e_password" placeholder="비밀번호" required>
+									<div><span id="result_checkPW" style="font-size: 12px"></span></div>
 								</div>
-								<button type="submit" class="btn btn-outline-primary m-2">로그인</button>
-							</form>
+								<button type="submit" class="btn btn-outline-primary m-2" id="login_btn">로그인</button>
+							</div>
 						</div>
-					</div>
 					<!-- Sales Chart End -->
+					</div>
 				</div>
-			</div>
 			<!-- Footer Start -->
 
 			<div class="container-fluid pt-4 px-4">
@@ -191,8 +183,7 @@
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="/lib/chart/chart.min.js"></script>
 	<script src="/lib/easing/easing.min.js"></script>
 	<script src="/lib/waypoints/waypoints.min.js"></script>
@@ -200,6 +191,52 @@
 	<script src="/lib/tempusdominus/js/moment.min.js"></script>
 	<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
 	<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+	<script>
+	
+		$("#login_btn").click(function() {
+			
+		    var arr = new Array();
+		    arr.push($("#e_id").val());
+		    arr.push($("#e_password").val());
+		    
+		    console.log($("#e_id").val());
+		    console.log($("#e_password").val());
+		    
+		    var url;
+		    if('${management_type}'=='rent')
+		    	url = "/tylibrary/rent/loginProcess";
+		    else if('${management_type}'=='assign')
+		    	url = "/tylibrary/assign/loginProcess";
+		    else if('${management_type}'=='renew')
+		    	url = "/tylibrary/renew/loginProcess";
+		    
+		    $.ajax({
+			    url : url,
+			    type : 'POST',   
+			    async : true,   
+			    dataType : 'json',   
+			    data: {arr,arr},
+			    success : function(data) {
+			    },
+			    error : function(data) {      
+			    	var d = JSON.parse(JSON.stringify(data));
+				    var error_msg = d['responseText'];
+				    
+				    if(error_msg=="아이디를 다시 입력해 주세요."){
+				    	$("#result_checkID").html(error_msg).css("color", "red");
+				    } else if (error_msg=="비밀번호를 다시 입력해 주세요."){
+				    	$("#result_checkPW").html(error_msg).css("color", "red");
+				    } else {
+				    	location.replace(d['responseText']);
+				    }	
+			    }
+		    })
+		 });
+
+	</script>
+	
+
 
 	<!-- Template Javascript -->
 	<script src="/js/main.js"></script>

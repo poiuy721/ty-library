@@ -241,6 +241,8 @@
 	    // 선택한 연장 날짜
 	    var due_date = s_year + "-" + s_month + "-" + newDIV.innerHTML;
 	    var due = new Date(due_date);
+	    
+	    console.log(due);
 	
 	    // 연장 가능한 최대 날짜
 	    var one_date = today.getFullYear() + "-" + (today.getMonth()+2) + "-" + today.getDate();
@@ -463,6 +465,11 @@
 					</div>
 				</div>
 				<!-- Footer End -->
+				
+				<br>
+				<div class="text-center">
+					<a href="/tylibrary/logout">로그아웃</a>
+				</div>
 			</div>
 			<!-- Content End -->
 

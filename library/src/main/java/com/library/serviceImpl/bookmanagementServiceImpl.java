@@ -28,34 +28,30 @@ public class bookmanagementServiceImpl implements bookmanagementService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
-	public EmployeeDTO checkEmplInfo(String e_id) {
+	public EmployeeDTO checkEmplInfo(String e_id, String e_password) {
 
-		EmployeeDTO returnValue = null;
+		EmployeeDTO returnValue = new EmployeeDTO("login_error_eid");
 		List<EmployeeDTO> allEmplInfo = bookmanagementMapper.selectAllEmplInfo();
 
 		// 존재하는 사원인지 확인
 		for (int i = 0; i < allEmplInfo.size(); i++) {
 			if (allEmplInfo.get(i).getE_id().equals(e_id.toLowerCase())) {
-				returnValue = allEmplInfo.get(i);
-			}
+				if(allEmplInfo.get(i).getE_password().equals(e_password)) {
+					returnValue = allEmplInfo.get(i);
+				} else {
+					returnValue = new EmployeeDTO("login_error_password");
+				}
+			} 
 		}
 		return returnValue;
 	}
 
 	@Override
-	public EmployeeDTO checkEmplInfoByBid(int b_id, String e_id, String management_type) {
+	public EmployeeDTO checkEmplInfoByBid(int b_id, String e_id, String e_password, String management_type) {
 
-		EmployeeDTO employee = null;
+		EmployeeDTO employee = checkEmplInfo(e_id, e_password);
 		EmployeeDTO returnValue = null;
 		EmployeeDTO emplInfoByBid = bookmanagementMapper.selectEmplInfoByBid(b_id);
-		List<EmployeeDTO> allEmplInfo = bookmanagementMapper.selectAllEmplInfo();
-
-		// 존재하는 사원인지 확인
-		for (int i = 0; i < allEmplInfo.size(); i++) {
-			if (allEmplInfo.get(i).getE_id().equals(e_id.toLowerCase()))
-				employee = allEmplInfo.get(i);
-			;
-		}
 
 		// 기존 대여자와 일치하는 지 확인
 		if (employee.getE_id().equals(emplInfoByBid.getE_id())) {
@@ -65,7 +61,6 @@ public class bookmanagementServiceImpl implements bookmanagementService {
 			if (management_type.equals("assign"))
 				returnValue = employee;
 		}
-
 		return returnValue;
 	}
 

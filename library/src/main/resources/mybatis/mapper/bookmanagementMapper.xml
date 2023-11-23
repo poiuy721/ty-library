@@ -31,7 +31,7 @@
     </select>
     
     <select id="selectAllEmplInfo" resultType="com.library.dto.EmployeeDTO"> 
-    	select	e_id, e_name
+    	select	e_id, e_name, e_password
     	from 	employees
     </select>
     

@@ -197,6 +197,10 @@
 						</div>
 					</div>
 				</div>
+				<br>
+				<div class="text-center">
+					<a href="/tylibrary/logout">로그아웃</a>
+				</div>
 			</div>
 		<!-- Footer End -->
 

@@ -12,7 +12,6 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
 
 <title>대여 기간 선택</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -255,6 +254,10 @@
 					</div>
 				</div>
 				<!-- Footer End -->
+				<br>
+				<div class="text-center">
+					<a href="/tylibrary/logout">로그아웃</a>
+				</div>
 			</div>
 			<!-- Content End -->
 
@@ -276,6 +279,7 @@
 				dayNamesMin: ['일','월','화','수','목','금','토'],
 				minDate: "0",
 				maxDate: "+1M"
+				
 			});
 			
 			// 기본 연장 기간 설정
@@ -342,7 +346,6 @@
 	</script>
 
 		<!-- JavaScript Libraries -->
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="/lib/chart/chart.min.js"></script>
 		<script src="/lib/easing/easing.min.js"></script>
@@ -351,6 +354,7 @@
 		<script src="/lib/tempusdominus/js/moment.min.js"></script>
 		<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
 		<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 		<!-- Template Javascript -->
 		<script src="/js/main.js"></script>
