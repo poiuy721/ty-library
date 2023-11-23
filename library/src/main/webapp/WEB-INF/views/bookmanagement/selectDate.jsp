@@ -241,8 +241,6 @@
 	    // 선택한 연장 날짜
 	    var due_date = s_year + "-" + s_month + "-" + newDIV.innerHTML;
 	    var due = new Date(due_date);
-	    
-	    console.log(due);
 	
 	    // 연장 가능한 최대 날짜
 	    var one_date = today.getFullYear() + "-" + (today.getMonth()+2) + "-" + today.getDate();

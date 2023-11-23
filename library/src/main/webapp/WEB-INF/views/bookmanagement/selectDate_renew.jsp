@@ -159,7 +159,7 @@
 	    
 		var arr = new Array();
 	    arr.push(d_year);
-	    arr.push(leftPad(d_month));
+	    arr.push(leftPad(d_month+1));
 	    arr.push(leftPad(d_day));
 	    
 		    $.ajax({
