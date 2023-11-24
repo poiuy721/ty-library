@@ -6,14 +6,18 @@
 
 <head>
 <meta charset="utf-8">
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+
+<script src="/lib/datepicker/bootstrap-datepicker.js"></script>
+<script src="/lib/datepicker/bootstrap-datepicker.css"></script>
 
 <title>대여 기간 선택</title>
+
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -268,8 +272,7 @@
 	<script>
 
 		$(function() {
-	
-			// INITIALIZE DATEPICKER PLUGIN
+			// datepicker 설정
 			$('#datepicker').datepicker({
 				clearBtn : true,
 				dateFormat : "yy/mm/dd",
@@ -278,25 +281,25 @@
 				monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 				dayNamesMin: ['일','월','화','수','목','금','토'],
 				minDate: "0",
-				maxDate: "+1M"
-				
+				maxDate: "+1M",
 			});
 			
-			// 기본 연장 기간 설정
+			// 날짜 계산
+			var arr = new Array();
+			
 			let today = new Date();
 			let basic_return_date = new Date(today.setDate(today.getDate()+14));
 			let brd = basic_return_date.getFullYear()+"/"+leftPad(basic_return_date.getMonth()+1)+"/"+leftPad(basic_return_date.getDate());
-			
-			// ========== 기본 대여 기간 설정 : start ==========
-			var arr = new Array();
 			arr.push(brd);
+			
+			// 기본 대여 기간 설정 및 데이터 전송
+			$( "#datepicker" ).datepicker( 'setDate', brd );
 	
 		    var url;
 		    if('${management_type}'=='rent')
 		    	url = "/tylibrary/rent/due";
 		    else
 		    	url = "/tylibrary/assign/due";
-			
 			$.ajax({
 			    url: url,
 			    data: {arr,arr},
@@ -307,11 +310,11 @@
 			    error : function(data){		
 			    }
 			});
-			// ========== 기본 대여 기간 설정 : end ==========
 	
-			// 날짜 선택 시, 날짜 데이터 전송
+			// 날짜 선택
 			$('#datepicker').on('change', function() {
 				var pickedDate = $('input').val();
+	
 				$('#pickedDate').html(pickedDate);
 	
 				var arr = new Array();
@@ -325,24 +328,18 @@
 				    },
 				    error : function(data){		
 				    }
-				}); 
-				
+				}); 			
 			});
-	
-			// 기본 대여 기간 설정       
-			$( "#datepicker" ).datepicker( 'setDate', '14D' );
+		});
 			
-			// 공백에 '0' 삽입하는 메소드
-	        function leftPad(value) {
-	            if (value < 10) {
-	                value = "0" + value;
-	                return value;
-	            }
+		// 공백에 '0' 삽입하는 메소드
+	    function leftPad(value) {
+	        if (value < 10) {
+	            value = "0" + value;
 	            return value;
 	        }
-	
-		});
-		 
+	        return value;
+	    }
 	</script>
 
 		<!-- JavaScript Libraries -->

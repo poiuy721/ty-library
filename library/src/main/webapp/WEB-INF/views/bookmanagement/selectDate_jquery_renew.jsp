@@ -7,12 +7,17 @@
 <head>
 <meta charset="utf-8">
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+<script src="/lib/datepicker/bootstrap-datepicker.js"></script>
+<script src="/lib/datepicker/bootstrap-datepicker.css"></script>
 
 <title>대여 기간 선택</title>
+
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -273,7 +278,7 @@ input.form-control::placeholder {
 			let brd = basic_return_date.getFullYear()+"/"+leftPad(basic_return_date.getMonth()+1)+"/"+leftPad(basic_return_date.getDate());
 			let mrd = max_return_date.getFullYear()+"/"+leftPad(max_return_date.getMonth()+1)+"/"+leftPad(max_return_date.getDate());
 			
-			// INITIALIZE DATEPICKER PLUGIN
+			// datepicker 설정
 			$('#datepicker').datepicker({
 				clearBtn : true,
 				dateFormat : "yy/mm/dd",
@@ -285,7 +290,7 @@ input.form-control::placeholder {
 				maxDate: mrd
 			});
 			
-			// 기본 대여 기간 설정       
+			// 기본 대여 기간 설정 및 데이터 전송     
 			$( "#datepicker" ).datepicker( 'setDate', brd );
 			var arr = new Array();
 			arr.push(brd);
@@ -300,7 +305,7 @@ input.form-control::placeholder {
 			    }
 			}); 
 	
-			// 날짜 선택 시, 날짜 데이터 전송
+			// 날짜 선택
 			$('#datepicker').on('change', function() {
 				var pickedDate = $('input').val();
 				$('#pickedDate').html(pickedDate);

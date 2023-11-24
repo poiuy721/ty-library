@@ -81,7 +81,7 @@ public class BookManagementController {
 			return "bookmanagement/enter_empl_num";
 		} else {
 			model.addAttribute("management_type", "rent");
-			return "bookmanagement/selectDate";
+			return "bookmanagement/selectDate_jquery";
 		}
 	}
 
@@ -104,7 +104,7 @@ public class BookManagementController {
 			} else {
 				model.addAttribute("management_type", "renew");
 				model.addAttribute("recent_return_date", recent_return_date);
-				return "bookmanagement/selectDate_renew";
+				return "bookmanagement/selectDate_jquery_renew";
 			}	
 		}
 	}
@@ -126,7 +126,7 @@ public class BookManagementController {
 				return "bookmanagement/wrongAccess";
 			} else {
 				model.addAttribute("management_type", "assign");
-				return "bookmanagement/selectDate";
+				return "bookmanagement/selectDate_jquery";
 			}	
 		}
 	}
@@ -152,14 +152,13 @@ public class BookManagementController {
 			session.setAttribute("employee", employee);
 			session.setAttribute("a", "a");
 			return "selectDate";
-			// return "bookmanagement/selectDate_jquery";
 		}
 	}
 	
 	@RequestMapping(value = "/tylibrary/rent/selectDate")
 	public String rent_selectDate(HttpSession session, HttpServletRequest request, Model model) {
 		model.addAttribute("management_type", "rent");
-		return "bookmanagement/selectDate";
+		return "bookmanagement/selectDate_jquery";
 	}
 
 	// ============ &&& 대여 기간 선택 &&& ============
@@ -171,8 +170,8 @@ public class BookManagementController {
 
 		// 대여 정보 확인 페이지에 표시될 내용
 		String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
-		// String due_date = pickedDate[0].replace("/", "-");
+		//String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
+		String due_date = pickedDate[0].replace("/", "-");
 
 		// 세션에 정보 저장
 		session.setAttribute("rent_date", rent_date);
@@ -237,7 +236,6 @@ public class BookManagementController {
 			session.setAttribute("employee", employee);
 			model.addAttribute("recent_return_date", recent_return_date);
 			return "selectDate";
-			// return "bookmanagement/selectDate_jquery_renew";
 		}
 	}
 
@@ -248,7 +246,7 @@ public class BookManagementController {
 
 		model.addAttribute("management_type", "renew");
 		model.addAttribute("recent_return_date", recent_return_date);
-		return "bookmanagement/selectDate_renew";
+		return "bookmanagement/selectDate_jquery_renew";
 	}
 
 	// ============ &&& 연장 : 기간 선택 &&& ============
@@ -259,8 +257,8 @@ public class BookManagementController {
 
 		// 연장 정보 확인 페이지에 표시될 내용
 		String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
-		// String due_date = pickedDate[0].replace("/", "-");
+		//String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
+		String due_date = pickedDate[0].replace("/", "-");
 
 		// 세션에 정보 저장
 		session.setAttribute("rent_date", rent_date);
@@ -335,7 +333,7 @@ public class BookManagementController {
 	@RequestMapping(value = "/tylibrary/assign/selectDate")
 	public String assign_selectDate(HttpSession session, HttpServletRequest request, Model model) {
 		model.addAttribute("management_type", "assign");
-		return "bookmanagement/selectDate";
+		return "bookmanagement/selectDate_jquery";
 	}
 	
 
@@ -347,8 +345,8 @@ public class BookManagementController {
 
 		// 대여 정보 확인 페이지에 표시될 내용
 		String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
-		//String due_date = pickedDate[0].replace("/", "-");
+		//String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
+		String due_date = pickedDate[0].replace("/", "-");
 
 		// 세션에 정보 저장
 		session.setAttribute("rent_date", rent_date);
