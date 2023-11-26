@@ -33,6 +33,13 @@
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
 
+<style>
+	.td {
+		word-break: keep-all;
+		text-align: left;
+	}
+</style>
+
 </head>
 
 <body>
@@ -105,14 +112,20 @@
 		<!-- Content Start -->
 		<div class="content">
 			<!-- Navbar Start -->
-			<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+			<nav class="navbar bg-light navbar-light sticky-top px-4 py-0">
 				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
 				<ul class="nav justify-content-end">
-		            <li style="font-size:11px; vertical-align:middle; text-align:right" >사원 번호: ${employee.e_id}  | 사원명 : ${employee.e_name}
-		            </li>
-		        </ul>	
+					<li style="font-size: 11px; vertical-align: middle; text-align: right">
+						<c:if test="${employee.e_id eq null}">
+							<a style="font-size: 13px; vertical-align: middle; text-align: right" href="/tylibrary/login">로그인</a>
+						</c:if>
+						<c:if test="${employee.e_id ne null}">
+							사원 번호: ${employee.e_id} | 사원명 : ${employee.e_name}
+						</c:if>
+					</li>
+				</ul>
 			</nav>
 			<!-- Navbar End -->
 
@@ -169,24 +182,28 @@
 								</thead>
 								<tbody>
 									<tr>
-										<th scope="row">도서명</th>
+										<th scope="row" width="80px">도서명</th>
 										<td>${bookInfo.title}</td>
 									</tr>
 									<tr>
+										<th scope="row" width="80px">지은이</th>
+										<td>${bookInfo.author}</td>
+									</tr>
+									<tr>
 										<c:if test="${management_type eq 'rent'}">
-					                    	<th scope="row">대여기간</th>
+					                    	<th scope="row" width="80px">대여기간</th>
 					                    	<td>${rent_date} ~ ${due_date}</td>
 					                    </c:if>
 					                    <c:if test="${management_type eq 'renew'}">
-					                    	<th scope="row">연장기간</th>
+					                    	<th scope="row" width="80px">연장기간</th>
 					                    	<td>${rent_date} ~ ${due_date}</td>
 					                    </c:if>
 					                    <c:if test="${management_type eq 'assign'}">
-					                    	<th scope="row">(양도)<br>대여기간</th>
+					                    	<th scope="row" width="80px">(양도)<br>대여기간</th>
 					                    	<td>${rent_date} ~ ${due_date}</td>
 					                    </c:if>
 					                    <c:if test="${management_type eq 'return'}">
-					                    	<th scope="row">반납일자</th>
+					                    	<th scope="row" width="80px">반납일자</th>
 					                    	<td>${rent_date}</td>
 					                    </c:if>
 									</tr>

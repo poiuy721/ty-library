@@ -23,7 +23,7 @@
 <meta content="" name="description">
 
 <!-- Favicon -->
-<link href="/boot/img/favicon.ico" rel="icon">
+<link href="/img/favicon.ico" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,14 +35,14 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="/boot/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-<link href="/boot/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="/boot/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="/boot/css/style.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
 
 
 <style>
@@ -118,7 +118,7 @@ input.form-control::placeholder {
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="/boot/img/user.jpg" alt=""
+						<img class="rounded-circle" src="/img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -165,14 +165,20 @@ input.form-control::placeholder {
 		<!-- Content Start -->
 		<div class="content">
 			<!-- Navbar Start -->
-			<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+			<nav class="navbar bg-light navbar-light sticky-top px-4 py-0">
 				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
 				<ul class="nav justify-content-end">
-		            <li style="font-size:11px; vertical-align:middle; text-align:right" >사원 번호: ${employee.e_id}  | 사원명 : ${employee.e_name}
-		            </li>
-		        </ul>	
+					<li style="font-size: 11px; vertical-align: middle; text-align: right">
+						<c:if test="${employee.e_id eq null}">
+							<a style="font-size: 13px; vertical-align: middle; text-align: right" href="/tylibrary/login">로그인</a>
+						</c:if>
+						<c:if test="${employee.e_id ne null}">
+							사원 번호: ${employee.e_id} | 사원명 : ${employee.e_name}
+						</c:if>
+					</li>
+				</ul>
 			</nav>
 			<!-- Navbar End -->
 
@@ -251,6 +257,9 @@ input.form-control::placeholder {
 					</div>
 				</div>
 				<!-- Footer End -->
+				<div class="text-center">
+					<a href="/tylibrary/logout">로그아웃</a>
+				</div>
 			</div>
 			<!-- Content End -->
 
@@ -291,7 +300,8 @@ input.form-control::placeholder {
 			});
 			
 			// 기본 대여 기간 설정 및 데이터 전송     
-			$( "#datepicker" ).datepicker( 'setDate', brd );
+			$('#datepicker').datepicker('setDate', brd );
+			
 			var arr = new Array();
 			arr.push(brd);
 			$.ajax({
@@ -321,10 +331,8 @@ input.form-control::placeholder {
 				    },
 				    error : function(data){		
 				    }
-				}); 
-				
+				});
 			});
-		
 		});
 		
 		// 공백에 '0' 삽입하는 메소드
@@ -340,16 +348,16 @@ input.form-control::placeholder {
 
 		<!-- JavaScript Libraries -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="/boot/lib/chart/chart.min.js"></script>
-		<script src="/boot/lib/easing/easing.min.js"></script>
-		<script src="/boot/lib/waypoints/waypoints.min.js"></script>
-		<script src="/boot/lib/owlcarousel/owl.carousel.min.js"></script>
-		<script src="/boot/lib/tempusdominus/js/moment.min.js"></script>
-		<script src="/boot/lib/tempusdominus/js/moment-timezone.min.js"></script>
-		<script src="/boot/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+		<script src="/lib/chart/chart.min.js"></script>
+		<script src="/lib/easing/easing.min.js"></script>
+		<script src="/lib/waypoints/waypoints.min.js"></script>
+		<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+		<script src="/lib/tempusdominus/js/moment.min.js"></script>
+		<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+		<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 		<!-- Template Javascript -->
-		<script src="/boot/js/main.js"></script>
+		<script src="/js/main.js"></script>
 		
 
 </body>

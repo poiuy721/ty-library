@@ -6,13 +6,13 @@
 
 <head>
 <meta charset="utf-8">
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
-
 <script src="/lib/datepicker/bootstrap-datepicker.js"></script>
 <script src="/lib/datepicker/bootstrap-datepicker.css"></script>
 
@@ -163,14 +163,20 @@
 		<!-- Content Start -->
 		<div class="content">
 			<!-- Navbar Start -->
-			<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+			<nav class="navbar bg-light navbar-light sticky-top px-4 py-0">
 				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
 				<ul class="nav justify-content-end">
-		            <li style="font-size:11px; vertical-align:middle; text-align:right" >사원 번호: ${employee.e_id}  | 사원명 : ${employee.e_name}
-		            </li>
-		        </ul>	
+					<li style="font-size: 11px; vertical-align: middle; text-align: right">
+						<c:if test="${employee.e_id eq null}">
+							<a style="font-size: 13px; vertical-align: middle; text-align: right" href="/tylibrary/login">로그인</a>
+						</c:if>
+						<c:if test="${employee.e_id ne null}">
+							사원 번호: ${employee.e_id} | 사원명 : ${employee.e_name}
+						</c:if>
+					</li>
+				</ul>
 			</nav>
 			<!-- Navbar End -->
 
@@ -265,7 +271,6 @@
 			</div>
 			<!-- Content End -->
 
-
 			<!-- Back to Top -->
 		</div>
 		
@@ -281,7 +286,7 @@
 				monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 				dayNamesMin: ['일','월','화','수','목','금','토'],
 				minDate: "0",
-				maxDate: "+1M",
+				maxDate: "+1M"
 			});
 			
 			// 날짜 계산
@@ -314,7 +319,6 @@
 			// 날짜 선택
 			$('#datepicker').on('change', function() {
 				var pickedDate = $('input').val();
-	
 				$('#pickedDate').html(pickedDate);
 	
 				var arr = new Array();
@@ -351,7 +355,6 @@
 		<script src="/lib/tempusdominus/js/moment.min.js"></script>
 		<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
 		<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> -->
 
 		<!-- Template Javascript -->
 		<script src="/js/main.js"></script>

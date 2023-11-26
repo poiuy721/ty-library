@@ -205,6 +205,8 @@
 		    	url = "/tylibrary/assign/loginProcess";
 		    else if('${management_type}'=='renew')
 		    	url = "/tylibrary/renew/loginProcess";
+		    else if('${management_type}'=='login')
+		    	url = "/tylibrary/loginProcess";
 		    
 		    $.ajax({
 			    url : url,

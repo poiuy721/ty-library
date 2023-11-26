@@ -107,11 +107,20 @@
 		<!-- Content Start -->
 		<div class="content">
 			<!-- Navbar Start -->
-			<nav
-				class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+			<nav class="navbar bg-light navbar-light sticky-top px-4 py-0">
 				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
+				<ul class="nav justify-content-end">
+					<li style="font-size: 11px; vertical-align: middle; text-align: right">
+						<c:if test="${employee.e_id eq null}">
+							<a style="font-size: 13px; vertical-align: middle; text-align: right" href="/tylibrary/login">로그인</a>
+						</c:if>
+						<c:if test="${employee.e_id ne null}">
+							사원 번호: ${employee.e_id} | 사원명 : ${employee.e_name}
+						</c:if>
+					</li>
+				</ul>
 			</nav>
 			<!-- Navbar End -->
 
@@ -136,26 +145,25 @@
 				<div class="row g-4">
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light text-center rounded p-4">
-							<div
-								class="d-flex align-items-center justify-content-between mb-4">
-								<h6 class="mb-0">${bookInfo.title}</h6>
+							<div class="d-flex align-items-center mb-4">
+								<a class="mb-0" style="font-size:25px">|&nbsp;&nbsp;</a><h6 class="mb-0" style="word-break:keep-all; text-align:left">${bookInfo.title}</h6>
 							</div>
 							<table class="table table-borderless">
 								<thead>
 								</thead>
 								<tbody>
 									<tr>
-										<th scope="row">지은이</th>
+										<th scope="row" width="80px">지은이</th>
 										<td></td>
 										<td>${bookInfo.author}</td>
 									</tr>
 									<tr>
-										<th scope="row">출판사</th>
+										<th scope="row" width="80px">출판사</th>
 										<td></td>
 										<td>${bookInfo.publisher}</td>
 									</tr>
 									<tr>
-										<th scope="row">카테고리</th>
+										<th scope="row" width="80px">카테고리</th>
 										<td></td>
 										<td>${bookInfo.category}</td>
 									</tr>
@@ -181,7 +189,6 @@
 									onclick="/tylibrary/return/check">반납
 								</button>
 			                </c:if>
-					   <!-- <button type="button" class="btn btn-outline-primary m-2" id="return" onclick="openCamera();">반납</button> -->
 						</div>
 					</div>	
 				</div>
@@ -207,6 +214,7 @@
 			<!-- Footer End -->
 			<br>
 			<div class="text-center">
+				<a href="/tylibrary/login">로그인 &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; </a>
 				<a href="/tylibrary/logout">로그아웃</a>
 			</div>
 		</div>

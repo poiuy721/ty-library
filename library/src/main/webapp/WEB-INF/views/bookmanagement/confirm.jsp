@@ -97,14 +97,20 @@
 		<!-- Content Start -->
 		<div class="content">
 			<!-- Navbar Start -->
-			<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+			<nav class="navbar bg-light navbar-light sticky-top px-4 py-0">
 				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
 				<ul class="nav justify-content-end">
-		            <li style="font-size:11px; vertical-align:middle; text-align:right" >사원 번호: ${employee.e_id}  | 사원명 : ${employee.e_name}
-		            </li>
-		        </ul>	
+					<li style="font-size: 11px; vertical-align: middle; text-align: right">
+						<c:if test="${employee.e_id eq null}">
+							<a style="font-size: 13px; vertical-align: middle; text-align: right" href="/tylibrary/login">로그인</a>
+						</c:if>
+						<c:if test="${employee.e_id ne null}">
+							사원 번호: ${employee.e_id} | 사원명 : ${employee.e_name}
+						</c:if>
+					</li>
+				</ul>
 			</nav>
 			<!-- Navbar End -->
 
@@ -161,7 +167,30 @@
 									<p>반납 일자</p>
 									<p><strong>${rent_date}</strong></p>
 								</c:if>
+								
+								<br><hr style="color:gray"><br>
+								<div class="d-flex align-items-center justify-content-between mb-4">
+								<h6 class="mb-0">| 도서 정보</h6></div>
+								<table class="table table-borderless">
+									<thead>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row" width="80px">도서명</th>
+											<td></td>
+											<td width="200px">${bookInfo.title}</td>
+										</tr>
+										<tr>
+											<th scope="row" width="80px">지은이</th>
+											<td></td>
+											<td width="200px">${bookInfo.author}</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
+
+
+							
 							<div class="text-center"><br>
 								<c:if test="${management_type eq 'rent'}">
 					                <h6>대여가 완료되었습니다.</h6>
@@ -176,8 +205,10 @@
 					                 <h6>반납이 완료되었습니다.</h6>
 					            </c:if>
 					            
+					          
+					            
 					            <button type="button" class="btn btn-outline-primary m-2" onclick="location.href='search'">도서 조회 홈으로</button>
-							</div>
+							</div>								
 						</div>
 					</div>
 
