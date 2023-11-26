@@ -237,6 +237,7 @@
 					</div>
 				</div>
 			</div>
+			<br>
 			<div class="text-center">
 				<c:if test="${management_type eq 'rent'}">
 					<button type="button" class="btn btn-outline-primary m-2" onclick="location='/tylibrary/rent/check'">다음</button>

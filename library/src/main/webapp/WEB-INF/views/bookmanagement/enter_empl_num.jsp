@@ -35,6 +35,20 @@
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
 
+<style>
+	input, password {
+	  width: 230px;
+	  height: 32px;
+	  font-size: 15px;
+	  border: 0;
+	  border-radius: 15px;
+	  outline: none;
+	  padding-left: 10px;
+	  background-color: rgb(233, 233, 233);
+	}
+</style>
+
+
 </head>
 
 <body>
@@ -144,9 +158,10 @@
 								<h6 class="mb-0">| 사번 입력</h6>
 							</div>
 								<div class="form-floating mb-3">
-									<input type="text" class="form-control" id="e_id" name="e_id" placeholder="사번" required>
+									ID&nbsp;&nbsp;:&nbsp;&nbsp;<input type="text" id="e_id" name="e_id" placeholder="사번" required>
 									<div><span id="result_checkID" style="font-size: 12px"></span></div>
-									<input type="password" class="form-control" id="e_password" name="e_password" placeholder="비밀번호" required>
+									<br>
+									PW&nbsp;&nbsp;:&nbsp;&nbsp;<input type="password" id="e_password" name="e_password" placeholder="비밀번호" required>
 									<div><span id="result_checkPW" style="font-size: 12px"></span></div>
 								</div>
 								<button type="submit" class="btn btn-outline-primary m-2" id="login_btn">로그인</button>

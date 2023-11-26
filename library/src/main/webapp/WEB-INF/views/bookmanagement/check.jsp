@@ -37,6 +37,7 @@
 	.td {
 		word-break: keep-all;
 		text-align: left;
+		vertical-align : middle;
 	}
 </style>
 
@@ -192,19 +193,19 @@
 									<tr>
 										<c:if test="${management_type eq 'rent'}">
 					                    	<th scope="row" width="80px">대여기간</th>
-					                    	<td>${rent_date} ~ ${due_date}</td>
+					                    	<td style="vertical-align:middle">${rent_date} ~ ${due_date}</td>
 					                    </c:if>
 					                    <c:if test="${management_type eq 'renew'}">
 					                    	<th scope="row" width="80px">연장기간</th>
-					                    	<td>${rent_date} ~ ${due_date}</td>
+					                    	<td style="vertical-align:middle">${rent_date} ~ ${due_date}</td>
 					                    </c:if>
 					                    <c:if test="${management_type eq 'assign'}">
 					                    	<th scope="row" width="80px">(양도)<br>대여기간</th>
-					                    	<td>${rent_date} ~ ${due_date}</td>
+					                    	<td style="vertical-align:middle">${rent_date} ~ ${due_date}</td>
 					                    </c:if>
 					                    <c:if test="${management_type eq 'return'}">
 					                    	<th scope="row" width="80px">반납일자</th>
-					                    	<td>${rent_date}</td>
+					                    	<td style="vertical-align:middle">${rent_date}</td>
 					                    </c:if>
 									</tr>
 								</tbody>
