@@ -35,6 +35,14 @@
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
 
+<style>
+	.td {
+		word-break: keep-all;
+		text-align: left;
+		vertical-align : middle;
+	}
+</style>
+
 </head>
 
 <body>
