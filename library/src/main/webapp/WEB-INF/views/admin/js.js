@@ -383,3 +383,47 @@ function leftPad(value) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.getElementById("sing-up").addEventListener("click", function() {
+	let formData = new FormData($('#sing-up-form')[0]);
+	console.log(formData);
+	$.ajax({
+		url: 'user-sign-up',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(response) {
+			// 성공 시 처리할 내용
+			let content = '';
+			for (var i = 0; i < data.length; i++) {
+				content += `
+        <tr>
+            <td>${num}</td>
+            <td>${data[i].title}</td>
+            <td>${data[i].b_id}</td>
+            <td><button type="button" class="btn btn-sm btn-danger rounded-pill deleteBtn" data-b_id="${data[i].b_id}">삭제</button></td>
+        </tr>
+    `;
+				num++;
+			}
+		},
+		error: function(xhr, status, error) {
+			// 실패 시 처리할 내용
+			alert("에러: " + error);
+		}
+	});
+});

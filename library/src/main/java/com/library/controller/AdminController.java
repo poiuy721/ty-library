@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.library.dto.BooksDTO;
+import com.library.dto.EmployeeDTO;
 import com.library.dto.SearchRentRecordDto;
 import com.library.dto.StockBookDTO;
 import com.library.service.StockService;
@@ -132,45 +133,26 @@ public class AdminController {
 
 		return result;
 	}
-
+	// ajax 모음-------------------------------
+	// 사원 조회
+	@RequestMapping("admin/search-employees")
+	@ResponseBody
+	public List<EmployeeDTO> infoUser(String category,String searchKey){
+		return stockService.searchEmployee(category,searchKey);
+	}
+	// 사원 비밀번호 초기화
+	@RequestMapping("admin/reset-password")
+	@ResponseBody
+	public int passwordReset(String id) {
+		return stockService.updatePassword(id);
+	}
 	// 사원등록이다
 	@RequestMapping("admin/user-sign-up")
 	@ResponseBody
-	public String isSingUP(@RequestParam(required = false) String ENum, @RequestParam(required = false) String EName,
+	public List<EmployeeDTO> isSingUP(@RequestParam(required = false) String ENum, @RequestParam(required = false) String EName,
 			@RequestParam(required = false) MultipartFile EFile) {
-
-		// stockService.goSingup(ENum,EName,EFile);
-		if (ENum != null && EName != null) {
-		}
-		if (EFile != null) {
-			try {
-				// MultipartFile에서 바이트 배열로 데이터 읽기
-				InputStream inputStream = EFile.getInputStream();
-
-				// 파일 데이터를 읽기 위한 버퍼 선언
-				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-				// 파일 내용을 읽어 로그에 출력
-				String line;
-				while ((line = bufferedReader.readLine()) != null) {
-				}
-				// 읽어온 바이트 배열 처리 로직 수행
-				bufferedReader.close();
-				inputStreamReader.close();
-				inputStream.close();
-				return "파일 읽기 성공";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return "파일 읽기 실패";
-			}
-		}
-
-		return "성공";
+		return stockService.goSingup(ENum,EName,EFile);
 	}
-
-	// ajax 모음-------------------------------
-
 	// 카메라 확인 후 n초기화
 	@RequestMapping("/stock-camera-ok")
 	@ResponseBody

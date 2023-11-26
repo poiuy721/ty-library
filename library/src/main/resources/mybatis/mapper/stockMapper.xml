@@ -32,7 +32,13 @@
 		RETURN_DATE = #{param2}
 		WHERE C_ID = #{param1}	
 	</update>
-
+	<!-- password reset -->
+	<update id="updatePassword">
+		UPDATE EMPLOYEES
+		SET
+		E_PASSWORD = '0000'
+		WHERE E_ID = #{id}
+	</update>
 	<!-- select -->
 	<select id="selectBooksByBId" 
 		resultType="com.library.dto.StockBookDTO">
@@ -126,6 +132,26 @@
 		LEFT JOIN employees e ON co.e_id = e.e_id
 		WHERE co.rent_date BETWEEN #{param1} AND #{param2}
 	</select>
-
+	
+	<!-- 사원 조회 -->
+	<select id="selectByEId" resultType="com.library.dto.EmployeeDTO">
+		SELECT * FROM EMPLOYEES
+		WHERE E_ID LIKE CONCAT('%', #{searchKey} ,'%')
+	</select>
+	<select id="selectByEName" resultType="com.library.dto.EmployeeDTO">
+		SELECT * FROM EMPLOYEES
+		WHERE E_NAME LIKE CONCAT('%', #{searchKey} ,'%')
+	</select>
+	<!-- 사원 확인 -->
+	<select id="selectEid" >
+		SELECT E_ID FROM EMPLOYEES
+		WHERE E_ID =#{ENum}
+	</select>
+	
+	<!-- 인설트 -->
+	<insert id="insertEmployee" >
+		INSERT INTO EMPLOYEES (E_ID,E_NAME,E_PASSWORD)
+		VALUES (#{ENum},#{EName},'0000')
+	</insert>
 
 </mapper>
