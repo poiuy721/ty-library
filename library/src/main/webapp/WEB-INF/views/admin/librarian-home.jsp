@@ -57,7 +57,7 @@
 		<!-- Sidebar Start -->
 		<div class="sidebar pe-4 pb-3">
 			<nav class="navbar bg-light navbar-light">
-				<a href="index.html" class="navbar-brand mx-4 mb-3">
+				<a href="/tylibrary/admin" class="navbar-brand mx-4 mb-3">
 					<h3 class="text-primary">
 						<i class="fa fa-hashtag me-2"></i>TY Library
 					</h3>
@@ -75,7 +75,7 @@
 					</div>
 				</div>
 				<div class="navbar-nav w-100">
-					<a href="index.html" class="nav-item nav-link active"><i
+					<a href="/tylibrary/admin" class="nav-item nav-link active"><i
 						class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
@@ -113,7 +113,8 @@
 			<!-- Navbar Start -->
 			<nav
 				class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+				<a href="/tylibrary/admin"
+					class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
 			</nav>
@@ -123,7 +124,7 @@
 			<!-- Sale & Revenue Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
-					<div class="col-sm-6 col-xl-3">
+					<div class="col-sm-12 col-xl-3">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
 							<div class="ms-3">
 								<h2 class="mb-0 text-center">도서관 홈</h2>
@@ -186,6 +187,11 @@
 			<div class="container-fluid pt-4 px-4">
 				<div class="bg-light rounded-top p-4">
 					<div class="row">
+						<div class="col-12 col-sm-6 text-center text-sm-start">
+							&copy; <a href="#">Your Site Name</a>, All Right
+							Reserved
+							<span id="out">.</span>
+						</div>
 						<div class="col-12 col-sm-6 text-center text-sm-end">
 							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 							Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
@@ -202,20 +208,31 @@
 
 		<!-- Back to Top -->
 	</div>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript">
+		let i = 0;
 		function go(url) {
 			window.location.href = url;
 		}
-		function goPost(state) {			
+		function goPost(state) {
 			let form = document.getElementById('myForm');
 			let input = document.getElementById('state_input')
 			input.value = state;
 			form.submit();
 		}
+
+		// 클래스를 이용하여 클릭 이벤트를 추가
+		$("#out").click(function() {
+			i++;
+			console.log(i);
+			if (i == 5) {
+				window.location.href = 'admin/logout'; // 5번 클릭하면 로그아웃 페이지로 이동
+			}
+		});
 	</script>
 
 	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="/lib/chart/chart.min.js"></script>

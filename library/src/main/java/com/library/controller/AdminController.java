@@ -29,11 +29,11 @@ import com.library.service.StockService;
 @RequestMapping("tylibrary")
 public class AdminController {
 
+	String admin[] = { "admin", "librarian" };
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	int stockState = 1; // 스톡 상태 : 0 잘못된 접근 1 기본상태 2 조사버튼 클릭 3 카메라확인 (여기서 디비 초기화) 1 종료 후 기본상태로
-
-	List<BooksDTO> a;
 
 	@Autowired
 	private StockService stockService;
@@ -52,29 +52,42 @@ public class AdminController {
 	@RequestMapping("/admin")
 	public String index2(HttpSession session, @RequestParam(required = false, defaultValue = "login") String adminId,
 			Model model) {
-		String sessionInfo = stockService.checkSession(session, adminId); // 세션에 담긴 정보를 확인합니다.
-		if (sessionInfo.equals("admin")) { // 정보가 어드민이면 어드민 화면으로
+		String sessionInfo = stockService.checkSession(session, adminId, admin); // 세션에 담긴 정보를 확인합니다.
+		if (sessionInfo.equals(admin[0])) { // 정보가 어드민이면 어드민 화면으로
 			return "admin/admin-home";
-		} else if (sessionInfo.equals("librarian")) { // 정보가 사서면 사서 화면으로
+		} else if (sessionInfo.equals(admin[1])) { // 정보가 사서면 사서 화면으로
 			return "admin/librarian-home";
 		}
 		return "admin/admin-login"; // 의미 없는 정보면 다시 로그인 화면으로
 	}
 
+	@RequestMapping("admin/logout")
+	public String logOut(HttpSession session) {
+		session.setAttribute(admin[0], null);
+		session.setAttribute(admin[1], null);
+		return "redirect:/tylibrary/admin";
+	}
+
 	// 사원 등록 컨트롤러
 	@RequestMapping("admin/user")
-	public String user() {
-
+	public String user(HttpSession session) {
+		if (session.getAttribute("admin") == null) {
+			return "redirect:/tylibrary/admin";
+		}
 		return "admin/user";
 	}
 
 	// 반납과 대여 컨트롤러
 	@RequestMapping("librarian")
-	public String notyet(String state, Model model) {
+	public String notyet(String state, Model model, HttpSession session) {
+		if (session.getAttribute("librarian") == null) {
+			return "redirect:/tylibrary/admin";
+		}
 		model.addAttribute("state", state);
 		return "admin/librarian-scan";
 	}
 
+	// 의미 없는 공간
 	@RequestMapping("isbn")
 	public String isbn() {
 		return "isbn";
@@ -88,8 +101,12 @@ public class AdminController {
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	@RequestMapping("admin/stock-count")
-	public String stockCount(@RequestParam(required = false) String stock, Model model, String state) {
-		a = stockService.selectBooksByNStateAndNStock();
+	public String stockCount(@RequestParam(required = false) String stock, Model model, String state,
+			HttpSession session) {
+		if (session.getAttribute("admin") == null) {
+			return "redirect:/tylibrary/admin";
+		}
+
 		System.out.println(stockState);
 		if (stock == null) {
 			// 체크안됨
@@ -121,7 +138,10 @@ public class AdminController {
 	}
 
 	@RequestMapping("admin/rent-record")
-	public String getRentRecord() {
+	public String getRentRecord(HttpSession session) {
+		if (session.getAttribute("admin") == null) {
+			return "redirect:/tylibrary/admin";
+		}
 		return "rent-record";
 	}
 
@@ -133,41 +153,55 @@ public class AdminController {
 
 		return result;
 	}
+
 	// ajax 모음-------------------------------
 	// 사원 조회
 	@RequestMapping("admin/search-employees")
 	@ResponseBody
-	public List<EmployeeDTO> infoUser(String category,String searchKey){
-		return stockService.searchEmployee(category,searchKey);
+	public List<EmployeeDTO> infoUser(String category, String searchKey) {
+		return stockService.searchEmployee(category, searchKey);
 	}
+
 	// 사원 비밀번호 초기화
 	@RequestMapping("admin/reset-password")
 	@ResponseBody
-	public int passwordReset(String id) {
-		return stockService.updatePassword(id);
+	public int passwordReset(String id, HttpSession session) {
+		if (session.getAttribute("admin") != null)
+			return stockService.updatePassword(id);
+		return 0;
 	}
+
 	// 사원등록이다
 	@RequestMapping("admin/user-sign-up")
 	@ResponseBody
-	public List<EmployeeDTO> isSingUP(@RequestParam(required = false) String ENum, @RequestParam(required = false) String EName,
-			@RequestParam(required = false) MultipartFile EFile) {
-		return stockService.goSingup(ENum,EName,EFile);
+	public List<EmployeeDTO> isSingUP(@RequestParam(required = false) String ENum,
+			@RequestParam(required = false) String EName, @RequestParam(required = false) MultipartFile EFile,
+			HttpSession session) {
+		if (session.getAttribute("admin") != null)
+			return stockService.goSingup(ENum, EName, EFile);
+		return null;
 	}
+
 	// 카메라 확인 후 n초기화
 	@RequestMapping("/stock-camera-ok")
 	@ResponseBody
-	public int isCamera(@RequestParam String cameraState) {
-		stockState = Integer.parseInt(cameraState);
-		stockService.updateInitialNStock();
-		return 3;
+	public int isCamera(@RequestParam String cameraState, HttpSession session) {
+		if (session.getAttribute("admin") != null) {
+			stockState = Integer.parseInt(cameraState);
+			stockService.updateInitialNStock();
+			return 3;
+		}
+		return 1;
 	}
 
 	// 스캔 완료시 y로 변경 후 리턴
 	@RequestMapping("/stock-is-exist")
 	@ResponseBody
-	public StockBookDTO isExist(@RequestParam int id) {
-		if (1 == stockService.updateYStockByBId(id)) {
-			return stockService.selectBooksByBId(id);
+	public StockBookDTO isExist(@RequestParam int id, HttpSession session) {
+		if (session.getAttribute("admin") != null) {
+			if (1 == stockService.updateYStockByBId(id)) {
+				return stockService.selectBooksByBId(id);
+			}
 		}
 		return null;
 	}

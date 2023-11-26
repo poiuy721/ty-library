@@ -41,5 +41,5 @@ public interface StockService {
 	public List<EmployeeDTO> goSingup(String ENum, String EName, MultipartFile EFile);
 	public StockBookDTO returnMethod(int id);
 	public List<SearchRentRecordDto> selectRentRecordsByDateRange(String startDate,String endDate);
-	public String checkSession(HttpSession session, String adminId);
+	public String checkSession(HttpSession session, String adminId, String[] admin);
 }

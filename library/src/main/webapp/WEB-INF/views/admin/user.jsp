@@ -76,7 +76,7 @@
 		<!-- Sidebar Start -->
 		<div class="sidebar pe-4 pb-3">
 			<nav class="navbar bg-light navbar-light">
-				<a href="index.html" class="navbar-brand mx-4 mb-3">
+				<a href="/tylibrary/admin" class="navbar-brand mx-4 mb-3">
 					<h3 class="text-primary">
 						<i class="fa fa-hashtag me-2"></i>TY Library
 					</h3>
@@ -94,7 +94,7 @@
 					</div>
 				</div>
 				<div class="navbar-nav w-100">
-					<a href="index.html" class="nav-item nav-link active"><i
+					<a href="/tylibrary/admin" class="nav-item nav-link active"><i
 						class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
@@ -132,7 +132,7 @@
 			<!-- Navbar Start -->
 			<nav
 				class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+				<a href="/tylibrary/admin" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
 			</nav>
@@ -277,6 +277,8 @@
 		}, true);
 	
 	document.getElementById("sing-up").addEventListener("click", function() {
+		let check = confirm("입력한 정보로 사원 등록을 진행 하시겠습니까?")
+		if(check){
 		let formData = new FormData($('#sing-up-form')[0]);
 		$.ajax({
 			url: 'user-sign-up',
@@ -299,14 +301,18 @@
 				}
 				$('#content2').html(content);
 				$('#sing-up-form')[0].reset()
+				alert('등록이 완료됬습니다.');
 				}else{
-					alert('잘못된 입력입니다.')
+					alert('잘못된 입력입니다.');
 				}
 			},
 			error: function(xhr, status, error) {
 				alert('잘못된 입력입니다.');
 			}
 		});
+		}else{
+			alert("등록이 취소됬습니다.")
+		}
 	});
 	document.getElementById("search-employee").addEventListener("click",function(){
 		let formData = $('#employee-search').serialize();

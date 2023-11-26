@@ -25,6 +25,7 @@ import com.library.service.StockService;
 
 @Service
 public class StockServiceImpl implements StockService {
+	
 
 	@Autowired
 	private adminStockMapper stockMapper;
@@ -165,22 +166,20 @@ public class StockServiceImpl implements StockService {
 	}
 
 	// 세션 체크 구현
-	public String checkSession(HttpSession session, String ID) {
+	public String checkSession(HttpSession session, String ID, String[] admin) {
 		// 세션에 admin이나 librarian이 없음 추가
-		if (ID.equals("admin") && session.getAttribute("admin") == null) {
+		if (ID.equals(admin[0]) && session.getAttribute("admin") == null) {
 			session.setAttribute("admin", ID);
-		} else if (ID.equals("librarian") && session.getAttribute("librarian") == null) {
+		} else if (ID.equals(admin[1]) && session.getAttribute("librarian") == null) {
 			session.setAttribute("librarian", ID);
 		}
 
 		// 세션 체크해서 admin인지 librarian인지 확인
-		if (session.getAttribute("admin") != null && ((String) session.getAttribute("admin")).equals("admin")) {
-			session.setMaxInactiveInterval(4); // 세션 유지 테스트용으로 4초
-			return "admin";
+		if (session.getAttribute("admin") != null && ((String) session.getAttribute("admin")).equals(admin[0])) {
+			return admin[0];
 		} else if (session.getAttribute("librarian") != null
-				&& ((String) session.getAttribute("librarian")).equals("librarian")) {
-			session.setMaxInactiveInterval(4);
-			return "librarian";
+				&& ((String) session.getAttribute("librarian")).equals(admin[1])) {
+			return admin[1];
 		}
 
 		return " ";
