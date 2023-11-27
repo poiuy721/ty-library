@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +34,12 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.library.dto.BookDTO;
 import com.library.dto.BookDeleteDto;
+import com.library.dto.SearchQuery;
+import com.library.dto.SearchRemoveDuplicateDto;
+import com.library.dto.SearchResultDto;
 import com.library.mapper.LibMapper;
+
+
 
 @Controller
 @RequestMapping("tylibrary/admin")
@@ -40,9 +47,10 @@ public class RegistrationController {
 
 	private int id;
 	private String url;
-
+	
+	
 	BookDTO Books = new BookDTO(); // *** ArrayList 형태로 바꿔도 무방 ***
-
+	
 	@Autowired
 	LibMapper libMapper;
 
@@ -62,11 +70,20 @@ public class RegistrationController {
 	@RequestMapping("/selectBookInfo")
 
 	public String register(
-			@RequestParam("isbn") String isbn) {
-
-		int match = libMapper.selectBookInfo(isbn);
-		if (match == 0) {
-
+			@RequestParam("isbn") String isbn, HttpSession session) {
+		
+		BookDTO book = libMapper.selectBookInfo(isbn);
+		
+		//pdf파일에서 받아오기 위함(register-check)
+		/*
+		session.setAttribute("isbn", book.getIsbn());
+		session.setAttribute("title", book.getTitle());
+		session.setAttribute("author", book.getAuthor());
+		session.setAttribute("publisher", book.getPublisher());
+		*/
+		
+		if (book==null) {
+			
 			return "forward:/tylibrary/admin/insertBookInfo";
 
 		} else {
@@ -78,11 +95,21 @@ public class RegistrationController {
 	@RequestMapping("/insertBookInfo")
 	public String insertBookInfo(HttpServletRequest httpServletRequest, Model model) {
 
+		System.out.println("insertBookInfo 등러옴");
+	
+		
 		String isbn = httpServletRequest.getParameter("isbn");
 		String title = httpServletRequest.getParameter("title");
 		String author = httpServletRequest.getParameter("author");
 		String publisher = httpServletRequest.getParameter("publisher");
 		String category = httpServletRequest.getParameter("category");
+		
+		System.out.println("isbn" + isbn);
+		System.out.println("title" + title);
+		System.out.println("author" + author);
+		System.out.println("publisher" + publisher);
+		System.out.println("category" + category);
+
 		model.addAttribute("isbn", isbn);
 		model.addAttribute("title", title);
 		model.addAttribute("author", author);
@@ -206,11 +233,17 @@ public class RegistrationController {
 	}
 
 	@RequestMapping("/delete-check")
-	public String deleteCheck(@RequestParam String b_id, Model model) {
-		model.addAttribute("b_id", b_id);
+	public String deleteCheck(@RequestParam String id, String title, Model model) {
+		model.addAttribute("id", id);
+		model.addAttribute("title", title);
+		
+		System.out.println(title);
 		return "deleteCheck";
 	}
-
+	
+	
+	
+/*
 	@PostMapping("/bringBooksInfo")
 	@ResponseBody
 	public List<BookDeleteDto> bringBooksInfo(
@@ -223,15 +256,26 @@ public class RegistrationController {
 
 		return bookInfo;
 	}
-
+*/
 	@PostMapping("/deleteBook")
 	public String deleteBook(
-			@RequestParam("b_id") String b_id) {
-		System.out.println("deleteBook 메소드 호출됨. b_id: " + b_id);
+			@RequestParam("id") String id) {
+		System.out.println("deleteBook 메소드 호출됨. b_id: " + id);
 		// 도서 삭제 로직을 수행
-		libMapper.deleteBook(b_id);
+		
+		libMapper.deleteBook(id);
 
 		return "delete";
+	}
+	
+	@PostMapping("/filteredToDelete")
+	public String getSearchFiltered(@ModelAttribute SearchQuery query, Model m) throws Exception {
+
+		List<SearchResultDto> informations = libMapper.bringBooksInfo(query);
+		m.addAttribute("informations", informations);
+		m.addAttribute("query", query);
+
+		return "delete-result";
 	}
 
 }

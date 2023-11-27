@@ -1,15 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <head>
 
-<meta charset="utf-8">
+
 <title>DASHMIN - Bootstrap Admin Template</title>
+<meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta content="" name="description">
 
 <!-- Favicon -->
@@ -43,6 +49,9 @@
 <link href="/css/style.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
 </head>
 
 <body>
@@ -147,26 +156,31 @@
 						<div
 							class="d-flex align-items-center justify-content-between mb-4">
 							<h6 class="mb-0">| QR코드</h6>
-							
+
 						</div>
-						 <img src="${pageContext.request.contextPath}/tylibrary/admin/produceBookQR" alt="QR Code">
+						<img
+							src="${pageContext.request.contextPath}/tylibrary/admin/produceBookQR"
+							alt="QR Code">
 					</div>
 					<!-- Sales Chart End -->
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light rounded p-4">
-						
-						<form action="/selectBookInfo" method="post">
-						
-							<table class="table table-borderless small">
-								<tbody>
-									
+
+							<form action="/selectBookInfo" method="post">
+
+								<table class="table table-borderless small">
+									<tbody>
+
 										<td colspan="2">
-											<button onclick="printQRAsPDF()" class="btn btn-primary w-100 m-2" type="button">Print QR as PDF</button>
-											
+
+											<button onclick="printQRAsPDF()"
+												class="btn btn-primary w-100 m-2" type="button">Print
+												QR as PDF</button>
+
 										</td>
-									
-								</tbody>
-							</table>
+
+									</tbody>
+								</table>
 							</form>
 						</div>
 					</div>
@@ -196,8 +210,8 @@
 
 		<!-- Back to Top -->
 	</div>
-	
-									
+
+
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
@@ -209,28 +223,65 @@
 	<script src="/lib/tempusdominus/js/moment.min.js"></script>
 	<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
 	<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-	
+
+
+
+
 	<!-- 프린트pdf버튼 스크립트 -->
- <script>
-        function printQRAsPDF() {
-            console.log("Button clicked!");
+	<script>
+		function printQRAsPDF() {
+			console.log("Button clicked!");
 
-            // jsPDF 객체를 생성하는 부분
-            var pdf = new window.jspdf.jsPDF(); // 라이브러리 이름을 window.jspdf.jsPDF로 변경
+			var title = sessionStorage.getItem('title');
+			var author = sessionStorage.getItem('author');
+			var publisher = sessionStorage.getItem('publisher');
 
-            // QR 코드 이미지를 동적으로 생성
-            var qrImage = new Image();
-            qrImage.src = "${pageContext.request.contextPath}/tylibrary/admin/produceBookQR";
+			console.log(title);
+			console.log(author);
+			console.log(publisher);
+			// jsPDF 객체를 생성하는 부분
+			var pdf = new window.jspdf.jsPDF(); // 라이브러리 이름을 window.jspdf.jsPDF로 변경
+			doc.addFileToVFS('malgun.ttf', malgun);
+			doc.addFont('malgun.ttf', 'malgun', 'normal');
+			doc.setFont('malgun');
+			doc.setFontType('bold');
+			doc.autoTable(col, row, {
+				theme : 'grid',
+				styles : {
+					font : 'malgun',
+					fontStyle : 'normal'
+				},
+				headerStyles : {
+					fontSize : 15,
+					font : 'malgun',
+					fontStyle : 'normal'
+				}
+			});
+			출처: https:
+			//shiftkey.tistory.com/28 [기억 저장소:티스토리]
 
-            // 이미지 로딩 후 PDF에 추가
-            qrImage.onload = function() {
-                pdf.addImage(qrImage, 'PNG', 10, 10, 90, 90); // x, y, width, height 조절 가능
-                pdf.output('dataurlnewwindow');
-            };
-        }
-    </script>
+			// QR 코드 이미지를 동적으로 생성
+			var qrImage = new Image();
+			qrImage.src = "${pageContext.request.contextPath}/tylibrary/admin/produceBookQR";
+
+			// 이미지 로딩 후 PDF에 추가
+			qrImage.onload = function() {
+
+				pdf.addImage(qrImage, 'PNG', 10, 10, 90, 90); // x, y, width, height 조절 가능
+
+				pdf.text(10, 120, "title: " + title);
+				pdf.text(10, 140, "author: " + author);
+				pdf.text(10, 160, "publisher: " + publisher);
+				pdf.output('dataurlnewwindow');
+
+			};
+		}
+	</script>
+
+
 	<!-- Template Javascript -->
 	<script src="/js/main.js"></script>
+
 </body>
 
 </html>

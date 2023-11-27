@@ -51,6 +51,10 @@ public class SearchController {
 
 		return "search-result";
 	}
+	
+	
+	
+	
 
 	@GetMapping("/searchbook/{id}")
 	public String getSearchBook(@PathVariable int id, Model m) {

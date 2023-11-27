@@ -152,7 +152,61 @@
 					<!-- Sales Chart End -->
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light rounded p-4">
-
+						
+							<form action="/tylibrary/admin/filteredToDelete" method="post">
+								<table class="table table-borderless text-center">
+									<thead>
+									</thead>
+									<tbody>
+										<tr>
+											<td><select class="form-select form-select-sm mb-3"
+												aria-label=".form-select-sm category" name="category">
+													<option selected value="일반 서적">일반 서적</option>
+													<option value="기술 서적">기술 서적</option>
+											</select></td>
+											<td><select class="form-select form-select-sm mb-3"
+												aria-label=".form-select-sm search" name="searchBy">
+													<option selected value="title">도서명</option>
+													<option value="author">저자명</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td colspan="2"><input
+												class="form-control form-control-sm" type="text"
+												placeholder="검색어를 입력하세요"
+												aria-label=".form-control-sm search" name="searchKey">
+											</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<button type="submit" class="btn btn-primary w-100 m-2">검색</button>
+											</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+							<div class="col-sm-12 col-xl-6">
+								<div class="bg-light text-center rounded p-4">
+									<div
+										class="d-flex align-items-center justify-content-between mb-4">
+										<h6 class="mb-0">도서 정보</h6>
+									</div>
+									<table class="table small">
+										<thead class="small">
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">도서명</th>
+												<th scope="col">저자명</th>
+												<th scope="col">삭제</th>
+											
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+							<!-- 
 							<form action="/bringBooksInfo" method="post">
 
 								<table class="table table-borderless small">
@@ -191,7 +245,7 @@
 										</tr>
 									</tbody>
 								</table>
-							</form>
+							</form> -->
 						</div>
 					</div>
 				</div>
@@ -203,6 +257,7 @@
 
 		<!-- Back to Top -->
 	</div>
+	<!-- 
 	<script type="text/javascript">
 		$("#clickIsbn")
 				.click(
@@ -249,20 +304,26 @@
 									})
 						})
 	</script>
-
+ -->
+ <!-- 
 	<script type="text/javascript">
-		$(document).on('click', '.deleteBtn', function() {
-			var b_idToDelete = $(this).data('b_id');
-			console.log(b_idToDelete);
-			// 현재 페이지 URL 저장
+		$(document)
+				.on(
+						'click',
+						'.deleteBtn',
+						function() {
+							var b_idToDelete = $(this).data('b_id');
+							console.log(b_idToDelete);
+							// 현재 페이지 URL 저장
 
-			var previousUrl = window.location.href;
-			// 삭제 확인 페이지로 이동
+							var previousUrl = window.location.href;
+							// 삭제 확인 페이지로 이동
 
-			window.location.href = '/tylibrary/admin/delete-check?b_id=' + b_idToDelete;
-		});
+							window.location.href = '/tylibrary/admin/delete-check?b_id='
+									+ b_idToDelete;
+						});
 	</script>
-
+ -->
 	<!-- 바로삭제 
 <script>
     $(document).on('click', '.deleteBtn', function () {
