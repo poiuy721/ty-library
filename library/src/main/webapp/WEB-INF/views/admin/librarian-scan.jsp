@@ -244,7 +244,6 @@
    let state = '${state}'//반납인지 대여인지
    if(!state){
       alert("잘못된 접근 입니다.");
-      console.log("state");
       window.history.back();
    }
    let i = 0;
@@ -254,12 +253,10 @@
    window.addEventListener('load', function () {
         let selectedDeviceId;
         const codeReader = new ZXing.BrowserMultiFormatReader()
-        console.log('ZXing code reader initialized')
         codeReader.listVideoInputDevices().then((videoInputDevices) => {
              let numOfCamera = videoInputDevices.length;
              if (numOfCamera<1){
                 alert ("카메라가 있는 디바이스로 접속해주세요")
-                console.log("카메라를 찾지 못했습니다.")
                 window.history.back();
              }
              selectedDeviceId = videoInputDevices[i].deviceId            
@@ -282,7 +279,6 @@
                             type: "GET",
                             dataType: "json",
                             success: function (data) {
-                               console.log(data)
                                canvas.width = video.offsetWidth;
                                canvas.height = video.offsetHeight;
                                canvas.getContext('2d').drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight, 0, 0, video.offsetWidth,video.offsetHeight);

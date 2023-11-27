@@ -25,7 +25,6 @@ import com.library.service.StockService;
 
 @Service
 public class StockServiceImpl implements StockService {
-	
 
 	@Autowired
 	private adminStockMapper stockMapper;
@@ -46,9 +45,11 @@ public class StockServiceImpl implements StockService {
 	public int updateReturn(int c_id, String date) {
 		return stockMapper.updateReturn(c_id, date);
 	}
+
 	public int updatePassword(String id) {
 		return stockMapper.updatePassword(id);
 	}
+
 	// select ========================================================
 	public StockBookDTO selectBooksByBId(int id) {
 		return stockMapper.selectBooksByBId(id);
@@ -85,11 +86,12 @@ public class StockServiceImpl implements StockService {
 	public int selectBooksByRstaus(int id) {
 		return stockMapper.selectBooksByRstaus(id);
 	}
-	
-	public List<EmployeeDTO> selectByEId(String searchKey){
+
+	public List<EmployeeDTO> selectByEId(String searchKey) {
 		return stockMapper.selectByEId(searchKey);
 	}
-	public List<EmployeeDTO> selectByEName(String searchKey){
+
+	public List<EmployeeDTO> selectByEName(String searchKey) {
 		return stockMapper.selectByEName(searchKey);
 	}
 
@@ -97,18 +99,21 @@ public class StockServiceImpl implements StockService {
 	public List<SearchRentRecordDto> selectRentRecordsByDateRange(String startDate, String endDate) {
 		return stockMapper.selectRentRecordsByDateRange(startDate, endDate);
 	}
+
 	public String selectEid(String ENum) {
 		return stockMapper.selectEid(ENum);
 	}
-	public int insertEmployee(String ENum,String Ename) {
+
+	public int insertEmployee(String ENum, String Ename) {
 		return stockMapper.insertEmployee(ENum, Ename);
 	}
+
 	// 사원 조회 구현
-	public List<EmployeeDTO> searchEmployee(String category,String searchKey){
-		List<EmployeeDTO> ret=new ArrayList<>();
-		if(category.equals("Enum")) {
+	public List<EmployeeDTO> searchEmployee(String category, String searchKey) {
+		List<EmployeeDTO> ret = new ArrayList<>();
+		if (category.equals("Enum")) {
 			ret = stockMapper.selectByEId(searchKey);
-		}else {
+		} else {
 			ret = stockMapper.selectByEName(searchKey);
 		}
 		return ret;
@@ -117,14 +122,14 @@ public class StockServiceImpl implements StockService {
 	// 사원 등록 구현
 	public List<EmployeeDTO> goSingup(String ENum, String EName, MultipartFile EFile) {
 		List<EmployeeDTO> ret = new ArrayList<>();
-		if (ENum != null && EName != null) {//서버로 넘어온 사용자 입력값
-			if(stockMapper.selectEid(ENum) == null){// 같은 사번이 없으면
-				if(1==stockMapper.insertEmployee(ENum, EName)) { //사번을 등록하고
-					ret.add(new EmployeeDTO(ENum,EName)); // 리스트에 추가
+		if (ENum != null && EName != null) {// 서버로 넘어온 사용자 입력값
+			if (stockMapper.selectEid(ENum) == null) {// 같은 사번이 없으면
+				if (1 == stockMapper.insertEmployee(ENum, EName)) { // 사번을 등록하고
+					ret.add(new EmployeeDTO(ENum, EName)); // 리스트에 추가
 				}
 			}
 		}
-		if (EFile != null) {//서버로 넘어온 사용자의 파일
+		if (EFile != null) {// 서버로 넘어온 사용자의 파일
 			try {
 				// MultipartFile에서 바이트 배열로 데이터 읽기
 				InputStream inputStream = EFile.getInputStream();
@@ -136,10 +141,10 @@ public class StockServiceImpl implements StockService {
 				// 파일 내용을 읽어 로그에 출력
 				String line;
 				while ((line = bufferedReader.readLine()) != null) {
-					String EmployeeSplit[]=line.split("\t");
-					if(stockMapper.selectEid(EmployeeSplit[0]) == null){// 같은 사번이 없으면
-						if(1==stockMapper.insertEmployee(EmployeeSplit[0], EmployeeSplit[1])) { //사번을 등록하고
-							ret.add(new EmployeeDTO(EmployeeSplit[0],EmployeeSplit[1])); // 리스트에 추가
+					String EmployeeSplit[] = line.split("\t");
+					if (stockMapper.selectEid(EmployeeSplit[0]) == null) {// 같은 사번이 없으면
+						if (1 == stockMapper.insertEmployee(EmployeeSplit[0], EmployeeSplit[1])) { // 사번을 등록하고
+							ret.add(new EmployeeDTO(EmployeeSplit[0], EmployeeSplit[1])); // 리스트에 추가
 						}
 					}
 				}

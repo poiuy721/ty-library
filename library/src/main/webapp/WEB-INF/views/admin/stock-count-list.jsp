@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>DASHMIN - Bootstrap Admin Template</title>
+<title>재고 조사</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -247,7 +247,6 @@
 	let state = ${state} == null ? null : ${state};
 	if(!state){
 		alert("잘못된 접근 입니다.");
-		console.log(state);
 		window.history.back();
 	}
 	

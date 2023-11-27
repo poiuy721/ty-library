@@ -30,8 +30,6 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<SearchResultDto> getLists(SearchQuery query) throws Exception {
-        System.out.println(query.getSearchBy());
-        System.out.println(query.getSearchKey());
         return searchMapper.getLists(query);
     }
 

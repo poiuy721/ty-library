@@ -59,25 +59,13 @@
 		</div>
 		<!-- Spinner End -->
 
-		<!-- Sidebar Start -->
-		<div class="sidebar pe-4 pb-3">
-			<nav class="navbar bg-light navbar-light">
-				<a href="/tylibrary/librarian" class="navbar-brand mx-4 mb-3">
-					<h3 class="text-primary">
-						<i class="fa fa-hashtag me-2"></i>TY Library
-					</h3>
-				</a>
-			</nav>
-		</div>
-		<!-- Sidebar End -->
-
 
 		<!-- Content Start -->
 		<div class="content">
 		
 			<!-- Navbar Start -->
 			<nav class="navbar bg-light navbar-light sticky-top px-4 py-0">
-				<a href="/tylibrary/librarian" class="navbar-brand d-flex d-lg-none me-4">
+				<a href="/tylibrary/search" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
 				<ul class="nav justify-content-end">
@@ -167,9 +155,6 @@
 			<div class="container-fluid pt-4 px-4">
 				<div class="bg-light rounded-top p-4">
 					<div class="row">
-						<div class="col-12 col-sm-6 text-center text-sm-start">
-							&copy; <a href="/tylibrary/librarian">TY Library</a>, All Right Reserved.
-						</div>
 						<div class="col-12 col-sm-6 text-center text-sm-end">
 							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 							Designed By <a href="https://htmlcodex.com">HTML Codex</a> </br>
@@ -188,7 +173,6 @@
 		<!-- Content End -->
 
 		<!-- Back to Top -->
-		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 	</div>
 
 	<!-- JavaScript Libraries -->

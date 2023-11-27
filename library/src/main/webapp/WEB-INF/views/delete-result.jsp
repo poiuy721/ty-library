@@ -61,7 +61,7 @@
 			<!-- Navbar Start -->
 			<nav
 				class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-				<a href="/tylibrary/search"
+				<a href="/tylibrary/admin"
 					class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
@@ -200,7 +200,6 @@
 		$(document).on('click','.deleteBtn',function() {
 					var idToDelete = $(this).data('b_id');
 					var titleToDelete = $(this).data('b_title');
-					console.log(idToDelete);
 					// 현재 페이지 URL 저장
 
 					var previousUrl = window.location.href;
