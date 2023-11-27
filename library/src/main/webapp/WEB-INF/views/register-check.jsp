@@ -50,11 +50,20 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-
+<style>
+    .text-image {
+        font-size: 12px;
+        color: black;
+        position: absolute;
+        left: 10px;
+        top: 110px;
+    }
+</style>
 
 </head>
 
 <body>
+
 	<div class="container-xxl position-relative bg-white d-flex p-0">
 		<!-- Spinner Start -->
 		<div id="spinner"
@@ -228,55 +237,50 @@
 
 
 	<!-- 프린트pdf버튼 스크립트 -->
-	<script>
-		function printQRAsPDF() {
-			console.log("Button clicked!");
+<script>
+    function printQRAsPDF() {
+        console.log("Button clicked!");
 
-			var title = sessionStorage.getItem('title');
-			var author = sessionStorage.getItem('author');
-			var publisher = sessionStorage.getItem('publisher');
+        var title = sessionStorage.getItem('title');
+        var author = sessionStorage.getItem('author');
+        var publisher = sessionStorage.getItem('publisher');
 
-			console.log(title);
-			console.log(author);
-			console.log(publisher);
-			// jsPDF 객체를 생성하는 부분
-			var pdf = new window.jspdf.jsPDF(); // 라이브러리 이름을 window.jspdf.jsPDF로 변경
-			doc.addFileToVFS('malgun.ttf', malgun);
-			doc.addFont('malgun.ttf', 'malgun', 'normal');
-			doc.setFont('malgun');
-			doc.setFontType('bold');
-			doc.autoTable(col, row, {
-				theme : 'grid',
-				styles : {
-					font : 'malgun',
-					fontStyle : 'normal'
-				},
-				headerStyles : {
-					fontSize : 15,
-					font : 'malgun',
-					fontStyle : 'normal'
-				}
-			});
-			출처: https:
-			//shiftkey.tistory.com/28 [기억 저장소:티스토리]
+        console.log(title);
+        console.log(author);
+        console.log(publisher);
 
-			// QR 코드 이미지를 동적으로 생성
-			var qrImage = new Image();
-			qrImage.src = "${pageContext.request.contextPath}/tylibrary/admin/produceBookQR";
+        // QR 코드 이미지를 동적으로 생성
+        var qrImage = new Image();
+        qrImage.src = "${pageContext.request.contextPath}/tylibrary/admin/produceBookQR";
 
-			// 이미지 로딩 후 PDF에 추가
-			qrImage.onload = function() {
+        // 이미지 로딩 후 캔버스에 QR 코드 이미지와 텍스트 추가
+        qrImage.onload = function() {
+            // 캔버스 생성
+            var canvas = document.createElement('canvas');
+            canvas.width = qrImage.width;
+            canvas.height = qrImage.height + 90; // 텍스트를 표시할 공간 추가
 
-				pdf.addImage(qrImage, 'PNG', 10, 10, 90, 90); // x, y, width, height 조절 가능
+            var ctx = canvas.getContext('2d');
 
-				pdf.text(10, 120, "title: " + title);
-				pdf.text(10, 140, "author: " + author);
-				pdf.text(10, 160, "publisher: " + publisher);
-				pdf.output('dataurlnewwindow');
+            // QR 코드 이미지 그리기
+            ctx.drawImage(qrImage, 0, 0);
 
-			};
-		}
-	</script>
+            // title, author, publisher 텍스트 추가
+            ctx.font = '12px Arial';
+            ctx.fillStyle = 'black';
+            ctx.fillText("Title: " + title, 10, qrImage.height + 20);
+            ctx.fillText("Author: " + author, 10, qrImage.height + 40);
+            ctx.fillText("Publisher: " + publisher, 10, qrImage.height + 60);
+
+            // 이미지를 새 창으로 열기
+            var dataURL = canvas.toDataURL('image/png');
+            var pdf = new window.jspdf.jsPDF();
+            pdf.addImage(dataURL, 'PNG', 10, 10, 90, 90); // QR 코드 이미지 영역
+            pdf.output('dataurlnewwindow');
+        };
+    }
+</script>
+
 
 
 	<!-- Template Javascript -->
