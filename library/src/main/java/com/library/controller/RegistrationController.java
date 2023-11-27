@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.library.dto.BookDTO;
 import com.library.dto.BookDeleteDto;
+import com.library.dto.DeleteDto;
 import com.library.dto.SearchQuery;
 import com.library.dto.SearchRemoveDuplicateDto;
 import com.library.dto.SearchResultDto;
@@ -44,6 +46,7 @@ import com.library.mapper.LibMapper;
 public class RegistrationController {
 
 	private int id;
+	@Value("${library.url}")
 	private String url;
 
 	BookDTO Books = new BookDTO(); // *** ArrayList 형태로 바꿔도 무방 ***
@@ -257,7 +260,7 @@ public class RegistrationController {
 	@PostMapping("/filteredToDelete")
 	public String getSearchFiltered(@ModelAttribute SearchQuery query, Model m) throws Exception {
 
-		List<SearchResultDto> informations = libMapper.bringBooksInfo(query);
+		List<DeleteDto> informations = libMapper.bringBooksInfo(query);
 		m.addAttribute("informations", informations);
 		m.addAttribute("query", query);
 

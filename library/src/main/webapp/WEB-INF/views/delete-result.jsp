@@ -148,10 +148,10 @@
 										<tr>
 											<th scope="row">${status.count}</th>
 											<td><c:out value="${info.title}"></c:out></td>
-											<td><c:out value="${info.id}"></c:out></td>
+											<td><c:out value="${info.b_id}"></c:out></td>
 											<td><button type="button"
 													class="btn btn-sm btn-danger rounded-pill deleteBtn"
-													data-b_id="'${info.id}'" data-b_title="'${info.title}'">삭제</button></td>
+													data-b_id="'${info.b_id}'" data-b_title="'${info.title}'">삭제</button></td>
 											<td></td>
 										</tr>
 									</c:forEach>

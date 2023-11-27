@@ -40,15 +40,11 @@ insert into books(isbn,b_status,stock_count_status,due_date)
 
 <select id="bringBooksInfo"
 		parameterType="com.library.dto.SearchQuery"
-		resultType="com.library.dto.SearchResultDto">
-SELECT bi.TITLE, bi.AUTHOR,bi.PUBLISHER,bi.CATEGORY, b.B_STATUS,
-		co.e_id ,b.b_id
+		resultType="com.library.dto.DeleteDto">
+SELECT bi.TITLE, bi.AUTHOR,bi.PUBLISHER,bi.CATEGORY, b.B_STATUS,b.b_id
 		FROM books b
 		JOIN book_info bi ON b.ISBN = bi.ISBN
-		LEFT
-		JOIN checkout co ON b.b_id = co.b_id
 		WHERE bi.category = #{category}
-		AND co.return_date IS NULL
 		AND b.b_status !='D'
 		<if test="searchKey != '' and searchBy != null">
           <choose>
