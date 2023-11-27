@@ -57,7 +57,7 @@
 		<!-- Sidebar Start -->
 		<div class="sidebar pe-4 pb-3">
 			<nav class="navbar bg-light navbar-light">
-				<a href="/tylibrary/admin" class="navbar-brand mx-4 mb-3">
+				<a href="/tylibrary" class="navbar-brand mx-4 mb-3">
 					<h3 class="text-primary">
 						<i class="fa fa-hashtag me-2"></i>TY Library
 					</h3>
@@ -75,7 +75,7 @@
 					</div>
 				</div>
 				<div class="navbar-nav w-100">
-					<a href="/tylibrary/admin" class="nav-item nav-link active"><i
+					<a href="/tylibrary" class="nav-item nav-link active"><i
 						class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
@@ -113,7 +113,7 @@
 			<!-- Navbar Start -->
 			<nav
 				class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-				<a href="/tylibrary/admin"
+				<a href="/tylibrary"
 					class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
@@ -155,28 +155,35 @@
 										</td>
 
 									</tr>
-									<!-- <tr>
 
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="goPost('rent')">도서 대여</button>
-										</td>
-									</tr> -->
 									<tr>
 
 
 										<td>
 											<button type="button" class="btn btn-primary m-2"
-												onclick="goPost('return')">반납</button>
+												onclick="goPost('rent')">도서 대여</button>
 										</td>
 
+									</tr>
+									<tr>
+
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="go('passwordReset')">비밀번호 변경</button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<button type="button" class="btn btn-primary m-2"
+												onclick="go('Elogout')">로그 아웃</button>
+										</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
 					<!-- secreat form!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-					<form id="myForm" action="librarian" method="post"
+					<form id="myForm" action="employee" method="post"
 						style="display: none;">
 						<input id="state_input" type="hidden" name="state" value="return">
 					</form>
@@ -202,6 +209,7 @@
 			</div>
 			<!-- Footer End -->
 		</div>
+	
 		<!-- Content End -->
 
 
@@ -223,13 +231,12 @@
 		// 클래스를 이용하여 클릭 이벤트를 추가
 		$("#out").click(function() {
 			i++;
-
-			if (i == 1) {
+			if (i == 1){
 				setTimeout(function() {
-					i = 0;
-				}, 5000)
+					  i = 0;
+					}, 5000)
 			}
-
+			console.log(i);
 			if (i == 5) {
 				window.location.href = 'admin/logout'; // 5번 클릭하면 로그아웃 페이지로 이동
 			}

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,7 +65,7 @@
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="img/user.jpg" alt=""
+						<img class="rounded-circle" src="/img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -124,10 +125,11 @@
 			<!-- Sale & Revenue Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
-					<div class="col-sm-12 col-xl-3">
+					<div class="col-sm-12 col-xl-12">
 						<div class="bg-light rounded d-md-flex align-items-center p-4">
-							<div class="ms-3">
-								<h2 class="mb-0 text-center">도서관 홈</h2>
+							<div style="margin: auto">
+								<h2 class="mb-0 text-center"
+									style="item-align: center !important;">비밀번호 변경</h2>
 							</div>
 						</div>
 					</div>
@@ -139,47 +141,34 @@
 			<!-- Sales Chart Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
-					<div class="col-sm-12 col-xl-6">
+
+
+
+					<!-- Sales Chart End -->
+					<div class="col-12">
 						<div class="bg-light text-center rounded p-4">
-
-							<h6 class="mb-0"></h6>
-
-							<table class="table table-borderless">
-								<thead>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('search')">도서 조회</button>
-										</td>
-
-									</tr>
-									<!-- <tr>
-
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="goPost('rent')">도서 대여</button>
-										</td>
-									</tr> -->
-									<tr>
-
-
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="goPost('return')">반납</button>
-										</td>
-
-									</tr>
-								</tbody>
-							</table>
+							<h6 class="mb-0" id ="title">현재 비밀번호 확인</h6>
+							<div class="table-responsive">
+								<div class="form-floating mb-3">
+									<input type="text" class="form-control" id="password" name="password">
+									<label for="password">Input password</label><span
+										id="result_password" style="font-size: 12px"></span>
+								</div>
+								<div class="form-floating mb-3" style="display:none" id="passdiv">
+									<input type="text" class="form-control" id="passwordCheck" name="passwordCheck">
+									<label for="e_id">Input password check</label><span
+										id="result_checkpassword" style="font-size: 12px"></span>
+								</div>
+								<button type="submit" class="btn btn-primary py-3 w-100 mb-4"
+									id="pass-check">확인</button>
+							</div>
 						</div>
 					</div>
-					<!-- secreat form!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-					<form id="myForm" action="librarian" method="post"
-						style="display: none;">
-						<input id="state_input" type="hidden" name="state" value="return">
-					</form>
+
+					
+					<div class="col-sm-12 col-xl-12" id="stock-finish">
+						
+					</div>
 				</div>
 			</div>
 			<!-- Footer Start -->
@@ -188,8 +177,7 @@
 				<div class="bg-light rounded-top p-4">
 					<div class="row">
 						<div class="col-12 col-sm-6 text-center text-sm-start">
-							&copy; <a href="#">Your Site Name</a>, All Right Reserved <span
-								id="out">.</span>
+							&copy; <a href="#">Your Site Name</a>, All Right Reserved.
 						</div>
 						<div class="col-12 col-sm-6 text-center text-sm-end">
 							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
@@ -209,35 +197,59 @@
 	</div>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript">
-		let i = 0;
-		function go(url) {
-			window.location.href = url;
+	
+	let state=0;
+	$('#pass-check').click(function() {
+		if(state == 0){
+			console.log('2222')
+			let password = $('#password').val();
+			$.ajax({
+			    url: 'passwordChange',
+			    type: 'POST',			   
+			    data: {
+			    	password : password
+			    },
+			    success: function(response) {
+			        if(response == 1){
+			        	state = 1;
+			        	$('#title').text('바꿀 비밀번호 확인');
+			        	$('#passdiv').css('display', 'block');
+			        }else {
+			        	$("#result_password").html("잘못된 입력입니다").css("color", "red");
+			        }
+			    },
+			    error: function(xhr, status, error) {
+			        // 요청이 실패한 경우 실행할 함수
+			        console.error('Error:', error);
+			        // 오류 메시지를 표시하거나 다른 조치를 취할 수 있음
+			    }
+			});
+		}else if (state == 1){
+			$.ajax({
+			    url: 'your_url_here',
+			    type: 'GET', 
+			    dataType: 'json', 
+			    data: {
+			        key1: 'value1', 
+			        key2: 'value2'
+			    },
+			    success: function(response) {
+			       
+			        console.log('Success:', response);
+			        
+			    },
+			    error: function(xhr, status, error) {
+			        
+			        console.error('Error:', error);
+			        
+			    }
+			});
 		}
-		function goPost(state) {
-			let form = document.getElementById('myForm');
-			let input = document.getElementById('state_input')
-			input.value = state;
-			form.submit();
-		}
-
-		// 클래스를 이용하여 클릭 이벤트를 추가
-		$("#out").click(function() {
-			i++;
-
-			if (i == 1) {
-				setTimeout(function() {
-					i = 0;
-				}, 5000)
-			}
-
-			if (i == 5) {
-				window.location.href = 'admin/logout'; // 5번 클릭하면 로그아웃 페이지로 이동
-			}
-		});
+	})
 	</script>
 
 	<!-- JavaScript Libraries -->
-
+	
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="/lib/chart/chart.min.js"></script>

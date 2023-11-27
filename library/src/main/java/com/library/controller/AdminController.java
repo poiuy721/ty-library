@@ -39,15 +39,31 @@ public class AdminController {
 	private StockService stockService;
 
 	@RequestMapping("")
-	public String userLogin() {
-		return "user-login";
+	public String userLogin(HttpSession session) {
+		if (session.getAttribute("librarian") != null) {//도서관 기기는 도서관 페이지로 납치
+			return session.getAttribute("librarian").equals(admin[1]) ? "redirect:/tylibrary/admin" :"redirect:";
+		}else if (session.getAttribute("employee")!=null){//일반 사원은 사원 페이지로
+			return "redirect:/tylibrary/home";
+		}
+		return "/admin/user-login";
 	}
-
-	@RequestMapping("test")
-	public String admin() {
-		return "/admin/calendar";
+	// 사원 로그인
+	@RequestMapping("/home")
+	public String login(HttpSession session) {
+		if(session.getAttribute("employee")!=null) { //이미 로그인 상태면 홈으로
+			return "/admin/user-home";
+		}
+		return "redirect:"; //아니라면 로그인 페이지로
 	}
-
+	//사원 비밀번호 리셋
+	@RequestMapping("passwordReset")
+	public String reset(HttpSession session) {
+		
+		return "admin/user-passreset";
+	}
+	
+	
+	
 	// admin login ====================
 	@RequestMapping("/admin")
 	public String index2(HttpSession session, @RequestParam(required = false, defaultValue = "login") String adminId,
@@ -60,7 +76,14 @@ public class AdminController {
 		}
 		return "admin/admin-login"; // 의미 없는 정보면 다시 로그인 화면으로
 	}
-
+	
+	@RequestMapping("Elogout")
+	public String useLlogout(HttpSession session) {
+		session.setAttribute("employee", null);
+		return "redirect:/tylibrary";
+	}
+	
+	
 	@RequestMapping("admin/logout")
 	public String logOut(HttpSession session) {
 		session.setAttribute(admin[0], null);
@@ -85,6 +108,12 @@ public class AdminController {
 		}
 		model.addAttribute("state", state);
 		return "admin/librarian-scan";
+	}
+	@RequestMapping("employee")
+	public String foryou(String state, Model model,HttpSession session) {
+		
+		model.addAttribute("state", state);
+		return "admin/user-scan";
 	}
 
 	// 의미 없는 공간
@@ -170,7 +199,13 @@ public class AdminController {
 			return stockService.updatePassword(id);
 		return 0;
 	}
-
+	//사원 비밀번호 변경
+	@RequestMapping("passwordChange")
+	@ResponseBody
+	public int passwordChange(String password, HttpSession session) {
+		System.out.println(password);
+		return 0;
+	}
 	// 사원등록이다
 	@RequestMapping("admin/user-sign-up")
 	@ResponseBody
