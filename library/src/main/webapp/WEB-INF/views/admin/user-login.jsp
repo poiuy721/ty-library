@@ -99,7 +99,7 @@
 
 			console.log(i);
 			if (i == 5) {
-				window.location.href = 'tylibrary/admin'; // 5번 클릭하면 로그아웃 페이지로 이동
+				window.location.href = '/tylibrary/admin'; // 5번 클릭하면 로그아웃 페이지로 이동
 			}
 		});
 		
