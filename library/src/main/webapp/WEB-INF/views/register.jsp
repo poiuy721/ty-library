@@ -360,6 +360,9 @@
 					switching.click();
 			}).catch((err) => {console.error(err)})
 		})
+</script>
+	
+	<script>
    $("#clickIsbn").click(function() {
       const isbn = $("#floatingInputISBN").val();
       $.ajax({
@@ -380,6 +383,10 @@
             $('input[name=author]').attr('value', data.author);
             $('input[name=publisher]').attr('value', data.publisher);
 
+            sessionStorage.setItem('title', data.title);
+            sessionStorage.setItem('author', data.author);
+            sessionStorage.setItem('publisher', data.publisher);
+         
          },
          error : function(request, status, error) { // 결과 에러 콜백함수        
             console.log(error)
