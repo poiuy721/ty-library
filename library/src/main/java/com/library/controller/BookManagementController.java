@@ -46,11 +46,15 @@ public class BookManagementController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-	// ******************************************** 공통 ******************************************** //
-
-	// ============ &&& qr 이동 &&& ============
+	// ******************************************** qr 이동 ******************************************** //
 	@GetMapping("/tylibrary/books/{b_id}")
-	public String moveToBookInfo(@PathVariable("b_id") int b_id, HttpServletRequest request, Model model) {
+	public String moveToBookInfo(@PathVariable("b_id") int b_id, HttpSession session, HttpServletRequest request, Model model) {
+		
+		// 로그인이 되어 있는 경우 : 사원 정보 저장
+		EmployeeDTO session_employee = (EmployeeDTO) session.getAttribute("employee");
+		if(session_employee!=null) {
+			model.addAttribute("employee", session_employee);
+		}
 
 		// 도서 아이디 비교해서 데이터 가져오기
 		BookInfoDTO bookInfo = libService.selectBookInfo(b_id);
@@ -62,26 +66,74 @@ public class BookManagementController {
 			model.addAttribute("rent_availability", cannot_rent);
 
 		// 대여 페이지로 보낼 정보 저장
+		session = request.getSession(false);
 		model.addAttribute("bookInfo", bookInfo);
 
 		// 세션에 도서 아이디 저장
-		HttpSession session = request.getSession(true);
 		session.setAttribute("b_id", b_id);
 
 		return "bookmanagement/books";
 	}
+	
+	// ******************************************** 로그인 ******************************************** //
+	@RequestMapping(value = "/tylibrary/login")
+	public String login(HttpSession session, HttpServletRequest request, Model model) {
+		model.addAttribute("management_type", "login");
+		return "bookmanagement/enter_empl_num";
+	}
+	
+	@RequestMapping(value = "/tylibrary/loginProcess")
+	@ResponseBody
+	public String loginProcess(@RequestParam(value = "arr[]") String[] arr, HttpSession session, HttpServletRequest request, Model model) {
 
+		// 사번 비교 및 사원 정보 가져오기
+		EmployeeDTO employee = libService.checkEmplInfo(arr[0], arr[1]);
+		if(employee==null) {
+			return "wrongAccess";
+		} else if (employee.getE_id().equals("login_error_password")) { 
+			return "비밀번호를 다시 입력해 주세요.";
+		} else if(employee.getE_id().equals("login_error_eid")) {
+			return "아이디를 다시 입력해 주세요.";
+		} else {
+			// 세션에 사원 정보 저장
+			session.setAttribute("employee", employee);
+			int b_id = (int) session.getAttribute("b_id"); // 도서 번호
+			return "books/"+b_id;
+		}
+	}
+	
+	// ******************************************** 로그아웃 ******************************************** //
+	@RequestMapping("/tylibrary/logout")
+	public String logout(HttpSession session, HttpServletRequest request, Model model) {
+		
+		// 세션에서 사원 정보 삭제
+		session.removeAttribute("employee");
+		
+		int b_id = (int) session.getAttribute("b_id"); // 도서 번호
+		return "redirect:/tylibrary/books/"+b_id;
+	}
+	
+	
+	// ******************************************** 로그인 페이지 이동 ******************************************** //
 	// ============ &&& 대여 : 사번 입력 페이지 이동 &&& ============
 	@RequestMapping(value = "/tylibrary/rent/enter_empl_num")
 	public String rent_login(HttpSession session, HttpServletRequest request, Model model) {
 
+		int b_id = (int) session.getAttribute("b_id"); // 도서 번호
+		BooksDTO book = libService.selectBooks(b_id);
 		EmployeeDTO session_employee = (EmployeeDTO) session.getAttribute("employee");
+		
 		if(session_employee==null) {
 			model.addAttribute("management_type", "rent");
 			return "bookmanagement/enter_empl_num";
 		} else {
-			model.addAttribute("management_type", "rent");
-			return "bookmanagement/selectDate";
+			if(book.getB_status().equals(cannot_rent)) {
+				model.addAttribute("error_type", "cant_rent");
+				return "bookmanagement/wrongAccess";
+			} else {
+				model.addAttribute("management_type", "rent");
+				return "bookmanagement/selectDate_jquery";
+			}
 		}
 	}
 
@@ -92,7 +144,7 @@ public class BookManagementController {
 		EmployeeDTO session_employee = (EmployeeDTO) session.getAttribute("employee");
 		int b_id = (int) session.getAttribute("b_id"); // 도서 번호
 		String recent_return_date = libService.getRecentReturnDate(b_id);	// 이전에 선택한 대여 기간
-		
+	
 		if(session_employee==null) {
 			model.addAttribute("management_type", "renew");
 			return "bookmanagement/enter_empl_num";
@@ -104,7 +156,7 @@ public class BookManagementController {
 			} else {
 				model.addAttribute("management_type", "renew");
 				model.addAttribute("recent_return_date", recent_return_date);
-				return "bookmanagement/selectDate_renew";
+				return "bookmanagement/selectDate_jquery_renew";
 			}	
 		}
 	}
@@ -126,13 +178,12 @@ public class BookManagementController {
 				return "bookmanagement/wrongAccess";
 			} else {
 				model.addAttribute("management_type", "assign");
-				return "bookmanagement/selectDate";
+				return "bookmanagement/selectDate_jquery";
 			}	
 		}
 	}
 
 	// ******************************************** 대여 ********************************************* //
-
 	// ============ &&& 대여 : 사번 입력 &&& ============
 	@RequestMapping(value = "/tylibrary/rent/loginProcess")
 	@ResponseBody
@@ -150,16 +201,14 @@ public class BookManagementController {
 		} else {
 			// 세션에 사원 정보 저장
 			session.setAttribute("employee", employee);
-			session.setAttribute("a", "a");
 			return "selectDate";
-			// return "bookmanagement/selectDate_jquery";
 		}
 	}
 	
 	@RequestMapping(value = "/tylibrary/rent/selectDate")
 	public String rent_selectDate(HttpSession session, HttpServletRequest request, Model model) {
 		model.addAttribute("management_type", "rent");
-		return "bookmanagement/selectDate";
+		return "bookmanagement/selectDate_jquery";
 	}
 
 	// ============ &&& 대여 기간 선택 &&& ============
@@ -171,8 +220,8 @@ public class BookManagementController {
 
 		// 대여 정보 확인 페이지에 표시될 내용
 		String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
-		// String due_date = pickedDate[0].replace("/", "-");
+		//String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
+		String due_date = pickedDate[0].replace("/", "-");
 
 		// 세션에 정보 저장
 		session.setAttribute("rent_date", rent_date);
@@ -187,6 +236,7 @@ public class BookManagementController {
 		BookInfoDTO bookInfo = libService.selectBookInfo((int) session.getAttribute("b_id"));
 		model.addAttribute("bookInfo", bookInfo);
 		model.addAttribute("management_type", "rent");
+		
 		return "bookmanagement/check";
 	}
 
@@ -200,10 +250,12 @@ public class BookManagementController {
 		if (libService.selectBooks(b_id).getB_status().equals(can_rent)) {
 			// 사원 정보
 			EmployeeDTO employee = (EmployeeDTO) session.getAttribute("employee");
-			// books, checkout DB에 정보 저장
-			libService.updateBooks(b_id, (String) session.getAttribute("due_date"));
+			BookInfoDTO bookInfo = libService.selectBookInfo(b_id);
+			
+			libService.updateBooks(b_id, (String) session.getAttribute("due_date"));	// books, checkout DB에 정보 저장
 			libService.insertCheckout(b_id, employee.getE_id());
-
+			
+			model.addAttribute("bookInfo", bookInfo);
 			model.addAttribute("management_type", "rent");
 			returnType = "bookmanagement/confirm";
 		} else if (libService.selectBooks(b_id).getB_status().equals(cannot_rent)) {
@@ -215,7 +267,6 @@ public class BookManagementController {
 	}
 
 	// ******************************************** 연장 ******************************************** //
-	
 	// ============ &&& 연장 : 사번 입력 &&& ============
 	@RequestMapping(value = "/tylibrary/renew/loginProcess")
 	@ResponseBody
@@ -237,7 +288,6 @@ public class BookManagementController {
 			session.setAttribute("employee", employee);
 			model.addAttribute("recent_return_date", recent_return_date);
 			return "selectDate";
-			// return "bookmanagement/selectDate_jquery_renew";
 		}
 	}
 
@@ -248,7 +298,7 @@ public class BookManagementController {
 
 		model.addAttribute("management_type", "renew");
 		model.addAttribute("recent_return_date", recent_return_date);
-		return "bookmanagement/selectDate_renew";
+		return "bookmanagement/selectDate_jquery_renew";
 	}
 
 	// ============ &&& 연장 : 기간 선택 &&& ============
@@ -259,8 +309,8 @@ public class BookManagementController {
 
 		// 연장 정보 확인 페이지에 표시될 내용
 		String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
-		// String due_date = pickedDate[0].replace("/", "-");
+		//String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
+		String due_date = pickedDate[0].replace("/", "-");
 
 		// 세션에 정보 저장
 		session.setAttribute("rent_date", rent_date);
@@ -276,6 +326,7 @@ public class BookManagementController {
 		BookInfoDTO bookInfo = libService.selectBookInfo((int) session.getAttribute("b_id"));
 		model.addAttribute("bookInfo", bookInfo);
 		model.addAttribute("management_type", "renew");
+		
 		return "bookmanagement/check";
 	}
 
@@ -291,8 +342,9 @@ public class BookManagementController {
 		} else {
 			int b_id = (int) session.getAttribute("b_id");
 			String due_date = (String) session.getAttribute("due_date");
-			EmployeeDTO employee = (EmployeeDTO) session.getAttribute("employee");
-
+			BookInfoDTO bookInfo = libService.selectBookInfo(b_id);
+			
+			model.addAttribute("bookInfo", bookInfo);
 			model.addAttribute("management_type", "renew");
 			model.addAttribute("due_date", due_date);
 			model.addAttribute("rent_date", (String) session.getAttribute("rent_date"));
@@ -309,7 +361,6 @@ public class BookManagementController {
 	}
 
 	// ******************************************** 양도 ******************************************** //
-	
 	// ============ &&& 양도 : 사번 입력 &&& ============
 	@RequestMapping(value = "/tylibrary/assign/loginProcess")
 	@ResponseBody
@@ -335,7 +386,7 @@ public class BookManagementController {
 	@RequestMapping(value = "/tylibrary/assign/selectDate")
 	public String assign_selectDate(HttpSession session, HttpServletRequest request, Model model) {
 		model.addAttribute("management_type", "assign");
-		return "bookmanagement/selectDate";
+		return "bookmanagement/selectDate_jquery";
 	}
 	
 
@@ -347,8 +398,8 @@ public class BookManagementController {
 
 		// 대여 정보 확인 페이지에 표시될 내용
 		String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
-		//String due_date = pickedDate[0].replace("/", "-");
+		//String due_date = pickedDate[0] + "-" + pickedDate[1] + "-" + pickedDate[2];
+		String due_date = pickedDate[0].replace("/", "-");
 
 		// 세션에 정보 저장
 		session.setAttribute("rent_date", rent_date);
@@ -379,7 +430,9 @@ public class BookManagementController {
 		} else {
 			int b_id = (int) session.getAttribute("b_id");
 			EmployeeDTO employee = (EmployeeDTO) session.getAttribute("employee");
-
+			BookInfoDTO bookInfo = libService.selectBookInfo(b_id);
+			
+			model.addAttribute("bookInfo", bookInfo);
 			model.addAttribute("management_type", "assign");
 			model.addAttribute("due_date", (String) session.getAttribute("due_date"));
 			model.addAttribute("rent_date", (String) session.getAttribute("rent_date"));
@@ -431,8 +484,8 @@ public class BookManagementController {
 		return "bookmanagement/confirm";
 	}
 
+	
 	// ******************************************** 오류 페이지 ******************************************** //
-
 	@RequestMapping("/tylibrary/assign/wrongAccess")
 	public String assign_wrong_access(Model model) {
 		model.addAttribute("error_type", "cant_assign");
@@ -449,18 +502,6 @@ public class BookManagementController {
 	public String renew_wrong_access(Model model) {
 		model.addAttribute("error_type", "cant_renew");
 		return "bookmanagement/wrongAccess";
-	}
-	
-	
-	
-	
-	@RequestMapping("/tylibrary/logout")
-	public String logout(HttpSession session, HttpServletRequest request, Model model) {
-		// 세션에서 사원 정보 삭제
-		session.removeAttribute("employee");
-		
-		int b_id = (int) session.getAttribute("b_id"); // 도서 번호
-		return "redirect:/tylibrary/books/"+b_id;
 	}
 
 }

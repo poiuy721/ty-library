@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,7 +65,7 @@
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="img/user.jpg" alt=""
+						<img class="rounded-circle" src="/img/user.jpg" alt=""
 							style="width: 40px; height: 40px;">
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -124,9 +125,10 @@
 			<div class="container-fluid pt-4 px-4">
 				<div class="row g-4">
 					<div class="col-sm-12 col-xl-12">
-						<div class="bg-light text-center rounded p-4">
-							<div class="ms-3">
-								<h2 class="mb-0 text-center">관리자 페이지</h2>
+						<div class="bg-light rounded d-md-flex align-items-center p-4">
+							<div style="margin: auto">
+								<h2 class="mb-0 text-center"
+									style="item-align: center !important;">사원 관리</h2>
 							</div>
 						</div>
 					</div>
@@ -134,72 +136,58 @@
 			</div>
 			<!-- Sale & Revenue End -->
 
-
-			<!-- Sales Chart Start -->
 			<div class="container-fluid pt-4 px-4">
-				<div class="row g-4">
-					<div class="col-sm-12 col-xl-12">
-						<div class="bg-light text-center rounded p-4">
+				<div class="col-sm-12 col-xl-12">
+					<div class="bg-light rounded h-100 p-4">
+						<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="pills-home-tab"
+									data-bs-toggle="pill" data-bs-target="#pills-home"
+									type="button" role="tab" aria-controls="pills-home"
+									aria-selected="true">사원 조회</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="pills-profile-tab"
+									data-bs-toggle="pill" data-bs-target="#pills-profile"
+									type="button" role="tab" aria-controls="pills-profile"
+									aria-selected="false">사원 등록</button>
+							</li>
+						</ul>
+						<div class="tab-content" id="pills-tabContent">
+							<div class="tab-pane fade show active" id="pills-home"
+								role="tabpanel" aria-labelledby="pills-home-tab">
+								조회!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div>
 
-							<h6 class="mb-0">관리자 홈</h6>
 
-							<table class="table table-borderless">
-								<thead>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('search')">도서 조회</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('admin/rent-record')">대여 기록</button>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('admin/register-book')">도서 등록</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('admin/overdue')">연체 도서</button>
-										</td>
-									</tr>
-									<tr>
 
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('admin/delete')">도서 삭제</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="goPost('admin/stock-count',1)">재고 조사</button>
-										</td>
+							<div class="tab-pane fade" id="pills-profile" role="tabpanel"
+								aria-labelledby="pills-profile-tab">
+								<form id="sing-up-form" method="POST" enctype="multipart/form-data" action="user-sign-up">
+									<div class="form-floating mb-3">
+										<input type="text" class="form-control" id="Enum" name="ENum">
+										<label for="Enum">Employee Number</label>
+									</div>
+									<div class="form-floating mb-3">
+										<input type="text" class="form-control" id="EName"
+											name="EName"> <label for="EName">Employee name</label>
+									</div>
+									<div class="form-floating mb-3">
+										<input type="file" class="form-control" id="EFile"
+											name="EFile"> <label for="EFile">Employee List File</label>
+									</div>
+									<button type="button" id="sing-up" class="btn btn-primary py-3 w-100 mb-4">등 록</button>
+								</form>
 
-									</tr>
-									
-									<tr>
 
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('')">QR재발급</button>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary m-2"
-												onclick="go('admin/user')">사원관리</button>
-										</td>
 
-									</tr>
-								</tbody>
-							</table>
+
+							</div>
 						</div>
 					</div>
-					<!-- Sales Chart End -->
-
 				</div>
 			</div>
+			<!-- Sales Chart Start -->
+
 			<!-- Footer Start -->
 
 			<div class="container-fluid pt-4 px-4">
@@ -217,31 +205,36 @@
 					</div>
 				</div>
 			</div>
-			<!-- secreat form!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-					<form id="myForm"  method="post"
-						style="display: none;">
-						<input id="state_input" type="hidden" name="state" value="return">
-					</form>
 			<!-- Footer End -->
 		</div>
 		<!-- Content End -->
 
 
 		<!-- Back to Top -->
-		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
-			class="bi bi-arrow-up"></i></a>
 	</div>
 	<script type="text/javascript">
-	function go(url){
-		window.location.href = url;
-	}
-	function goPost(url,state) {			
-		let form = document.getElementById('myForm');
-		let input = document.getElementById('state_input');
-		form.action = url;
-		input.value = state;
-		form.submit();
-	}
+	document.getElementById("sing-up").addEventListener("click", function() {
+        var formData = new FormData($('#sing-up-form')[0]);
+        console.log(formData);
+        $.ajax({
+            url: 'user-sign-up',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // 성공 시 처리할 내용
+                alert("성공: " + response);
+            },
+            error: function(xhr, status, error) {
+                // 실패 시 처리할 내용
+                alert("에러: " + error);
+            }
+        });
+    });
+	
+	
+	
 	
 	</script>
 

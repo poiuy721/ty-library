@@ -6,7 +6,9 @@
 
 <head>
 <meta charset="utf-8">
+
 <title>로그인</title>
+
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -33,7 +35,18 @@
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
 
-
+<style>
+	input, password {
+	  width: 230px;
+	  height: 32px;
+	  font-size: 15px;
+	  border: 0;
+	  border-radius: 15px;
+	  outline: none;
+	  padding-left: 10px;
+	  background-color: rgb(233, 233, 233);
+	}
+</style>
 
 
 </head>
@@ -145,9 +158,10 @@
 								<h6 class="mb-0">| 사번 입력</h6>
 							</div>
 								<div class="form-floating mb-3">
-									<input type="text" class="form-control" id="e_id" name="e_id" placeholder="사번" required>
+									ID&nbsp;&nbsp;:&nbsp;&nbsp;<input type="text" id="e_id" name="e_id" placeholder="사번" required>
 									<div><span id="result_checkID" style="font-size: 12px"></span></div>
-									<input type="password" class="form-control" id="e_password" name="e_password" placeholder="비밀번호" required>
+									<br>
+									PW&nbsp;&nbsp;:&nbsp;&nbsp;<input type="password" id="e_password" name="e_password" placeholder="비밀번호" required>
 									<div><span id="result_checkPW" style="font-size: 12px"></span></div>
 								</div>
 								<button type="submit" class="btn btn-outline-primary m-2" id="login_btn">로그인</button>
@@ -177,12 +191,11 @@
 		</div>
 		<!-- Content End -->
 
-
 		<!-- Back to Top -->
 	</div>
 
 	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="/lib/chart/chart.min.js"></script>
 	<script src="/lib/easing/easing.min.js"></script>
@@ -191,7 +204,7 @@
 	<script src="/lib/tempusdominus/js/moment.min.js"></script>
 	<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
 	<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
+	
 	<script>
 	
 		$("#login_btn").click(function() {
@@ -200,9 +213,6 @@
 		    arr.push($("#e_id").val());
 		    arr.push($("#e_password").val());
 		    
-		    console.log($("#e_id").val());
-		    console.log($("#e_password").val());
-		    
 		    var url;
 		    if('${management_type}'=='rent')
 		    	url = "/tylibrary/rent/loginProcess";
@@ -210,6 +220,8 @@
 		    	url = "/tylibrary/assign/loginProcess";
 		    else if('${management_type}'=='renew')
 		    	url = "/tylibrary/renew/loginProcess";
+		    else if('${management_type}'=='login')
+		    	url = "/tylibrary/loginProcess";
 		    
 		    $.ajax({
 			    url : url,
@@ -235,8 +247,6 @@
 		 });
 
 	</script>
-	
-
 
 	<!-- Template Javascript -->
 	<script src="/js/main.js"></script>

@@ -1,6 +1,10 @@
 package com.library.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.library.dto.BooksDTO;
 import com.library.dto.SearchRentRecordDto;
@@ -32,6 +37,11 @@ public class AdminController {
 	@Autowired
 	private StockService stockService;
 
+	@RequestMapping("")
+	public String userLogin() {
+		return "user-login";
+	}
+
 	@RequestMapping("test")
 	public String admin() {
 		return "/admin/calendar";
@@ -48,6 +58,13 @@ public class AdminController {
 			return "admin/librarian-home";
 		}
 		return "admin/admin-login"; // 의미 없는 정보면 다시 로그인 화면으로
+	}
+
+	// 사원 등록 컨트롤러
+	@RequestMapping("admin/user")
+	public String user() {
+
+		return "admin/user";
 	}
 
 	// 반납과 대여 컨트롤러
@@ -72,6 +89,7 @@ public class AdminController {
 	@RequestMapping("admin/stock-count")
 	public String stockCount(@RequestParam(required = false) String stock, Model model, String state) {
 		a = stockService.selectBooksByNStateAndNStock();
+		System.out.println(stockState);
 		if (stock == null) {
 			// 체크안됨
 			model.addAttribute("book_one", stockService.selectBooksByNStockNBook());
@@ -98,7 +116,6 @@ public class AdminController {
 			model.addAttribute("state", stockState);
 			return "admin/stock-count-list";
 		}
-
 		return "";
 	}
 
@@ -114,6 +131,42 @@ public class AdminController {
 		List<SearchRentRecordDto> result = stockService.selectRentRecordsByDateRange(startDate, endDate);
 
 		return result;
+	}
+
+	// 사원등록이다
+	@RequestMapping("admin/user-sign-up")
+	@ResponseBody
+	public String isSingUP(@RequestParam(required = false) String ENum, @RequestParam(required = false) String EName,
+			@RequestParam(required = false) MultipartFile EFile) {
+
+		// stockService.goSingup(ENum,EName,EFile);
+		if (ENum != null && EName != null) {
+		}
+		if (EFile != null) {
+			try {
+				// MultipartFile에서 바이트 배열로 데이터 읽기
+				InputStream inputStream = EFile.getInputStream();
+
+				// 파일 데이터를 읽기 위한 버퍼 선언
+				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+				// 파일 내용을 읽어 로그에 출력
+				String line;
+				while ((line = bufferedReader.readLine()) != null) {
+				}
+				// 읽어온 바이트 배열 처리 로직 수행
+				bufferedReader.close();
+				inputStreamReader.close();
+				inputStream.close();
+				return "파일 읽기 성공";
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "파일 읽기 실패";
+			}
+		}
+
+		return "성공";
 	}
 
 	// ajax 모음-------------------------------
@@ -148,12 +201,8 @@ public class AdminController {
 	@RequestMapping("/check-bookInfo")
 	@ResponseBody
 	public StockBookDTO doSometing(@RequestParam int id, @RequestParam String state) {
-		System.out.println(id);
-		System.out.println(state);
 		if (state.equals("return")) {
-			System.out.println(stockService.selectBooksByRstaus(id));
-			if (stockService.selectBooksByRstaus(id)==1) { // 추가 checkout 테이블 변경
-				System.out.println("if 진입");
+			if (stockService.selectBooksByRstaus(id) == 1) { // 추가 checkout 테이블 변경
 				return stockService.returnMethod(id);
 			}
 		} else if (state.equals("rent")) {

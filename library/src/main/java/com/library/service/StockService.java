@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.library.dto.BooksDTO;
 import com.library.dto.SearchRentRecordDto;
 import com.library.dto.StockBookDTO;
@@ -26,6 +28,7 @@ public interface StockService {
 	public List<StockBookDTO> selectBooksByYStockNBook();
 	
 	
+	public void goSingup(String ENum, String EName, MultipartFile EFile);
 	public StockBookDTO returnMethod(int id);
 	public List<SearchRentRecordDto> selectRentRecordsByDateRange(String startDate,String endDate);
 	public String checkSession(HttpSession session, String adminId);

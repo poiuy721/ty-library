@@ -1,6 +1,11 @@
 package com.library.serviceImpl;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.library.dto.BooksDTO;
 import com.library.dto.SearchRentRecordDto;
@@ -80,23 +86,45 @@ public class StockServiceImpl implements StockService {
 		return stockMapper.selectRentRecordsByDateRange(startDate, endDate);
 	}
 
+	// 사원 등록 구현
+	public void goSingup(String ENum, String EName, MultipartFile EFile) {
+		if (ENum != null && EName != null) {
+		}
+		if (EFile != null) {
+			try {
+				// MultipartFile에서 바이트 배열로 데이터 읽기
+				InputStream inputStream = EFile.getInputStream();
+
+				// 파일 데이터를 읽기 위한 버퍼 선언
+				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+				// 파일 내용을 읽어 로그에 출력
+				String line;
+				while ((line = bufferedReader.readLine()) != null) {
+				}
+				// 읽어온 바이트 배열 처리 로직 수행
+				bufferedReader.close();
+				inputStreamReader.close();
+				inputStream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	// return 구현
 	public StockBookDTO returnMethod(int id) {
 		int c_id = stockMapper.isReturnalbe(id);
-		System.out.println(c_id);
 		if (c_id > 0) {
-			System.out.println("if if 진입");
-			Date currentDate = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String formattedDate = sdf.format(currentDate);
-			System.out.println(formattedDate);
-			stockMapper.updateReturn(c_id, formattedDate);
+			String rent_date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			stockMapper.updateReturn(c_id, rent_date);
 			stockMapper.updateNStatusByBid(id);
 		}
-		System.out.println("메소드 리턴전");
 		return stockMapper.selectBooksByBId(id);
 	}
 
+	// 세션 체크 구현
 	public String checkSession(HttpSession session, String ID) {
 		// 세션에 admin이나 librarian이 없음 추가
 		if (ID.equals("admin") && session.getAttribute("admin") == null) {
