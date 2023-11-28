@@ -166,8 +166,12 @@
 			<!-- Footer End --><br>
 			
 			<div class="text-center">
-				<a href="/tylibrary/login">로그인 &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; </a>
-				<a href="/tylibrary/logout">로그아웃</a>
+				<c:if test="${employee eq null}">
+					<a href="/tylibrary/login">로그인</a>
+				</c:if>
+				<c:if test="${employee ne null}">
+					<a href="/tylibrary/login">로그아웃</a>
+				</c:if>
 			</div>
 		</div>
 		<!-- Content End -->
