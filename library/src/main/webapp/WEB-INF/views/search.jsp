@@ -61,7 +61,7 @@
 			<!-- Navbar Start -->
 			<nav
 				class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-				<a href="/tylibrary/search" class="navbar-brand d-flex d-lg-none me-4">
+				<a href="/tylibrary/admin" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">TY Library</h2>
 				</a>
 			</nav>
@@ -99,7 +99,8 @@
 									<tr>
 										<td><select class="form-select form-select-sm mb-3"
 											aria-label=".form-select-sm category" name="category">
-												<option selected value="일반 서적">일반 서적</option>
+												<option selected value="전체 도서">전체 도서</option>
+												<option value="일반 서적">일반 서적</option>
 												<option value="기술 서적">기술 서적</option>
 										</select></td>
 										<td><select class="form-select form-select-sm mb-3"

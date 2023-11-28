@@ -57,7 +57,11 @@
                         <form action="/tylibrary/admin" method="post"> 
 	                        <div class="form-floating mb-3">
 	                            <input type="text" class="form-control" id="adminId" name="adminId">
-	                            <label for="adminId">Input Admin Id</label>
+	                            <label for="adminId">ID</label>
+	                        </div>
+	                        <div class="form-floating mb-3">
+	                            <input type="password" class="form-control" id="adminPassword" name="adminPassword">
+	                            <label for="adminPassword">PASSWORD</label>
 	                        </div>
 	                        
 	                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">로그인</button>

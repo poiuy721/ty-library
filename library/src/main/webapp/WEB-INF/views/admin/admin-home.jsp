@@ -127,13 +127,13 @@
 
 									</tr>
 									
-									<tr>
+									<!-- <tr>
 										<td>
 											<button type="button" class="btn btn-primary m-2"
 												onclick="go('admin/user')">사원 관리</button>
 										</td>
 
-									</tr>
+									</tr> -->
 								</tbody>
 							</table>
 						</div>

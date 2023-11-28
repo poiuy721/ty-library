@@ -25,7 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN book_info bi ON b.ISBN = bi.ISBN
 		LEFT
 		JOIN checkout co ON b.b_id = co.b_id
-		WHERE bi.category = #{category}
+		<if test="category!='전체 도서'">
+			WHERE bi.category = #{category}
+		</if>
 		AND co.return_date IS NULL
 		AND b.b_status !='D'
 		<if test="searchKey != '' and searchBy != null">
