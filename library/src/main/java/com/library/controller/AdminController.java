@@ -72,7 +72,7 @@ public class AdminController {
 		if (sessionInfo.equals(admin[0])) { // 정보가 어드민이면 어드민 화면으로
 			return "admin/admin-home";
 		} else if (sessionInfo.equals(admin[1])) { // 정보가 사서면 사서 화면으로
-			model.addAttribute("librarian",admin[1]);
+			model.addAttribute("librarian", admin[1]);
 			return "admin/librarian-home";
 		}
 		return "admin/admin-login"; // 의미 없는 정보면 다시 로그인 화면으로
@@ -236,6 +236,9 @@ public class AdminController {
 	public StockBookDTO isExist(@RequestParam int id, HttpSession session) {
 		if (session.getAttribute("admin") != null) {
 			if (1 == stockService.updateYStockByBId(id)) {
+				if (stockService.selectBooksByRstaus(id) == 1) { // 추가 checkout 테이블 변경
+					return stockService.returnMethod(id);
+				}
 				return stockService.selectBooksByBId(id);
 			}
 		}
