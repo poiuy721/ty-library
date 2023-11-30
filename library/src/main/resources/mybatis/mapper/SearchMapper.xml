@@ -17,32 +17,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getLists"
-		parameterType="com.library.dto.SearchQuery"
-		resultType="com.library.dto.SearchResultDto">
-		SELECT bi.TITLE, bi.AUTHOR,bi.PUBLISHER,bi.CATEGORY, b.B_STATUS,
-		co.e_id ,b.b_id
-		FROM books b
-		JOIN book_info bi ON b.ISBN = bi.ISBN
-		LEFT
-		JOIN checkout co ON b.b_id = co.b_id
-		<if test="category!='전체 도서'">
-			WHERE bi.category = #{category}
-		</if>
-		AND co.return_date IS NULL
-		AND b.b_status !='D'
-		<if test="searchKey != '' and searchBy != null">
-          <choose>
-              <when test="searchBy.equals('title')">
-                  AND bi.TITLE LIKE CONCAT('%', #{searchKey}, '%')
-              </when>
-              <when test="searchBy.equals('author')">
-                  AND bi.AUTHOR LIKE CONCAT('%', #{searchKey}, '%')
-              </when>
-              <otherwise>
-              </otherwise>
-          </choose>
-      </if>
-	</select>
+        parameterType="com.library.dto.SearchQuery"
+        resultType="com.library.dto.SearchResultDto">
+    SELECT bi.TITLE, bi.AUTHOR, bi.PUBLISHER, bi.CATEGORY, b.B_STATUS,
+           co.e_id, b.b_id
+    FROM books b
+    JOIN book_info bi ON b.ISBN = bi.ISBN
+    LEFT JOIN checkout co ON b.b_id = co.b_id
+    <where>
+        <if test="category != '전체 도서'">
+            AND bi.CATEGORY = #{category}
+        </if>
+        AND (co.return_date IS NULL)
+        AND b.b_status != 'D'
+        <if test="searchKey != '' and searchBy != null">
+            <choose>
+                <when test="searchBy.equals('title')">
+                    AND bi.TITLE LIKE CONCAT('%', #{searchKey}, '%')
+                </when>
+                <when test="searchBy.equals('author')">
+                    AND bi.AUTHOR LIKE CONCAT('%', #{searchKey}, '%')
+                </when>
+                <otherwise>
+                </otherwise>
+            </choose>
+        </if>
+    </where>
+</select>
+
 
 	<select id="getBook" parameterType="int"
 		resultType="com.library.dto.SearchResultDto">
