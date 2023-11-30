@@ -207,10 +207,7 @@
                      </div>
                   </div>
                </div>
-
-
             </div>
-         </div>
          <!-- Footer Start -->
 
          <div class="container-fluid pt-4 px-4">
@@ -231,7 +228,7 @@
          <!-- Footer End -->
       </div>
       <!-- Content End -->
-
+		
 
       <!-- Back to Top -->
    </div>
@@ -275,6 +272,7 @@
                 codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
                    if (result) {
                 	   window.location.href=result.text
+                	   $('#res').val(result.text);
                       }
                    if (err && !(err instanceof ZXing.NotFoundException)) {
                       console.error(err);

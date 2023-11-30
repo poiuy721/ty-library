@@ -255,7 +255,7 @@
         const codeReader = new ZXing.BrowserMultiFormatReader()
         codeReader.listVideoInputDevices().then((videoInputDevices) => {
              let numOfCamera = videoInputDevices.length;
-             if (numOfCamera<1){
+             if (numOfCamera>1){
                 alert ("카메라가 있는 디바이스로 접속해주세요")
                 window.history.back();
              }
